@@ -1,0 +1,11 @@
+.row {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.row-header {
+    display: flex;
+}

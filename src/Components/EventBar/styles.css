@@ -1,0 +1,19 @@
+.event-bar {
+    background-color: rgb(159, 225, 231);
+    margin-bottom: 3px;
+    padding: 2px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    z-index: 5;
+}
+
+.event-bar.start {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.event-bar.end {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

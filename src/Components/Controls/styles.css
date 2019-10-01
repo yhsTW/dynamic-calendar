@@ -1,0 +1,21 @@
+.controls {
+    display: flex;
+}
+
+.buttons {
+    all: unset;
+    margin-right: 15px;
+    font-size: 0.8rem;
+    background-color: #FAFAFA;
+    cursor: pointer;
+}
+
+.today-btn {
+    padding: 10px 20px;
+    border-radius: 23px;
+}
+
+.move-btn {
+    padding: 10px 15px;
+    border-radius: 18px;
+}

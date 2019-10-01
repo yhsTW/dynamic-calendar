@@ -1,0 +1,9 @@
+.background-cell {
+    flex: 1;
+    position: relative;
+}
+
+.selected-cell {
+    background-color: gray;
+    opacity: 0.3;
+}

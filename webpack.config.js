@@ -30,10 +30,11 @@ const config = {
                     {
                         loader : 'css-loader',
                         options : {
-                            modules : true,
-                            camelCase : true,
+                            modules : {
+                                localIdentName : '[local]__[hash:base64:5]'
+                            },
+                            localsConvention: 'camelCase',
                             sourceMap : true,
-                            localIdentName : '[local]__[hash:base64:5]'
                         }
                     }
                 ]

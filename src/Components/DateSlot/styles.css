@@ -1,0 +1,11 @@
+.date-slot {
+    flex: 1;
+}
+
+.date-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    padding: 10px 0;
+}
