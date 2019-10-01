@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Header from '../Header';
-import Body from '../Body';
+import Body from '../View';
 import { MONTH, WEEK, DAY, COMPONENT_NAMES, CONTROLS_TYPE } from '../../variables';
 // 테스트용
 import { events } from '../../events';

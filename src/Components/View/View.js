@@ -4,7 +4,7 @@ import Month from '../Month';
 import moment from 'moment';
 import { MONTH, WEEK, DAY } from '../../variables';
 
-const Body = ({ today, currentDate, currentView, events, onSelectSlot, onSelectEvent }) => {
+const View = ({ today, currentDate, currentView, events, onSelectSlot, onSelectEvent }) => {
     if(currentView === MONTH) return (
         <Month key={ currentDate } today={ today } currentDate={ currentDate } events={ events } onSelectSlot={ onSelectSlot }
             onSelectEvent={ onSelectEvent } />
@@ -13,7 +13,7 @@ const Body = ({ today, currentDate, currentView, events, onSelectSlot, onSelectE
     else if(currentView === DAY) return <div>Day</div>;
 };
 
-Body.propTypes = {
+View.propTypes = {
     today : PropTypes.instanceOf(moment).isRequired,
     currentDate : PropTypes.instanceOf(moment).isRequired,
     currentView : PropTypes.oneOf([MONTH, WEEK, DAY]).isRequired,
@@ -31,4 +31,4 @@ Body.propTypes = {
     onSelectEvent : PropTypes.func
 };
 
-export default Body;
+export default View;

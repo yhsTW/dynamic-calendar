@@ -84,14 +84,14 @@ EventRow.propTypes = {
     })),
     isSelecting : PropTypes.bool.isRequired,
     slotStart : PropTypes.shape({
-        date : PropTypes.instanceOf(Date).isRequired,
+        date : PropTypes.instanceOf(moment).isRequired,
         type : PropTypes.oneOf(['prev', 'current', 'next']).isRequired
     }),
     slotEnd : PropTypes.shape({
-        date : PropTypes.instanceOf(Date).isRequired,
+        date : PropTypes.instanceOf(moment).isRequired,
         type : PropTypes.oneOf(['prev', 'current', 'next']).isRequired
     }),
-    eventRowRef : PropTypes.instanceOf(Element),
+    eventRowRef : PropTypes.object,
     onSelectEvent : PropTypes.func.isRequired,
     startSelecting : PropTypes.func.isRequired
 };
