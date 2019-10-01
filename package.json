@@ -2,7 +2,7 @@
   "name": "dynamic-calendar",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/bundle.[hash].js",
+  "main": "dist/bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server",

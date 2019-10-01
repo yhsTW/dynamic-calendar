@@ -7,7 +7,7 @@ const config = {
     mode : 'development',
     entry : path.join(__dirname, '/src/index.js'),
     output : {
-        filename : 'bundle.[hash].js',
+        filename : 'bundle.js',
         path : path.join(__dirname, '/dist')
     },
     resolve : {
