@@ -4,8 +4,9 @@ import moment from 'moment';
 import Header from '../Header';
 import Body from '../View';
 import { MONTH, WEEK, DAY, COMPONENT_NAMES, CONTROLS_TYPE } from '../../variables';
-// 테스트용
+//////////////////////////////////// 테스트용 ////////////////////////////////////
 import { events } from '../../events';
+//////////////////////////////////// 테스트용 ////////////////////////////////////
 import styles from './styles.css';
 
 const TODAY = moment();
