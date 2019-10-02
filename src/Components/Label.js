@@ -9,7 +9,11 @@ const Label = ({ className, text }) => (
 
 Label.propTypes = {
     className : PropTypes.string,
-    text : PropTypes.string.isRequired
+    text : PropTypes.string.isRequired,
+    customizeLabel : PropTypes.shape({
+        format : PropTypes.string,
+        style : PropTypes.object
+    })
 };
 
 export default Label;

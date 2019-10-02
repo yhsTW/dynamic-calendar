@@ -76,7 +76,7 @@ DynamicCalendar.defaultProps = {
             order : [
                 COMPONENT_NAMES.controls,
                 COMPONENT_NAMES.label,
-                COMPONENT_NAMES.views
+                COMPONENT_NAMES.viewControls
             ],
             style : {},
             Controls : {
@@ -190,7 +190,7 @@ DynamicCalendar.propTypes = {
                 PropTypes.oneOf([
                     COMPONENT_NAMES.controls,
                     COMPONENT_NAMES.label,
-                    COMPONENT_NAMES.views
+                    COMPONENT_NAMES.viewControls
                 ])
             ),
             style : PropTypes.object,
@@ -214,7 +214,7 @@ DynamicCalendar.propTypes = {
             ViewControls : PropTypes.shape({
                 viewControlsStyle : PropTypes.object,
                 viewControlStyle : PropTypes.object
-            }),
+            })
         }),
         View : PropTypes.shape({
             BackgroundCell : PropTypes.shape({

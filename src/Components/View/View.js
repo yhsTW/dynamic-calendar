@@ -4,10 +4,10 @@ import Month from '../Month';
 import moment from 'moment';
 import { MONTH, WEEK, DAY } from '../../variables';
 
-const View = ({ today, currentDate, currentView, events, onSelectSlot, onSelectEvent }) => {
+const View = ({ today, currentDate, currentView, events, onSelectSlot, onSelectEvent, customizeView }) => {
     if(currentView === MONTH) return (
         <Month key={ currentDate } today={ today } currentDate={ currentDate } events={ events } onSelectSlot={ onSelectSlot }
-            onSelectEvent={ onSelectEvent } />
+            onSelectEvent={ onSelectEvent } customizeView={ customizeView } />
     );
     else if(currentView === WEEK) return <div>Week</div>;
     else if(currentView === DAY) return <div>Day</div>;

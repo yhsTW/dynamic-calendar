@@ -6,7 +6,7 @@ export const WEEK_INFO = ['일', '월', '화', '수', '목', '금', '토'];
 // component names
 const HEADER = 'Header';
 const CONTROLS = 'Controls';
-const VIEWS = 'Views';
+const VIEW_CONTROLS = 'ViewControls';
 const LABEL = 'Label';
 
 // controls type
@@ -27,7 +27,7 @@ const CENTER = 'center';
 export const COMPONENT_NAMES = {
     header : HEADER,
     controls : CONTROLS,
-    views : VIEWS,
+    viewControls : VIEW_CONTROLS,
     label : LABEL
 };
 

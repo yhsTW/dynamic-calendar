@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
-import moment from 'moment'
+import moment from 'moment';
+import { CONTROLS_TYPE } from '../../variables';
+import orderComponents from '../../utils/orderComponents';
 import styles from './styles.css';
 
-const Controls = ({ today, currentDate, updateCurrentDate }) => {
+const Controls = ({ today, currentDate, updateCurrentDate, customizeControls : { controlStyle, controlsStyle, nextContent, order, prevContent, todayContent } }) => {
     const getDateMonth = () => {
         const date = moment(currentDate);
         const month = date.get('month');
@@ -33,12 +35,16 @@ const Controls = ({ today, currentDate, updateCurrentDate }) => {
 
         updateCurrentDate(date);
     };
-    
+
+    const getComponents = () => ({
+        [CONTROLS_TYPE.today] : <Button key={ CONTROLS_TYPE.today } className={ `${ styles.buttons } ${ styles.todayBtn }` } style={ controlStyle } text={ todayContent } onClick={ goToday } />,
+        [CONTROLS_TYPE.prev] : <Button key={ CONTROLS_TYPE.prev } className={ `${ styles.buttons } ${ styles.moveBtn }` } style={ controlStyle } text={ prevContent } onClick={ movePrevDate } />,
+        [CONTROLS_TYPE.next] : <Button key={ CONTROLS_TYPE.next } className={ `${ styles.buttons } ${ styles.moveBtn }` } style={ controlStyle } text={ nextContent } onClick={ moveNextDate } />
+    });
+
     return (
-        <div className={ styles.controls }>
-            <Button className={ `${ styles.buttons } ${ styles.todayBtn }` } text="오늘" onClick={ goToday } />
-            <Button className={ `${ styles.buttons } ${ styles.moveBtn }` } text="<" onClick={ movePrevDate } />
-            <Button className={ `${ styles.buttons } ${ styles.moveBtn }` } text=">" onClick={ moveNextDate } />
+        <div className={ styles.controls } style={ controlsStyle }>
+            { orderComponents(order, getComponents()) }
         </div>
     );
 };

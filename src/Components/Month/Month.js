@@ -102,13 +102,19 @@ class Month extends Component {
     render() {
         const events = this.settingEvents();
         const { isSelecting, selectedStart, selectedEnd, limit, usePopup } = this.state;
-        const { currentDate, today, onSelectSlot, onSelectEvent } = this.props;
+        const { 
+            currentDate, today, onSelectSlot, onSelectEvent, 
+            customizeView : { 
+                BackgroundCell, More, Popup : customizePopup, holiday, today : customizeToday,
+                weekdays, weekend
+            }
+        } = this.props;
         const dateArr = getDateArr(currentDate);
         
         return (
             <div className={ styles.month } ref={ this.month } onMouseLeave={ this.stopSelecting }>
                 <Week />
-                { 
+                {
                     dateArr.map((itemArr, idx) => (
                         <Row ref={ this.row } key={ idx + 1 } today={ today } itemArr={ itemArr } events={ events[idx] } onSelectSlot={ onSelectSlot }
                             isSelecting={ isSelecting } stopSelecting={ this.stopSelecting } startSelecting={ this.startSelecting }
@@ -118,7 +124,12 @@ class Month extends Component {
                             openPopup={ this.openPopup } />
                     ))
                 }
-                { usePopup && <Popup popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent } /> }
+                {
+                    usePopup && (
+                        <Popup popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent }
+                            customizePopup={ customizePopup } />
+                    )
+                }
             </div>
         )
     }
