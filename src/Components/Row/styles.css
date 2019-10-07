@@ -9,3 +9,8 @@
 .row-header {
     display: flex;
 }
+
+.date-content {
+    /* pointer-events: none; */
+    z-index: 4;
+}

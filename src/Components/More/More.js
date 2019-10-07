@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.css';
 
-const More = ({ more, openPopup }) => {
+const More = ({ more, openPopup, customizeMore : { moreStyle, numBackText, numFrontText } }) => {
     const showMore = e => {
         e.stopPropagation();
 
@@ -10,7 +10,7 @@ const More = ({ more, openPopup }) => {
     };
 
     return (
-        <span className={ styles.more } onMouseDown={ showMore }>+{ more } more</span>
+        <span className={ styles.more } style={ moreStyle } onMouseDown={ showMore }>{ `${ numFrontText }${ more }${ numBackText }` }</span>
     );
 };
 

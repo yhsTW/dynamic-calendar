@@ -107,14 +107,36 @@ class BackgroundCell extends Component {
         pOpenPopup({ top, left, width, height, events, date });
     };
 
+    getBackgroundCellStyle = (isSelected) => {
+        // TODO: holiday는 나중에
+        const { 
+            item : { date }, isToday, customizeBackgroundCell : { 
+                BackgroundCell : { useBorder, borderStyle, selectStyle }, 
+                customizeToday, holiday, weekdays, weekend : { backgroundCellStyle : { saturdayStyle, sundayStyle } }
+            }
+        } = this.props;
+        let style = {};
+        
+        if(isToday) style = { ...style, ...customizeToday.backgroundCellStyle };
+        // border가 겹치는 현상을 수정하기 위해 marginLeft와 marginBottom 추가
+        if(useBorder) style = { ...style, ...borderStyle, marginLeft : '-1px', marginBottom : '-1px' };
+        if(isSelected) style = { ...style, ...selectStyle };
+        if(date.day() !== 0 && date.day() !== 6) style = { ...style,...weekdays.backgroundCellStyle };
+        if(date.day() === 0) style = { ...style, ...sundayStyle };
+        if(date.day() === 6) style = { ...style, ...saturdayStyle };
+
+        return style;
+    };
+
     render() {
+        const { isMore, more, customizeBackgroundCell : { More : customizeMore } } = this.props;
         const isSelected = this.checkSelected();
-        const { isMore, more } = this.props;
+        const backgroundCellStyle = this.getBackgroundCellStyle(isSelected);
 
         return (
-            <div ref={ this.cell } className={ `${ styles.backgroundCell } ${ isSelected ? styles.selectedCell : '' }` } onMouseDown={ this.selectStart } onMouseUp={ this.selectEnd }
-                onMouseEnter={ this.selecting }>
-                { isMore && <More more={ more } openPopup={ this.openPopup } /> }
+            <div ref={ this.cell } className={ styles.backgroundCell } onMouseDown={ this.selectStart } onMouseUp={ this.selectEnd }
+                onMouseEnter={ this.selecting } style={ backgroundCellStyle }>
+                { isMore && <More more={ more } openPopup={ this.openPopup } customizeMore={ customizeMore } /> }
             </div>
         );
     };

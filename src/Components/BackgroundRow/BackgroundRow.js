@@ -39,7 +39,7 @@ class BackgroundRow extends Component {
             itemArr, onSelectSlot, isSelecting, stopSelecting, startSelecting,
             setSelectedStart, setSelectedEnd, selectedStart, selectedEnd,
             lastSelectedDate, setLastSelectedDate, defaultSelectedDate, limit,
-            openPopup, today
+            openPopup, today, customizeBackgroundRow
         } = this.props;
 
         const eventCountArr = this.settingEventCount();
@@ -66,7 +66,7 @@ class BackgroundRow extends Component {
                                 selectedStart={ selectedStart } selectedEnd={ selectedEnd } lastSelectedDate={ lastSelectedDate }
                                 setLastSelectedDate={ setLastSelectedDate } defaultSelectedDate={ defaultSelectedDate }
                                 isMore={ isMore } events={ events } more={ more } openPopup={ openPopup }
-                                isToday={ today.isSame(item.date, 'date') } />
+                                isToday={ today.isSame(item.date, 'date') } customizeBackgroundCell={ customizeBackgroundRow } />
                         );
                     })
                 }

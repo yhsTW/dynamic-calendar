@@ -121,7 +121,7 @@ class Month extends Component {
                             setSelectedStart={ this.setSelectedStart } setSelectedEnd={ this.setSelectedEnd } selectedStart={ selectedStart }
                             selectedEnd={ selectedEnd } lastSelectedDate={ this.lastSelectedDate } setLastSelectedDate={ this.setLastSelectedDate }
                             defaultSelectedDate={ this.defaultSelectedDate } onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit }
-                            openPopup={ this.openPopup } />
+                            openPopup={ this.openPopup } customizeRow={{ BackgroundCell, More, holiday, today : customizeToday, weekdays, weekend }} />
                     ))
                 }
                 {

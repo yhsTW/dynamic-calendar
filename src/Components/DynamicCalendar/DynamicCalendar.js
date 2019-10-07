@@ -36,8 +36,10 @@ class DynamicCalendar extends Component {
     };
 
     render() {
-        // const { views, events, onSelectSlot, onSelectEvent } = this.props;
-        const { views, onSelectSlot, onSelectEvent, useHeader, customize : { Header : customizeHeader, View : customizeView } } = this.props;
+        const { 
+            views, onSelectSlot, onSelectEvent, useHeader, 
+            customize : { Header : customizeHeader, View : customizeView }
+        } = this.props;
         const { currentDate, currentView } = this.state;
 
         return (
@@ -104,12 +106,15 @@ DynamicCalendar.defaultProps = {
             BackgroundCell : {
                 useBorder : false,
                 borderStyle : {},
-                selectStyle : {}
+                selectStyle : {
+                    backgroundColor: '#DDD',
+                    opacity: 0.3,
+                }
             },
             Popup : {},
             More : {
                 numFrontText : '+',
-                numBackText : 'more',
+                numBackText : ' more',
                 moreStyle : {},
                 position : [
                     POSITION.top,
@@ -125,8 +130,14 @@ DynamicCalendar.defaultProps = {
                 backgroundCellStyle : {}
             },
             weekend : {
-                saturdayStyle : {},
-                sundayStyle : {}
+                dateHeaderStyle : {
+                    saturdayStyle : {},
+                    sundayStyle : {}
+                },
+                backgroundCellStyle : {
+                    saturdayStyle : {},
+                    sundayStyle : {}
+                }
             },
             weekdays : {
                 dateHeaderStyle : {},
