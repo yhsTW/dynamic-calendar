@@ -1,11 +1,9 @@
-.date-slot {
-    flex: 1;
-}
-
 .date-header {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 0.9rem;
     padding: 10px 0;
+    font-weight: bold;
 }

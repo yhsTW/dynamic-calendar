@@ -107,8 +107,7 @@ DynamicCalendar.defaultProps = {
                 useBorder : false,
                 borderStyle : {},
                 selectStyle : {
-                    backgroundColor: '#DDD',
-                    opacity: 0.3,
+                    backgroundColor: '#EEEEEE'
                 }
             },
             Popup : {},
@@ -122,7 +121,12 @@ DynamicCalendar.defaultProps = {
                 ]
             },
             today : {
-                dateHeaderStyle : {},
+                dateHeaderStyle : {
+                    backgroundColor : '#F8613B',
+                    borderRadius : '13px',
+                    padding : '3px 10px',
+                    color : '#FFF'
+                },
                 backgroundCellStyle : {}
             },
             holiday : {
@@ -132,7 +136,9 @@ DynamicCalendar.defaultProps = {
             weekend : {
                 dateHeaderStyle : {
                     saturdayStyle : {},
-                    sundayStyle : {}
+                    sundayStyle : {
+                        color : '#F76767'
+                    }
                 },
                 backgroundCellStyle : {
                     saturdayStyle : {},
@@ -142,6 +148,22 @@ DynamicCalendar.defaultProps = {
             weekdays : {
                 dateHeaderStyle : {},
                 backgroundCellStyle : {}
+            },
+            prevMonth : {
+                dateHeaderStyle : {
+                    opacity : 0.3
+                },
+                backgroundCellStyle : {
+                    backgroundColor : '#EEEEEE'
+                }
+            },
+            nextMonth : {
+                dateHeaderStyle : {
+                    opacity : 0.3
+                },
+                backgroundCellStyle : {
+                    backgroundColor : '#EEEEEE'
+                }
             }
         }
     },

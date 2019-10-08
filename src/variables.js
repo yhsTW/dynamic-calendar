@@ -24,6 +24,11 @@ const BOTTOM = 'bottom';
 const LEFT = 'left';
 const CENTER = 'center';
 
+// month type
+const CURRENT_MONTH = 'current';
+const PREV_MONTH = 'prev';
+const NEXT_MONTH = 'next';
+
 export const COMPONENT_NAMES = {
     header : HEADER,
     controls : CONTROLS,
@@ -43,4 +48,10 @@ export const POSITION = {
     bottom : BOTTOM,
     left : LEFT,
     center : CENTER
+};
+
+export const MONTH_TYPE = {
+    current : CURRENT_MONTH,
+    prev : PREV_MONTH,
+    next : NEXT_MONTH
 };

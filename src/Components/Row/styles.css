@@ -11,6 +11,6 @@
 }
 
 .date-content {
-    /* pointer-events: none; */
+    pointer-events: none;
     z-index: 4;
 }

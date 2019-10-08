@@ -144,7 +144,7 @@ class Row extends Component {
             stopSelecting, startSelecting, setSelectedStart, setSelectedEnd,
             selectedStart, selectedEnd, lastSelectedDate, setLastSelectedDate,
             defaultSelectedDate, onSelectEvent, limit, openPopup,
-            customizeRow : { BackgroundCell, More, holiday, today : customizeToday, weekdays, weekend }
+            customizeRow : { BackgroundCell, More, holiday, today : customizeToday, weekdays, weekend, prevMonth, nextMonth }
         } = this.props;
 
         const sameEventRow = this.sameEventRow();
@@ -155,13 +155,13 @@ class Row extends Component {
                     stopSelecting={ stopSelecting } startSelecting={ startSelecting } setSelectedStart={ setSelectedStart }
                     setSelectedEnd={ setSelectedEnd } selectedStart={ selectedStart } selectedEnd={ selectedEnd }
                     lastSelectedDate={ lastSelectedDate } setLastSelectedDate={ setLastSelectedDate } defaultSelectedDate={ defaultSelectedDate }
-                    limit={ limit } events={ events } openPopup={ openPopup } today={ today } customizeBackgroundRow={{ BackgroundCell, More, customizeToday, weekdays, holiday, weekend }} />
+                    limit={ limit } events={ events } openPopup={ openPopup } today={ today } customizeBackgroundRow={{ BackgroundCell, More, customizeToday, weekdays, holiday, weekend, prevMonth, nextMonth }} />
                 <div className={ styles.dateContent }>
                     <div className={ styles.rowHeader } ref={ this.header }>
                         { 
                             itemArr.map(item => (
                                 <DateSlot key={ `${ item.type }_${ item.date.date() }` } isToday={ today.isSame(item.date, 'date') } item={ item }
-                                    customizeDateSlot={{ customizeToday, holiday, weekend, weekdays }} />
+                                    customizeDateSlot={{ customizeToday, holiday, weekend, weekdays, prevMonth, nextMonth }} />
                             ))
                         }
                     </div>

@@ -12,6 +12,7 @@ class EventBar extends Component {
     resetIsMouseDown = () => this.isMouseDown = false;
 
     onClickEvent = e => {
+        console.log('onClickEvent start');
         const { event, onSelectEvent } = this.props;
 
         this.resetIsMouseDown();
@@ -32,7 +33,8 @@ class EventBar extends Component {
         const { isStart, isEnd, width, isSelecting, event : { title } } = this.props;
 
         return (
-            <div className={ `${ styles.eventBar } ${ isStart ? styles.start : '' } ${ isEnd ? styles.end : '' }` } style={{ width, flexBasis : width, pointerEvents : isSelecting ? 'none' : 'auto' }}
+            <div className={ `${ styles.eventBar } ${ isStart ? styles.start : '' } ${ isEnd ? styles.end : '' }` } 
+                style={{ width, flexBasis : width, pointerEvents : isSelecting ? 'none' : 'auto' }}
                 onClick={ this.onClickEvent } onMouseDown={ this.mouseDown } onMouseMove={ this.moveMouse }>
                 <span>{ title }</span>
             </div>

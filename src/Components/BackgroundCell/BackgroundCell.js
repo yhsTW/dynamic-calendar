@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import styles from './styles.css';
 import moment from 'moment';
 import More from '../More';
+import { MONTH_TYPE, MONTH } from '../../variables';
+
+const BACKGROUND_CELL_STYLE = 'backgroundCellStyle';
 
 class BackgroundCell extends Component {
     cell = createRef();
@@ -110,20 +113,22 @@ class BackgroundCell extends Component {
     getBackgroundCellStyle = (isSelected) => {
         // TODO: holiday는 나중에
         const { 
-            item : { date }, isToday, customizeBackgroundCell : { 
+            item : { date, type }, isToday, customizeBackgroundCell : { 
                 BackgroundCell : { useBorder, borderStyle, selectStyle }, 
-                customizeToday, holiday, weekdays, weekend : { backgroundCellStyle : { saturdayStyle, sundayStyle } }
+                customizeToday, holiday, weekdays, weekend, prevMonth, nextMonth
             }
         } = this.props;
         let style = {};
         
-        if(isToday) style = { ...style, ...customizeToday.backgroundCellStyle };
+        if(isToday) style = { ...style, ...customizeToday[BACKGROUND_CELL_STYLE] };
         // border가 겹치는 현상을 수정하기 위해 marginLeft와 marginBottom 추가
         if(useBorder) style = { ...style, ...borderStyle, marginLeft : '-1px', marginBottom : '-1px' };
         if(isSelected) style = { ...style, ...selectStyle };
-        if(date.day() !== 0 && date.day() !== 6) style = { ...style,...weekdays.backgroundCellStyle };
-        if(date.day() === 0) style = { ...style, ...sundayStyle };
-        if(date.day() === 6) style = { ...style, ...saturdayStyle };
+        if(date.day() !== 0 && date.day() !== 6) style = { ...style,...weekdays[BACKGROUND_CELL_STYLE] };
+        if(date.day() === 0) style = { ...style, ...weekend[BACKGROUND_CELL_STYLE].sundayStyle };
+        if(date.day() === 6) style = { ...style, ...weekend[BACKGROUND_CELL_STYLE].saturdayStyle };
+        if(type === MONTH_TYPE.prev) style = { ...style, ...prevMonth[BACKGROUND_CELL_STYLE] };
+        if(type === MONTH_TYPE.next) style = { ...style, ...nextMonth[BACKGROUND_CELL_STYLE] };
 
         return style;
     };

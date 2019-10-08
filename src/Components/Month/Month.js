@@ -106,14 +106,14 @@ class Month extends Component {
             currentDate, today, onSelectSlot, onSelectEvent, 
             customizeView : { 
                 BackgroundCell, More, Popup : customizePopup, holiday, today : customizeToday,
-                weekdays, weekend
+                weekdays, weekend, prevMonth, nextMonth
             }
         } = this.props;
         const dateArr = getDateArr(currentDate);
         
         return (
             <div className={ styles.month } ref={ this.month } onMouseLeave={ this.stopSelecting }>
-                <Week />
+                <Week customizeWeek={{ weekend }} />
                 {
                     dateArr.map((itemArr, idx) => (
                         <Row ref={ this.row } key={ idx + 1 } today={ today } itemArr={ itemArr } events={ events[idx] } onSelectSlot={ onSelectSlot }
@@ -121,7 +121,7 @@ class Month extends Component {
                             setSelectedStart={ this.setSelectedStart } setSelectedEnd={ this.setSelectedEnd } selectedStart={ selectedStart }
                             selectedEnd={ selectedEnd } lastSelectedDate={ this.lastSelectedDate } setLastSelectedDate={ this.setLastSelectedDate }
                             defaultSelectedDate={ this.defaultSelectedDate } onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit }
-                            openPopup={ this.openPopup } customizeRow={{ BackgroundCell, More, holiday, today : customizeToday, weekdays, weekend }} />
+                            openPopup={ this.openPopup } customizeRow={{ BackgroundCell, More, holiday, today : customizeToday, weekdays, weekend, prevMonth, nextMonth }} />
                     ))
                 }
                 {

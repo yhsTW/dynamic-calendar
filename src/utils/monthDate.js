@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { MONTH_TYPE } from '../variables';
 
 let dateArr = [];
 let item = [];
@@ -24,7 +25,7 @@ const setItem = date => {
     }
 };
 
-const settingDate = (start, end, month, type = 'current') => {
+const settingDate = (start, end, month, type = MONTH_TYPE.current) => {
     for(let i = start; i < end; i++) {
         const date = moment(month).date(i);
         
@@ -43,7 +44,7 @@ const monthDate = currentDate => {
         const prevMonthStart = getEndOf(prevMonth).date() - getStartOf(currentDate).day() + 1;
         const prevMonthEnd = getEndOf(prevMonth).date() + 1;
         
-        settingDate(prevMonthStart, prevMonthEnd, prevMonth, 'prev');
+        settingDate(prevMonthStart, prevMonthEnd, prevMonth, MONTH_TYPE.prev);
     }
 
     settingDate(getStartOf(currentDate).date(), getEndOf(currentDate).date() + 1, currentDate);
@@ -53,7 +54,7 @@ const monthDate = currentDate => {
         const nextMonthStart = getStartOf(nextMonth).date();
         const nextMonthEnd = WEEK_NUM - currentDateEndDay;
         
-        settingDate(nextMonthStart, nextMonthEnd, nextMonth, 'next');
+        settingDate(nextMonthStart, nextMonthEnd, nextMonth, MONTH_TYPE.next);
     }
 };
 
