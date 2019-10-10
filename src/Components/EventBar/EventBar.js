@@ -30,11 +30,11 @@ class EventBar extends Component {
     };
 
     render() {
-        const { isStart, isEnd, width, isSelecting, event : { title } } = this.props;
-
+        const { isStart, isEnd, width, isSelecting, event : { title, color } } = this.props;
+        
         return (
             <div className={ `${ styles.eventBar } ${ isStart ? styles.start : '' } ${ isEnd ? styles.end : '' }` } 
-                style={{ width, flexBasis : width, pointerEvents : isSelecting ? 'none' : 'auto' }}
+                style={{ width, flexBasis : width, pointerEvents : isSelecting ? 'none' : 'auto', backgroundColor : color ? color : '' }}
                 onClick={ this.onClickEvent } onMouseDown={ this.mouseDown } onMouseMove={ this.moveMouse }>
                 <span>{ title }</span>
             </div>

@@ -5,7 +5,7 @@ import Label from '../Label';
 import ViewControls from '../ViewControls';
 import { MONTH, WEEK, DAY, COMPONENT_NAMES } from '../../variables';
 import moment from 'moment';
-import orderComponents from '../../utils/orderComponents';
+import { orderComponents } from '../../utils/utils';
 import styles from './styles.css';
 
 const Header = ({ today, currentDate, views, currentView, updateCurrentDate, updateCurrentView, customizeHeader : { Controls : customizeControls, Label : customizeLabel, ViewControls : customizeViewControls, order, style } }) => {

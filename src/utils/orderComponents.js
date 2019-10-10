@@ -1,1 +1,0 @@
-export default (order, components) => order.map(type => components[type]);

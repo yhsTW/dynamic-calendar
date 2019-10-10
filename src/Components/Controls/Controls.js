@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from '../Button';
 import moment from 'moment';
 import { CONTROLS_TYPE } from '../../variables';
-import orderComponents from '../../utils/orderComponents';
+import { orderComponents } from '../../utils/utils';
 import styles from './styles.css';
 
 const Controls = ({ today, currentDate, updateCurrentDate, customizeControls : { controlStyle, controlsStyle, nextContent, order, prevContent, todayContent } }) => {
