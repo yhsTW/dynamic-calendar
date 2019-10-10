@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Controls from '../Controls';
 import Label from '../Label';
 import ViewControls from '../ViewControls';
-import { MONTH, WEEK, DAY, COMPONENT_NAMES } from '../../variables';
+import { VIEW_TYPE, COMPONENT_NAMES } from '../../variables';
 import moment from 'moment';
 import { orderComponents } from '../../utils/utils';
 import styles from './styles.css';
@@ -35,7 +35,7 @@ Header.propTypes = {
     today : PropTypes.instanceOf(moment).isRequired,
     currentDate : PropTypes.instanceOf(moment).isRequired,
     views : PropTypes.arrayOf(PropTypes.string.isRequired),
-    currentView : PropTypes.oneOf([MONTH, WEEK, DAY]).isRequired,
+    currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]).isRequired,
     updateCurrentDate : PropTypes.func.isRequired,
     updateCurrentView : PropTypes.func.isRequired
 };

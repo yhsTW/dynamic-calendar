@@ -1,13 +1,13 @@
 import React from 'react';
 import EventBar from '../EventBar';
-import { WEEK_INFO } from '../../variables';
+import { MONTH_HEADER_DATA } from '../../variables';
 import styles from './styles.css';
 
 const Popup = ({ popup : { events, top, left, width, height, date }, closePopup, onSelectEvent }) => (
     <div className={ styles.popupBackground } onClick={ closePopup }>
         <div className={ styles.popup } onClick={ e => e.stopPropagation() } style={{ top, left, width, height }}>
             <div className={ styles.popupHeader }>
-                <span className={ styles.popupDay }>{ WEEK_INFO[date.day()] }</span>
+                <span className={ styles.popupDay }>{ MONTH_HEADER_DATA[date.day()] }</span>
                 <span className={ styles.popupDate }>{ date.date() }</span>
             </div>
             <div className={ styles.popupEvents }>

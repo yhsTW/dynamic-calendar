@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Header from '../Header';
 import View from '../View';
-import { MONTH, WEEK, DAY, COMPONENT_NAMES, CONTROLS_TYPE, POSITION, FORMAT } from '../../variables';
+import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, POSITION, FORMAT } from '../../variables';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 import { events } from '../../events';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
@@ -41,7 +41,7 @@ class DynamicCalendar extends Component {
             customize : { Header : customizeHeader, View : customizeView }
         } = this.props;
         const { currentDate, currentView } = this.state;
-
+        
         return (
             <div className={ styles.dynamicCalendar }>
                 { 
@@ -67,8 +67,13 @@ DynamicCalendar.defaultProps = {
     date : TODAY,
     min : null,
     max : null,
-    defaultView : MONTH,
-    views : [MONTH],
+    ///////////////////// 테스트용 /////////////////////
+    // defaultView : VIEW_TYPE.month,
+    defaultView : VIEW_TYPE.week,
+    ///////////////////// 테스트용 /////////////////////
+    ///////////////////// 테스트용 /////////////////////
+    views : [VIEW_TYPE.month, VIEW_TYPE.week],
+    ///////////////////// 테스트용 /////////////////////
     components : null,
     selectable : false,
     popup : false,
@@ -203,9 +208,9 @@ DynamicCalendar.propTypes = {
     ]),
     // 달력 첫 화면에 보여 줄 달력 타입
     defaultView : PropTypes.oneOf([
-        MONTH,
-        WEEK,
-        DAY
+        VIEW_TYPE.month,
+        VIEW_TYPE.week,
+        VIEW_TYPE.day
     ]),
     // 달력 타입 모음
     views : PropTypes.arrayOf(PropTypes.string.isRequired),

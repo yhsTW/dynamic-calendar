@@ -1,7 +1,7 @@
-export const MONTH = 'month';
-export const WEEK = 'week';
-export const DAY = 'day';
-export const WEEK_INFO = ['일', '월', '화', '수', '목', '금', '토'];
+const MONTH = 'month';
+const WEEK = 'week';
+const DAY = 'day';
+export const MONTH_HEADER_DATA = ['일', '월', '화', '수', '목', '금', '토'];
 
 // component names
 const HEADER = 'Header';
@@ -28,6 +28,12 @@ const CENTER = 'center';
 const CURRENT_MONTH = 'current';
 const PREV_MONTH = 'prev';
 const NEXT_MONTH = 'next';
+
+export const VIEW_TYPE = {
+    month : MONTH,
+    week : WEEK,
+    day : DAY
+};
 
 export const COMPONENT_NAMES = {
     header : HEADER,

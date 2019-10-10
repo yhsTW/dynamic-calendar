@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
-import Week from '../Week';
+import MonthHeader from '../MonthHeader';
 import Row from '../Row';
 import { getDateArr } from '../../utils/monthDate';
 import { classification } from '../../utils/classification';
@@ -113,7 +113,7 @@ class Month extends Component {
         
         return (
             <div className={ styles.month } ref={ this.month } onMouseLeave={ this.stopSelecting }>
-                <Week customizeWeek={{ weekend }} />
+                <MonthHeader customizeWeek={{ weekend }} />
                 {
                     dateArr.map((itemArr, idx) => (
                         <Row ref={ this.row } key={ idx + 1 } today={ today } itemArr={ itemArr } events={ events[idx] } onSelectSlot={ onSelectSlot }

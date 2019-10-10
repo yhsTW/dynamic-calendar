@@ -1,22 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Month from '../Month';
+import Week from '../Week';
 import moment from 'moment';
-import { MONTH, WEEK, DAY } from '../../variables';
+import { VIEW_TYPE } from '../../variables';
 
 const View = ({ today, currentDate, currentView, events, onSelectSlot, onSelectEvent, customizeView }) => {
-    if(currentView === MONTH) return (
+    if(currentView === VIEW_TYPE.month) return (
         <Month key={ currentDate } today={ today } currentDate={ currentDate } events={ events } onSelectSlot={ onSelectSlot }
             onSelectEvent={ onSelectEvent } customizeView={ customizeView } />
     );
-    else if(currentView === WEEK) return <div>Week</div>;
-    else if(currentView === DAY) return <div>Day</div>;
+    else if(currentView === VIEW_TYPE.week) return <Week />;
+    else if(currentView === VIEW_TYPE.day) return <div>Day</div>;
 };
 
 View.propTypes = {
     today : PropTypes.instanceOf(moment).isRequired,
     currentDate : PropTypes.instanceOf(moment).isRequired,
-    currentView : PropTypes.oneOf([MONTH, WEEK, DAY]).isRequired,
+    currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]).isRequired,
     events : PropTypes.arrayOf(
         PropTypes.shape(
             {
