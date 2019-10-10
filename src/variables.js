@@ -29,6 +29,8 @@ const CURRENT_MONTH = 'current';
 const PREV_MONTH = 'prev';
 const NEXT_MONTH = 'next';
 
+export const WEEK_NUM = 7
+
 export const VIEW_TYPE = {
     month : MONTH,
     week : WEEK,

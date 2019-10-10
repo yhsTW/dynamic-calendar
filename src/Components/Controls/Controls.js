@@ -2,27 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 import moment from 'moment';
-import { CONTROLS_TYPE } from '../../variables';
+import { CONTROLS_TYPE, VIEW_TYPE, WEEK_NUM } from '../../variables';
 import { orderComponents } from '../../utils/utils';
 import styles from './styles.css';
 
-const Controls = ({ today, currentDate, updateCurrentDate, customizeControls : { controlStyle, controlsStyle, nextContent, order, prevContent, todayContent } }) => {
-    const getDateMonth = () => {
+const Controls = ({ today, currentDate, updateCurrentDate, currentView, customizeControls : { controlStyle, controlsStyle, nextContent, order, prevContent, todayContent } }) => {
+    const getDate = () => {
         const date = moment(currentDate);
-        const month = date.get('month');
 
-        return { date, month };
+        return date;
     };
 
     const movePrevDate = () => {
-        const { date, month } = getDateMonth();
-        date.set('month', month - 1);
+        const date = getDate();
+
+        if(currentView === VIEW_TYPE.month) {
+            date.set('month', date.month() - 1);
+        } else if(currentView === VIEW_TYPE.week) {
+            date.set('date', date.date() - WEEK_NUM);
+        } else if(currentView === VIEW_TYPE.day) {
+            date.set('date', date.date() - 1);
+        }
         
         updateCurrentDate(date);
     };
     
     const goToday = () => {
-        const { date } = getDateMonth();
+        const date = getDate();
 
         if(date.isSame(today, 'month')) return;
 
@@ -30,8 +36,15 @@ const Controls = ({ today, currentDate, updateCurrentDate, customizeControls : {
     }
     
     const moveNextDate = () => {
-        const { date, month } = getDateMonth();
-        date.set('month', month + 1);
+        const date = getDate();
+        
+        if(currentView === VIEW_TYPE.month) {
+            date.set('month', date.month() + 1);
+        } else if(currentView === VIEW_TYPE.week) {
+            date.set('date', date.date() + WEEK_NUM);
+        } else if(currentView === VIEW_TYPE.day) {
+            date.set('date', date.date() + 1);
+        }
 
         updateCurrentDate(date);
     };

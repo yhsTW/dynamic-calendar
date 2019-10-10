@@ -12,7 +12,7 @@ const Header = ({ today, currentDate, views, currentView, updateCurrentDate, upd
     const getComponents = () => ({
         [COMPONENT_NAMES.controls] : (
             <Controls key={ COMPONENT_NAMES.controls } today={ today } currentDate={ currentDate } updateCurrentDate={ updateCurrentDate }
-                customizeControls={ customizeControls } />
+                customizeControls={ customizeControls } currentView={ currentView } />
         ),
         [COMPONENT_NAMES.label] : (
             <Label key={ COMPONENT_NAMES.label } className={ styles.currentViewDate } text={ `${ currentDate.get('year') }년 ${ currentDate.get('month') + 1 }월` }

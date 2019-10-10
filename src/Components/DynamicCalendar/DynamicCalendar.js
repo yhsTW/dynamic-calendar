@@ -72,7 +72,7 @@ DynamicCalendar.defaultProps = {
     defaultView : VIEW_TYPE.week,
     ///////////////////// 테스트용 /////////////////////
     ///////////////////// 테스트용 /////////////////////
-    views : [VIEW_TYPE.month, VIEW_TYPE.week],
+    views : [VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day],
     ///////////////////// 테스트용 /////////////////////
     components : null,
     selectable : false,

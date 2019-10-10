@@ -1,13 +1,12 @@
 import moment from 'moment';
-import { MONTH_TYPE } from '../variables';
+import { MONTH_TYPE, WEEK_NUM } from '../variables';
 
 let dateArr = [];
 let item = [];
-const WEEK_NUM = 7;
 
-const getStartOf = date => date.startOf('month');
+const getStartOf = date => moment(date).startOf('month');
 
-const getEndOf = date => date.endOf('month');
+const getEndOf = date => moment(date).endOf('month');
 
 const setDateArr = arr => dateArr.push(arr);
 

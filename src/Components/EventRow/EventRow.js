@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import EventBar from '../EventBar';
 import moment from 'moment';
+import { WEEK_NUM } from '../../variables';
 import styles from './styles.css';
 
 const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSelecting, startSelecting }) => {
@@ -27,9 +28,9 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
         if(getStartCondition(event)) {
             if(idx > 0) {
                 // segmentWidth = `calc(100% * ${ moment(events[idx - 1].end).day() - moment(event.start).day() }/7)`;
-                segmentWidth = `calc(100% * ${ moment(event.start).day() - moment(events[idx - 1].end).day() - 1 }/7)`;
+                segmentWidth = `calc(100% * ${ moment(event.start).day() - moment(events[idx - 1].end).day() - 1 }/${ WEEK_NUM })`;
             } else {
-                segmentWidth = `calc(100% * ${ moment(event.start).day() }/7)`;
+                segmentWidth = `calc(100% * ${ moment(event.start).day() }/${ WEEK_NUM })`;
             }
         }
 
@@ -47,16 +48,16 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
         if(start.isSame(end) || (getStartCondition(event) && getEndCondition(event))) {
             width = end.day() - start.day() + 1;
         } else {
-            width = 7;
+            width = WEEK_NUM;
             
             if(!getStartCondition(event) && getEndCondition(event)) {
                 width = end.day() + 1;
             } else if(getStartCondition(event) && !getEndCondition(event)) {
-                width = 7 - start.day();
+                width = WEEK_NUM - start.day();
             }
         }
         
-        return `calc(100% * ${ width }/7)`;
+        return `calc(100% * ${ width }/${ WEEK_NUM })`;
     };
     
     return (

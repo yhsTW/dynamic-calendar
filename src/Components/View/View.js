@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Month from '../Month';
 import Week from '../Week';
+import Day from '../Day';
 import moment from 'moment';
 import { VIEW_TYPE } from '../../variables';
 
@@ -10,8 +11,16 @@ const View = ({ today, currentDate, currentView, events, onSelectSlot, onSelectE
         <Month key={ currentDate } today={ today } currentDate={ currentDate } events={ events } onSelectSlot={ onSelectSlot }
             onSelectEvent={ onSelectEvent } customizeView={ customizeView } />
     );
-    else if(currentView === VIEW_TYPE.week) return <Week />;
-    else if(currentView === VIEW_TYPE.day) return <div>Day</div>;
+
+    else if(currentView === VIEW_TYPE.week) return (
+        <Week today={ today } currentDate={ currentDate } events={ events } onSelectSlot={ onSelectSlot } 
+            onSelectEvent={ onSelectEvent } />
+    );
+    
+    else if(currentView === VIEW_TYPE.day) return (
+        <Day today={ today } currentDate={ currentDate } events={ events } onSelectSlot={ onSelectSlot }
+            onSelectEvent={ onSelectEvent } />
+    );
 };
 
 View.propTypes = {
