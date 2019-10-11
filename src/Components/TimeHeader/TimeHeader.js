@@ -5,7 +5,6 @@ import { VIEW_TYPE, MONTH_HEADER_DATA, WEEK_NUM, MONTH_TYPE } from '../../variab
 import moment from 'moment';
 import styles from './styles.css';
 
-// const TimeHeader = ({ today, currentDate, currentView, customizeTimeHeader : { BackgroundCell, customizeToday, holiday, weekend, weekdays }, select }) => {
 const TimeHeader = ({ today, currentDate, currentView, customizeTimeHeader, select, onSelectSlot, events, onSelectEvent }) => {
     const getSunday = () => {
         const currentDay = currentDate.day();
@@ -41,7 +40,6 @@ const TimeHeader = ({ today, currentDate, currentView, customizeTimeHeader, sele
     };
 
     const getAllDayEvents = (start, end) => {
-        console.log('start, end : ', start, end);
         return events.filter(event => 
             (moment(event.start).isBetween(start, end, null, '[]') || moment(event.end).isBetween(start, end, null, '[]')) && event.allDay && event
         );

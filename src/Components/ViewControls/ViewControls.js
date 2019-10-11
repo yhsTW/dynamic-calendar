@@ -4,12 +4,25 @@ import Button from '../Button';
 import { VIEW_TYPE} from '../../variables';
 import styles from './styles.css';
 
+const showViewType = view => {
+    switch(view) {
+        case VIEW_TYPE.month : 
+            return '월간';
+        
+        case VIEW_TYPE.week :
+            return '주간';
+
+        case VIEW_TYPE.day :
+            return '일간';
+    }
+};
+
 const ViewControls = ({ views, currentView, updateCurrentView, customizeViewControls : { viewControlStyle, viewControlsStyle } }) => (
     <div className={ styles.viewControls } style={ viewControlsStyle }>
         { 
             views.map(view => (
                 <Button key={ view } className={ `${ styles.view } ${ view === currentView ? styles.active : '' }` } style={ viewControlStyle } 
-                    onClick={ view === currentView ? () => {} : () => updateCurrentView(view) } text={ view } />
+                    onClick={ view === currentView ? () => {} : () => updateCurrentView(view) } text={ showViewType(view) } />
             )) 
         }
     </div>

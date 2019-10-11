@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Header from '../Header';
 import View from '../View';
+import Selection from '../Selection';
 import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, POSITION, FORMAT } from '../../variables';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 import { events } from '../../events';
@@ -51,7 +52,10 @@ class DynamicCalendar extends Component {
                             customizeHeader={ customizeHeader }  />
                     )
                 }
-                <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } 
+                {/* <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } 
+                    events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
+                    customizeView={ customizeView } /> */}
+                <Selection today={ TODAY } currentDate={ currentDate } currentView={ currentView } 
                     events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
                     customizeView={ customizeView } />
             </div>
