@@ -28,7 +28,7 @@ class BackgroundCell extends Component {
         const { _data : { days } } = moment.duration(end.diff(start));
 
         for(let i = 0; i <= days; i++) {
-            const pushDate = moment(start).add('days', i);
+            const pushDate = moment(start).add(i, 'days');
             slots.push(pushDate);
         }
 
@@ -141,7 +141,9 @@ BackgroundCell.propTypes = {
         id : PropTypes.number.isRequired,
         title : PropTypes.string.isRequired,
         start : PropTypes.instanceOf(Date).isRequired,
-        end : PropTypes.instanceOf(Date).isRequired
+        end : PropTypes.instanceOf(Date).isRequired,
+        color : PropTypes.string,
+        allDay : PropTypes.bool.isRequired
     })).isRequired,
     isMore : PropTypes.bool.isRequired,
     isSelecting : PropTypes.bool.isRequired,

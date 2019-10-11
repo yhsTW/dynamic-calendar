@@ -5,6 +5,7 @@ import EventRow from '../EventRow';
 import BackgroundRow from '../BackgroundRow';
 import moment from 'moment';
 import styles from './styles.css';
+import { VIEW_TYPE } from '../../variables';
 
 class Row extends Component {
     row = createRef();
@@ -114,14 +115,23 @@ class Row extends Component {
     // }
 
     componentDidMount = () => {
-        this.getRowLimit();
+        
 
-        window.addEventListener('resize', this.getRowLimit);
+        this.isMonth() && (
+            this.getRowLimit(),
+            window.addEventListener('resize', this.getRowLimit)
+        );
     }
 
     componentWillUnmount = () => {
-        window.removeEventListener('resize', this.getRowLimit);
+        this.isMonth() && window.removeEventListener('resize', this.getRowLimit);
     };
+
+    isMonth = () => {
+        const { currentView } = this.props;
+
+        return currentView === VIEW_TYPE.month;
+    }
     
     getRowLimit = () => {
         const rowHeight = this.row.current.clientHeight;
@@ -140,10 +150,10 @@ class Row extends Component {
 
     render() {
         const { 
-            today, itemArr, events, onSelectSlot, isSelecting, 
+            today, itemArr, events, onSelectSlot, isSelecting, currentView,
             stopSelecting, startSelecting, setSelectedStart, setSelectedEnd,
             selectedStart, selectedEnd, lastSelectedDate, setLastSelectedDate,
-            defaultSelectedDate, onSelectEvent, limit, openPopup,
+            defaultSelectedDate, onSelectEvent, limit, openPopup, useDateHeader,
             customizeRow : { BackgroundCell, More, holiday, today : customizeToday, weekdays, weekend, prevMonth, nextMonth }
         } = this.props;
 
@@ -159,7 +169,7 @@ class Row extends Component {
                 <div className={ styles.dateContent }>
                     <div className={ styles.rowHeader } ref={ this.header }>
                         { 
-                            itemArr.map(item => (
+                            useDateHeader && itemArr.map(item => (
                                 <DateSlot key={ `${ item.type }_${ item.date.date() }` } isToday={ today.isSame(item.date, 'date') } item={ item }
                                     customizeDateSlot={{ customizeToday, holiday, weekend, weekdays, prevMonth, nextMonth }} />
                             ))
@@ -168,11 +178,12 @@ class Row extends Component {
                     <div className="eventBox">
                         {  
                             events && sameEventRow.map((event, idx) => {
-                                if(limit === 0 || idx < limit) {
+                                if(currentView !== VIEW_TYPE.month || (limit === 0 || idx < limit)) {
                                     return (
                                         <EventRow ref={ this.eventRowParent } eventRowRef={ this.eventRow } key={ `event-row_${ idx }` } 
                                             events={ event } slotStart={ itemArr[0] } slotEnd={ itemArr[itemArr.length - 1] } 
-                                            onSelectEvent={ onSelectEvent } isSelecting={ isSelecting } startSelecting={ startSelecting } />
+                                            onSelectEvent={ onSelectEvent } isSelecting={ isSelecting } startSelecting={ startSelecting }
+                                            currentView={ currentView } />
                                     )
                                 } else {
                                     return null;
@@ -186,13 +197,20 @@ class Row extends Component {
     }
 }
 
+Row.defaultProps = {
+    useDateHeader : true,
+    openPopup : () => {}
+};
+
 Row.propTypes = {
     defaultSelectedDate : PropTypes.instanceOf(moment),
     events : PropTypes.arrayOf(PropTypes.shape({
         id : PropTypes.number.isRequired,
         title : PropTypes.string.isRequired,
         start : PropTypes.instanceOf(Date).isRequired,
-        end : PropTypes.instanceOf(Date).isRequired
+        end : PropTypes.instanceOf(Date).isRequired,
+        color : PropTypes.string,
+        allDay : PropTypes.bool.isRequired
     })),
     isSelecting : PropTypes.bool.isRequired,
     itemArr : PropTypes.arrayOf( PropTypes.shape({
@@ -200,15 +218,16 @@ Row.propTypes = {
         type : PropTypes.string.isRequired
     }).isRequired).isRequired,
     lastSelectedDate : PropTypes.instanceOf(moment),
-    limit : PropTypes.number.isRequired,
+    limit : PropTypes.number,
     selectedStart : PropTypes.instanceOf(moment),
     selectedEnd : PropTypes.instanceOf(moment),
     today : PropTypes.instanceOf(moment).isRequired,
+    useDateHeader : PropTypes.bool,
     onSelectEvent : PropTypes.func,
     onSelectSlot : PropTypes.func,
     openPopup : PropTypes.func,
-    setLastSelectedDate : PropTypes.func.isRequired,
-    setLimit : PropTypes.func.isRequired,
+    setLastSelectedDate : PropTypes.func,
+    setLimit : PropTypes.func,
     setSelectedStart : PropTypes.func.isRequired,
     setSelectedEnd : PropTypes.func.isRequired,
     startSelecting : PropTypes.func.isRequired,

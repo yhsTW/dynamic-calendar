@@ -1,4 +1,33 @@
 .time-header {
     display: flex;
-    flex: 0.3;
+    flex: 0.2;
+}
+
+.time-header-segment {
+    flex: 0.05;
+}
+
+.time-header-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.time-header-headers {
+    display: flex;
+    flex: 0.5;
+}
+
+.time-header-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.time-header-all-days {
+    display: flex;
+    flex: 1;
 }

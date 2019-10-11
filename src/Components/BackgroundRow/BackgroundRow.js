@@ -81,7 +81,9 @@ BackgroundRow.propTypes = {
         id : PropTypes.number.isRequired,
         title : PropTypes.string.isRequired,
         start : PropTypes.instanceOf(Date).isRequired,
-        end : PropTypes.instanceOf(Date).isRequired
+        end : PropTypes.instanceOf(Date).isRequired,
+        color : PropTypes.string,
+        allDay : PropTypes.bool.isRequired
     })),
     isSelecting : PropTypes.bool.isRequired,
     itemArr : PropTypes.arrayOf(PropTypes.shape({
@@ -89,7 +91,7 @@ BackgroundRow.propTypes = {
         type : PropTypes.string.isRequired
     })).isRequired,
     lastSelectedDate : PropTypes.instanceOf(moment),
-    limit : PropTypes.number.isRequired,
+    limit : PropTypes.number,
     selectedStart : PropTypes.instanceOf(moment),
     selectedEnd : PropTypes.instanceOf(moment),
     today : PropTypes.instanceOf(moment),

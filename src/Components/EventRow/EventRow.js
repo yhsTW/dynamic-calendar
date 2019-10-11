@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import EventBar from '../EventBar';
 import moment from 'moment';
-import { WEEK_NUM } from '../../variables';
+import { WEEK_NUM, VIEW_TYPE } from '../../variables';
 import styles from './styles.css';
 
-const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSelecting, startSelecting }) => {
+const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSelecting, startSelecting, currentView }) => {
     const getStartCondition = (event) => {
         const slotStartDate = moment(slotStart.date);
         const start = moment(event.start);
@@ -44,20 +44,24 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
         const end = moment(event.end);
         let width = 0;
 
-        // 당일 일정 or 일정의 주(week)가 같은 일정
-        if(start.isSame(end) || (getStartCondition(event) && getEndCondition(event))) {
-            width = end.day() - start.day() + 1;
-        } else {
-            width = WEEK_NUM;
-            
-            if(!getStartCondition(event) && getEndCondition(event)) {
-                width = end.day() + 1;
-            } else if(getStartCondition(event) && !getEndCondition(event)) {
-                width = WEEK_NUM - start.day();
+        if(currentView !== VIEW_TYPE.day) {
+            // 당일 일정 or 일정의 주(week)가 같은 일정
+            if(start.isSame(end) || (getStartCondition(event) && getEndCondition(event))) {
+                width = end.day() - start.day() + 1;
+            } else {
+                width = WEEK_NUM;
+                
+                if(!getStartCondition(event) && getEndCondition(event)) {
+                    width = end.day() + 1;
+                } else if(getStartCondition(event) && !getEndCondition(event)) {
+                    width = WEEK_NUM - start.day();
+                }
             }
+
+            return `calc(100% * ${ width }/${ WEEK_NUM })`;
+        } else {
+            return `100%`;
         }
-        
-        return `calc(100% * ${ width }/${ WEEK_NUM })`;
     };
     
     return (
@@ -65,7 +69,7 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
             {
                 events.map((event, idx) => (
                     <Fragment key={ event.id }>
-                        <div className="segment" style={{ width : getSegmentWidth(event, idx), flexBasis : getSegmentWidth(event, idx) }}></div>
+                        { currentView !== VIEW_TYPE.day && <div className="segment" style={{ width : getSegmentWidth(event, idx), flexBasis : getSegmentWidth(event, idx) }}></div> }
                         <EventBar event={ event } width={ getEventBarWidth(event) } isStart={ getStartCondition(event) } 
                             isEnd={ getEndCondition(event) } onSelectEvent={ onSelectEvent } isSelecting={ isSelecting }
                             startSelecting={ startSelecting } />
@@ -81,7 +85,9 @@ EventRow.propTypes = {
         id : PropTypes.number.isRequired,
         title : PropTypes.string.isRequired,
         start : PropTypes.instanceOf(Date).isRequired,
-        end : PropTypes.instanceOf(Date).isRequired
+        end : PropTypes.instanceOf(Date).isRequired,
+        color : PropTypes.string,
+        allDay : PropTypes.bool.isRequired
     })),
     isSelecting : PropTypes.bool.isRequired,
     slotStart : PropTypes.shape({

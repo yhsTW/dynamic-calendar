@@ -11,8 +11,6 @@ import styles from './styles.css';
 class Month extends Component {
     month = createRef();
     limit = 0;
-    lastSelectedDate = null;
-    defaultSelectedDate = null;
     popup = {
         top : 0,
         left : 0,
@@ -23,44 +21,9 @@ class Month extends Component {
     };
     
     state = {
-        isSelecting : false,
-        selectedStart : null,
-        selectedEnd : null,
         limit : this.limit,
         usePopup : false
     };
-
-    stopSelecting = () => {
-        this.setState({ isSelecting : false });
-        this.setDates(null);
-    };
-
-    startSelecting = date => {
-        const { isSelecting } = this.state;
-
-        if(!isSelecting) {
-            this.setState({ isSelecting : true });
-        }
-
-        if(date) {
-            this.setDates(date);
-        }
-    };
-
-    setDates = date => {
-        this.setSelectedStart(date);
-        this.setSelectedEnd(date);
-        this.setLastSelectedDate(date);
-        this.setDefaultSelectedDate(date);
-    };
-
-    setSelectedStart = selectedStart => this.setState({ selectedStart });
-
-    setSelectedEnd = selectedEnd => this.setState({ selectedEnd });
-
-    setLastSelectedDate = date => this.lastSelectedDate = date;
-
-    setDefaultSelectedDate = date => this.defaultSelectedDate = date;
 
     settingEvents = () => {
         const { events : pEvents, currentDate : pCurrentDate } = this.props;
@@ -101,26 +64,23 @@ class Month extends Component {
 
     render() {
         const events = this.settingEvents();
-        const { isSelecting, selectedStart, selectedEnd, limit, usePopup } = this.state;
+        const { limit, usePopup } = this.state;
         const { 
             currentDate, today, onSelectSlot, onSelectEvent, 
             customizeView : { 
                 BackgroundCell, More, Popup : customizePopup, holiday, today : customizeToday,
                 weekdays, weekend, prevMonth, nextMonth
-            }
+            }, select, currentView
         } = this.props;
         const dateArr = getDateArr(currentDate);
         
         return (
-            <div className={ styles.month } ref={ this.month } onMouseLeave={ this.stopSelecting }>
+            <div className={ styles.month } onMouseLeave={ this.stopSelecting }>
                 <MonthHeader customizeWeek={{ weekend }} />
                 {
                     dateArr.map((itemArr, idx) => (
                         <Row ref={ this.row } key={ idx + 1 } today={ today } itemArr={ itemArr } events={ events[idx] } onSelectSlot={ onSelectSlot }
-                            isSelecting={ isSelecting } stopSelecting={ this.stopSelecting } startSelecting={ this.startSelecting }
-                            setSelectedStart={ this.setSelectedStart } setSelectedEnd={ this.setSelectedEnd } selectedStart={ selectedStart }
-                            selectedEnd={ selectedEnd } lastSelectedDate={ this.lastSelectedDate } setLastSelectedDate={ this.setLastSelectedDate }
-                            defaultSelectedDate={ this.defaultSelectedDate } onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit }
+                            { ...select } onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit } currentView={ currentView }
                             openPopup={ this.openPopup } customizeRow={{ BackgroundCell, More, holiday, today : customizeToday, weekdays, weekend, prevMonth, nextMonth }} />
                     ))
                 }
@@ -144,7 +104,9 @@ Month.propTypes = {
                 id : PropTypes.number.isRequired,
                 title : PropTypes.string.isRequired,
                 start : PropTypes.instanceOf(Date).isRequired,
-                end : PropTypes.instanceOf(Date).isRequired
+                end : PropTypes.instanceOf(Date).isRequired,
+                color : PropTypes.string,
+                allDay : PropTypes.bool.isRequired
             }
         )
     )

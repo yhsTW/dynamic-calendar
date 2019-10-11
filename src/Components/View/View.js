@@ -1,26 +1,72 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Month from '../Month';
-import Week from '../Week';
-import Day from '../Day';
+import TimeGrid from '../TimeGrid';
 import moment from 'moment';
 import { VIEW_TYPE } from '../../variables';
 
-const View = ({ today, currentDate, currentView, events, onSelectSlot, onSelectEvent, customizeView }) => {
-    if(currentView === VIEW_TYPE.month) return (
-        <Month key={ currentDate } today={ today } currentDate={ currentDate } events={ events } onSelectSlot={ onSelectSlot }
-            onSelectEvent={ onSelectEvent } customizeView={ customizeView } />
-    );
+class View extends Component {
+    lastSelectedDate = null;
+    defaultSelectedDate = null;
 
-    else if(currentView === VIEW_TYPE.week) return (
-        <Week today={ today } currentDate={ currentDate } events={ events } onSelectSlot={ onSelectSlot } 
-            onSelectEvent={ onSelectEvent } />
-    );
-    
-    else if(currentView === VIEW_TYPE.day) return (
-        <Day today={ today } currentDate={ currentDate } events={ events } onSelectSlot={ onSelectSlot }
-            onSelectEvent={ onSelectEvent } />
-    );
+    state = {
+        isSelecting : false,
+        selectedStart : null,
+        selectedEnd : null
+    };
+
+    setSelectedStart = selectedStart => this.setState({ selectedStart });
+
+    setSelectedEnd = selectedEnd => this.setState({ selectedEnd });
+
+    setLastSelectedDate = date => this.lastSelectedDate = date;
+
+    setDefaultSelectedDate = date => this.defaultSelectedDate = date;
+
+    setDates = date => {
+        this.setSelectedStart(date);
+        this.setSelectedEnd(date);
+        this.setLastSelectedDate(date);
+        this.setDefaultSelectedDate(date);
+    };
+
+    stopSelecting = () => {
+        this.setState({ isSelecting : false });
+        this.setDates(null);
+    };
+
+    startSelecting = date => {
+        const { isSelecting } = this.state;
+
+        if(!isSelecting) {
+            this.setState({ isSelecting : true });
+        }
+
+        if(date) {
+            this.setDates(date);
+        }
+    };
+
+    render() {
+        const { isSelecting, selectedStart, selectedEnd } = this.state;
+        const { today, currentDate, currentView } = this.props;
+        const select = {
+            isSelecting, selectedStart, selectedEnd, 
+            setSelectedStart : this.setSelectedStart, setSelectedEnd : this.setSelectedEnd, 
+            setLastSelectedDate : this.setLastSelectedDate, setDefaultSelectedDate : this.setDefaultSelectedDate, 
+            stopSelecting : this.stopSelecting, startSelecting : this.startSelecting,
+            lastSelectedDate : this.lastSelectedDate, defaultSelectedDate : this.defaultSelectedDate
+        };
+        console.log('currentView : ', currentView)
+
+        if(currentView === VIEW_TYPE.month) return (
+            <Month key={ currentDate } { ...this.props } select={ select } />
+        );
+        
+        else if(currentView !== VIEW_TYPE.month) return (
+            <TimeGrid today={ today } { ...this.props } select={ select } />
+        );
+    }
 };
 
 View.propTypes = {
@@ -33,7 +79,9 @@ View.propTypes = {
                 id : PropTypes.number.isRequired,
                 title : PropTypes.string.isRequired,
                 start : PropTypes.instanceOf(Date).isRequired,
-                end : PropTypes.instanceOf(Date).isRequired
+                end : PropTypes.instanceOf(Date).isRequired,
+                color : PropTypes.string,
+                allDay : PropTypes.bool.isRequired
             }
         )
     ),
