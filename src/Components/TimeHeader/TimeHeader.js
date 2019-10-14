@@ -8,11 +8,17 @@ import styles from './styles.css';
 const TimeHeader = ({ today, weekArr, currentView, customizeTimeHeader, select, onSelectSlot, events, onSelectEvent }) => {
     const getAllDayEvents = (start, end) => {
         return events.filter(event => 
-            (moment(event.start).isBetween(start, end, null, '[]') || moment(event.end).isBetween(start, end, null, '[]')) && event.allDay && event
+            (moment(event.start).isBetween(start, end, null, '[]') || 
+            moment(event.end).isBetween(start, end, null, '[]')) && 
+            event.allDay && 
+            event
         );
     };
 
-    const allDayEvents = getAllDayEvents(moment(weekArr[0].date).set({ hour : 0, minute : 0, second : 0 }), moment(weekArr[weekArr.length - 1].date).set({ hour : 23, minute : 59, second : 59 }));
+    const allDayEvents = getAllDayEvents(
+        moment(weekArr[0].date).set({ hour : 0, minute : 0, second : 0 }), 
+        moment(weekArr[weekArr.length - 1].date).set({ hour : 23, minute : 59, second : 59 })
+    );
     
     return (
         <div className={ styles.timeHeader }>
