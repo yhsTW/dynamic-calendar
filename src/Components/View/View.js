@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Month from '../Month';
 import TimeGrid from '../TimeGrid';
@@ -6,15 +6,14 @@ import moment from 'moment';
 import { VIEW_TYPE } from '../../variables';
 
 const View = props => {
-    if(props.currentView === VIEW_TYPE.month) {
+    if(props.currentView === VIEW_TYPE.month) 
         return (
             <Month { ...props } />
         );
-    } else {
+    else 
         return (
             <TimeGrid { ...props } />
         );
-    }
 };
 
 View.propTypes = {

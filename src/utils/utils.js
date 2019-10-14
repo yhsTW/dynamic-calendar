@@ -6,7 +6,7 @@ export const orderComponents = (order, components) => order.map(type => componen
 const getConditions = ({ styleObj, item, isToday, property }) => {
     return [
         // 오늘인지 확인
-        { condition : isToday, useStyle : styleObj.customizeToday[property] },
+        // { condition : isToday, useStyle : styleObj.customizeToday[property] },
         { condition : item.date.day() !== 0 && item.date.day() !== 6, useStyle : styleObj.weekdays[property] },
         { condition : item.date.day() === 0, useStyle : styleObj.weekend[property].sundayStyle },
         { condition : item.date.day() === 6, useStyle : styleObj.weekend[property].saturdayStyle },

@@ -1,3 +1,14 @@
 .time-content { 
     flex: 1;
+    display: flex;
+    overflow-y: auto;
+}
+
+.time-content-header {
+    flex: 0.05;
+}
+
+.time-contents {
+    flex: 1;
+    display: flex;
 }

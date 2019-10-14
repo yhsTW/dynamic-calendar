@@ -144,7 +144,7 @@ BackgroundCell.propTypes = {
         end : PropTypes.instanceOf(Date).isRequired,
         color : PropTypes.string,
         allDay : PropTypes.bool.isRequired
-    })).isRequired,
+    })),
     isMore : PropTypes.bool.isRequired,
     isSelecting : PropTypes.bool.isRequired,
     isToday : PropTypes.bool.isRequired,

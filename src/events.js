@@ -222,5 +222,19 @@ export const events = [
 		start : new Date('2019-10-11'),
 		end : new Date('2019-10-20'),
 		allDay : true
+	},
+	{
+		id : 32,
+		title : '종일 일정5',
+		start : new Date('2019-10-14'),
+		end : new Date('2019-10-14'),
+		allDay : true
+	},
+	{
+		id : 33,
+		title : '당일 일정6',
+		start : new Date('2019-10-15 14:00'),
+		end : new Date('2019-10-15 14:00'),
+		allDay : false
 	}
 ];

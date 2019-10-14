@@ -12,11 +12,8 @@ class Selection extends Component {
     };
 
     setSelectedStart = selectedStart => this.setState({ selectedStart });
-
     setSelectedEnd = selectedEnd => this.setState({ selectedEnd });
-
     setLastSelectedDate = date => this.lastSelectedDate = date;
-
     setDefaultSelectedDate = date => this.defaultSelectedDate = date;
 
     setDates = date => {
@@ -34,13 +31,8 @@ class Selection extends Component {
     startSelecting = date => {
         const { isSelecting } = this.state;
 
-        if(!isSelecting) {
-            this.setState({ isSelecting : true });
-        }
-
-        if(date) {
-            this.setDates(date);
-        }
+        if(!isSelecting) this.setState({ isSelecting : true });
+        if(date) this.setDates(date);
     };
 
     render() {
