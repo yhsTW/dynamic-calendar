@@ -1,12 +1,11 @@
 import React from 'react';
 import Label from '../Label';
-import Row from '../Row';
 import { MONTH_HEADER_DATA } from '../../variables';
 import moment from 'moment';
 import styles from './styles.css';
-import withSelection from '../../hoc/withSelection';
+import TimeAllDay from '../TimeAllDay/TimeAllDay';
 
-const TimeHeader = ({ today, weekArr, currentView, customizeTimeHeader, select, onSelectSlot, events, onSelectEvent }) => {
+const TimeHeader = ({ today, weekArr, currentView, customizeTimeHeader, onSelectSlot, events, onSelectEvent }) => {
     const getAllDayEvents = (start, end) => {
         return events.filter(event => 
             (moment(event.start).isBetween(start, end, null, '[]') || 
@@ -36,13 +35,11 @@ const TimeHeader = ({ today, weekArr, currentView, customizeTimeHeader, select, 
                         )
                     }
                 </div>
-                <div className={ styles.timeHeaderAllDays }>
-                    <Row today={ today } itemArr={ weekArr } { ...select } customizeRow={ customizeTimeHeader } useDateHeader={ false }
-                        onSelectSlot={ onSelectSlot } events={ allDayEvents } currentView={ currentView } onSelectEvent={ onSelectEvent } />
-                </div>
+                <TimeAllDay today={ today } itemArr={ weekArr } customizeRow={ customizeTimeHeader } useDateHeader={ false }
+                    onSelectSlot={ onSelectSlot } events={ allDayEvents } currentView={ currentView } onSelectEvent={ onSelectEvent } />
             </div>
         </div>
     );
 };
 
-export default withSelection(TimeHeader);
+export default TimeHeader;

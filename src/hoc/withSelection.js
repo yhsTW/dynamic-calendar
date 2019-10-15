@@ -11,6 +11,14 @@ const withSelection = WrappedComponent => {
             selectedStart : null,
             selectedEnd : null
         };
+
+        componentDidMount = () => {
+            document.addEventListener('mouseleave', this.stopSelecting);
+        };
+
+        componentWillUnmount = () => {
+            document.removeEventListener('mouseleave', this.stopSelecting);
+        };
     
         setSelectedStart = selectedStart => this.setState({ selectedStart });
         setSelectedEnd = selectedEnd => this.setState({ selectedEnd });
@@ -25,6 +33,7 @@ const withSelection = WrappedComponent => {
         };
     
         stopSelecting = () => {
+            console.log('stopSelecting')
             this.setState({ isSelecting : false });
             this.setDates(null);
         };
