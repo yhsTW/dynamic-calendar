@@ -2,8 +2,9 @@ import React, { Fragment } from 'react';
 import Label from '../Label';
 import BackgroundCell from '../BackgroundCell';
 import styles from './styles.css';
+import moment from 'moment';
 
-const TimeSlot = ({ items, week, customizeTimeSlot, select, onSelectSlot, onSelectEvent }) => (
+const TimeSlot = ({ items, week, customizeTimeSlot, select, onSelectSlot, onSelectEvent, currentView }) => (
     <div className={ styles.timeSlot }>
         { 
             !week && (
@@ -18,12 +19,18 @@ const TimeSlot = ({ items, week, customizeTimeSlot, select, onSelectSlot, onSele
             week && (
                 <Fragment>
                     { 
-                        items.map(item => (
-                            <BackgroundCell key={ `${ item.date }_${ item.type }` } isMore={ false } isToday={ false } 
-                                item={ item } more={ 0 } openPopup={ () => {} } 
-                                customizeBackgroundCell={ customizeTimeSlot } { ...select } onSelectSlot={ onSelectSlot }
-                                onSelectEvent={ onSelectEvent } />
-                        ))
+                        items.map(item => {
+                            const newDate = moment(week.date).set({ hour : item.date.hour(), minute : item.date.minute(), second : item.date.second() });
+
+                            return (
+                                (
+                                    <BackgroundCell key={ `${ newDate }_${ item.type }` } isMore={ false } isToday={ false } 
+                                        item={{ ...item, date : newDate }} more={ 0 } openPopup={ () => {} } { ...select }
+                                        customizeBackgroundCell={ customizeTimeSlot } onSelectSlot={ onSelectSlot }
+                                        onSelectEvent={ onSelectEvent } currentView={ currentView } />
+                                )
+                            )
+                        })
                     }
                 </Fragment>
             )

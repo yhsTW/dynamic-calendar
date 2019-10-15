@@ -1,12 +1,11 @@
 import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import MonthHeader from '../MonthHeader';
-import Row from '../Row';
-import { getDateArr } from '../../utils/monthDate';
 import { classification } from '../../utils/classification';
 import moment from 'moment';
 import Popup from '../Popup/Popup';
 import styles from './styles.css';
+import MonthContent from '../MonthContent';
 
 class Month extends Component {
     month = createRef();
@@ -70,20 +69,15 @@ class Month extends Component {
             customizeView : { 
                 BackgroundCell, More, Popup : customizePopup, holiday, today : customizeToday,
                 weekdays, weekend, prevMonth, nextMonth
-            }, select, currentView
+            }, currentView
         } = this.props;
-        const dateArr = getDateArr(currentDate);
         
         return (
             <div className={ styles.month } onMouseLeave={ this.stopSelecting }>
                 <MonthHeader customizeWeek={{ weekend }} />
-                {
-                    dateArr.map((itemArr, idx) => (
-                        <Row ref={ this.row } key={ idx + 1 } today={ today } itemArr={ itemArr } events={ events[idx] } onSelectSlot={ onSelectSlot }
-                            { ...select } onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit } currentView={ currentView }
-                            openPopup={ this.openPopup } customizeRow={{ BackgroundCell, More, holiday, today : customizeToday, weekdays, weekend, prevMonth, nextMonth }} />
-                    ))
-                }
+                <MonthContent today={ today } events={ events } onSelectSlot={ onSelectSlot } currentDate={ currentDate }
+                    onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit } currentView={ currentView }
+                    openPopup={ this.openPopup } customizeRow={{ BackgroundCell, More, holiday, today : customizeToday, weekdays, weekend, prevMonth, nextMonth }} />
                 {
                     usePopup && (
                         <Popup popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent }

@@ -3,7 +3,7 @@ import styles from './styles.css';
 import TimeColumn from '../TimeColumn';
 import getTimeArr from '../../utils/getTimeArr';
 
-const TimeContent = ({ today, weekArr, currentView, customizeTimeContent, select, onSelectSlot, events, onSelectEvent }) => {
+const TimeContent = ({ today, weekArr, currentView, customizeTimeContent, onSelectSlot, events, onSelectEvent }) => {
 
     const timeArr = getTimeArr();
     
@@ -16,10 +16,10 @@ const TimeContent = ({ today, weekArr, currentView, customizeTimeContent, select
                 { 
                     weekArr.map(week => (
                             <TimeColumn key={ `${ week.date }_${ week.type }` } itemArr={ timeArr } week={ week } 
-                                customizeTimeColumn={ customizeTimeContent } select={ select } onSelectSlot={ onSelectSlot }
-                                onSelectEvent={ onSelectEvent } />
+                                customizeTimeColumn={ customizeTimeContent }  onSelectSlot={ onSelectSlot }
+                                onSelectEvent={ onSelectEvent } currentView={ currentView } />
                         )
-                    ) 
+                    )
                 }
             </div>
         </div>

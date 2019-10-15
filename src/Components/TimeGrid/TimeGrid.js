@@ -5,7 +5,7 @@ import moment from 'moment';
 import { MONTH_TYPE, WEEK_NUM, VIEW_TYPE } from '../../variables';
 import styles from './styles.css';
 
-const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, customizeView, select, currentView }) => {
+const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, customizeView, currentView }) => {
     const getSunday = () => {
         const currentDay = currentDate.day();
 
@@ -44,10 +44,10 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cus
     return (
         <div className={ styles.week }>
             <TimeHeader today={ today } currentView={ currentView } weekArr={ weekArr }
-                customizeTimeHeader={customizeView} select={ select } onSelectSlot={ onSelectSlot }
+                customizeTimeHeader={customizeView} onSelectSlot={ onSelectSlot }
                 events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent } />
             <TimeContent today={ today } currentDate={ currentDate } currentView={ currentView } 
-                customizeTimeContent={customizeView} select={ select } onSelectSlot={ onSelectSlot }
+                customizeTimeContent={customizeView} onSelectSlot={ onSelectSlot }
                 events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
                 weekArr={ weekArr } />
         </div>

@@ -4,6 +4,7 @@ import Row from '../Row';
 import { MONTH_HEADER_DATA } from '../../variables';
 import moment from 'moment';
 import styles from './styles.css';
+import withSelection from '../../hoc/withSelection';
 
 const TimeHeader = ({ today, weekArr, currentView, customizeTimeHeader, select, onSelectSlot, events, onSelectEvent }) => {
     const getAllDayEvents = (start, end) => {
@@ -44,4 +45,4 @@ const TimeHeader = ({ today, weekArr, currentView, customizeTimeHeader, select, 
     );
 };
 
-export default TimeHeader;
+export default withSelection(TimeHeader);

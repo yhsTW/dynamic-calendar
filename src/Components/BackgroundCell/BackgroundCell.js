@@ -4,6 +4,8 @@ import styles from './styles.css';
 import moment from 'moment';
 import More from '../More';
 import { getStyle } from '../../utils/utils';
+import { VIEW_TYPE, AM_PM } from '../../variables';
+import Label from '../Label';
 
 const BACKGROUND_CELL_STYLE = 'backgroundCellStyle';
 
@@ -121,14 +123,34 @@ class BackgroundCell extends Component {
         return style;
     };
 
+    currentSelectTime = () => {
+        let selectTime = '';
+        const { selectedStart, selectedEnd } = this.props;
+
+        const start = this.makeTime(selectedStart);
+        const end = this.makeTime(selectedEnd);
+
+        selectTime = `${ start } - ${ end }`;
+
+        return selectTime;
+    };
+
+    makeTime = date => {
+        const hour = date.hour();
+        const min = date.minute();
+
+        return `${ hour > 12 ? 24 - hour : (hour === 0 ? 12 : hour) }:${ min.toString().length < 2 ? `0${ min }` : min } ${ hour > 12 ? AM_PM.pm : AM_PM.am }`;
+    };
+
     render() {
-        const { isMore, more, customizeBackgroundCell : { More : customizeMore } } = this.props;
+        const { isMore, more, currentView, selectedStart, item : { date }, customizeBackgroundCell : { More : customizeMore } } = this.props;
         const isSelected = this.checkSelected();
         const backgroundCellStyle = this.getBackgroundCellStyle(isSelected);
-
+        
         return (
             <div ref={ this.cell } className={ styles.backgroundCell } onMouseDown={ this.selectStart } onMouseUp={ this.selectEnd }
                 onMouseEnter={ this.selecting } style={ backgroundCellStyle }>
+                { (currentView !== VIEW_TYPE.month && selectedStart && isSelected && selectedStart.isSame(date)) && <Label text={ this.currentSelectTime() } /> }
                 { isMore && <More more={ more } openPopup={ this.openPopup } customizeMore={ customizeMore } /> }
             </div>
         );

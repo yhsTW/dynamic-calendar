@@ -115,8 +115,6 @@ class Row extends Component {
     // }
 
     componentDidMount = () => {
-        
-
         this.isMonth() && (
             this.getRowLimit(),
             window.addEventListener('resize', this.getRowLimit)
@@ -165,7 +163,9 @@ class Row extends Component {
                     stopSelecting={ stopSelecting } startSelecting={ startSelecting } setSelectedStart={ setSelectedStart }
                     setSelectedEnd={ setSelectedEnd } selectedStart={ selectedStart } selectedEnd={ selectedEnd }
                     lastSelectedDate={ lastSelectedDate } setLastSelectedDate={ setLastSelectedDate } defaultSelectedDate={ defaultSelectedDate }
-                    limit={ limit } events={ events } openPopup={ openPopup } today={ today } customizeBackgroundRow={{ BackgroundCell, More, customizeToday, weekdays, holiday, weekend, prevMonth, nextMonth }} />
+                    limit={ limit } events={ events } openPopup={ openPopup } today={ today } 
+                    customizeBackgroundRow={{ BackgroundCell, More, customizeToday, weekdays, holiday, weekend, prevMonth, nextMonth }}
+                    currentView={ currentView } />
                 <div className={ styles.dateContent }>
                     <div className={ styles.rowHeader } ref={ this.header }>
                         { 

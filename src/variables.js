@@ -29,6 +29,10 @@ const CURRENT_MONTH = 'current';
 const PREV_MONTH = 'prev';
 const NEXT_MONTH = 'next';
 
+// AM, PM
+const AM = 'AM';
+const PM = 'PM';
+
 export const WEEK_NUM = 7
 
 export const VIEW_TYPE = {
@@ -62,4 +66,9 @@ export const MONTH_TYPE = {
     current : CURRENT_MONTH,
     prev : PREV_MONTH,
     next : NEXT_MONTH
+};
+
+export const AM_PM = {
+    am : AM,
+    pm : PM
 };
