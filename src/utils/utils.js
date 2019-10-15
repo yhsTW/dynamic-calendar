@@ -1,4 +1,4 @@
-import { MONTH_TYPE } from "../variables";
+import { MONTH_TYPE, AM_PM } from "../variables";
 
 // 컴포넌트를 정렬한다.
 export const orderComponents = (order, components) => order.map(type => components[type]);
@@ -29,4 +29,15 @@ export const getStyle = ({ styleObj, item, isToday, property }) => {
     }
 
     return style;
+};
+
+export const makeTimeFormat = date => {
+    const hour = date.hour();
+    const min = date.minute();
+
+    return `
+        ${ hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour) }:
+        ${ min.toString().length < 2 ? `0${ min }` : min } 
+        ${ hour > 12 ? AM_PM.pm : AM_PM.am }
+    `;
 };

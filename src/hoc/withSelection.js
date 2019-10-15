@@ -33,7 +33,6 @@ const withSelection = WrappedComponent => {
         };
     
         stopSelecting = () => {
-            console.log('stopSelecting')
             this.setState({ isSelecting : false });
             this.setDates(null);
         };
@@ -55,7 +54,7 @@ const withSelection = WrappedComponent => {
                 lastSelectedDate : this.lastSelectedDate, defaultSelectedDate : this.defaultSelectedDate
             };
     
-            return <WrappedComponent ref={ this.wrappedComponent } { ...this.props } select={ select } />
+            return <WrappedComponent { ...this.props } select={ select } />
         };
     };
 };
