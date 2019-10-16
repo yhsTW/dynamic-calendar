@@ -36,8 +36,7 @@ export const makeTimeFormat = date => {
     const min = date.minute();
 
     return `
-        ${ hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour) }:
-        ${ min.toString().length < 2 ? `0${ min }` : min } 
+        ${ hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour) }:${ min.toString().length < 2 ? `0${ min }` : min }
         ${ hour > 12 ? AM_PM.pm : AM_PM.am }
     `;
 };

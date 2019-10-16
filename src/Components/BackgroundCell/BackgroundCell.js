@@ -52,7 +52,6 @@ class BackgroundCell extends Component {
     };
 
     selectStart = () => {
-        console.log('select start')
         const { startSelecting, item : { date } } = this.props;
         
         startSelecting(date);
