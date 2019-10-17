@@ -17,3 +17,11 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+
+.time-event-bar {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+}

@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import MonthHeader from '../MonthHeader';
-import { classification } from '../../utils/classification';
+// import { classification } from '../../utils/classification';
 import moment from 'moment';
 import Popup from '../Popup/Popup';
 import styles from './styles.css';
@@ -24,12 +24,12 @@ class Month extends Component {
         usePopup : false
     };
 
-    settingEvents = () => {
-        const { events : pEvents, currentDate : pCurrentDate } = this.props;
-        const classificationEvents = classification(pEvents, pCurrentDate);
+    // settingEvents = () => {
+    //     const { events : pEvents, currentDate : pCurrentDate } = this.props;
+    //     const classificationEvents = classification(pEvents, pCurrentDate);
         
-        return classificationEvents;
-    };
+    //     return classificationEvents;
+    // };
 
     setLimit = limit => {
         if(this.limit !== limit) {
@@ -62,14 +62,14 @@ class Month extends Component {
     };
 
     render() {
-        const events = this.settingEvents();
+        // const events = this.settingEvents();
         const { limit, usePopup } = this.state;
         const { 
             currentDate, today, onSelectSlot, onSelectEvent, 
             customizeView : { 
                 BackgroundCell, More, Popup : customizePopup, holiday, today : customizeToday,
                 weekdays, weekend, prevMonth, nextMonth
-            }, currentView
+            }, currentView, events
         } = this.props;
         
         return (

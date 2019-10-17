@@ -27,7 +27,7 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cus
         }
     };
 
-    const getWeek = () => {
+    const getWeekArr = () => {
         let weekArr = [];
 
         if(currentView === VIEW_TYPE.week) {
@@ -39,16 +39,41 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cus
         return weekArr;
     };
 
-    const weekArr = getWeek();
+    const getWeek = () => {
+        const firstWeek = moment(currentDate).startOf('month').week();
+        const currentWeek = moment(currentDate).month() === 11 && moment(currentDate).week() === 1 ?(
+                                moment(currentDate).weeksInYear() + moment(currentDate).endOf('month').week()
+                            ) : moment(currentDate).week();
+        
+        return currentWeek - firstWeek;
+    };
+
+    const getWeekEvents = () => {
+        return events[getWeek()];
+    };
+
+    const getAllDayEvents = () => {
+        const weekEvents = getWeekEvents();
+
+        return weekEvents ? weekEvents.filter(event => event.allDay && event) : [];
+    };
+
+    const getNotAllDayEvents = () => {
+        const weekEvents = getWeekEvents();
+
+        return weekEvents ? weekEvents.filter(event => !event.allDay && event) : [];
+    };
+
+    const weekArr = getWeekArr();
     
     return (
         <div className={ styles.week }>
             <TimeHeader today={ today } currentView={ currentView } weekArr={ weekArr }
                 customizeTimeHeader={customizeView} onSelectSlot={ onSelectSlot }
-                events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent } />
+                events={ getAllDayEvents() } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent } />
             <TimeContent today={ today } currentDate={ currentDate } currentView={ currentView } 
                 customizeTimeContent={customizeView} onSelectSlot={ onSelectSlot }
-                events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
+                events={ getNotAllDayEvents() } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
                 weekArr={ weekArr } />
         </div>
     );

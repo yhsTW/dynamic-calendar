@@ -233,8 +233,43 @@ export const events = [
 	{
 		id : 33,
 		title : '당일 일정6',
+		start : new Date('2019-10-18 13:00'),
+		end : new Date('2019-10-18 16:00'),
+		allDay : false
+	},
+	{
+		id : 34,
+		title : '당일 일정7',
 		start : new Date('2019-10-15 14:00'),
-		end : new Date('2019-10-15 14:00'),
+		end : new Date('2019-10-15 14:30'),
+		allDay : false
+	},
+	{
+		id : 35,
+		title : '당일 일정8',
+		start : new Date('2019-10-13 8:00'),
+		end : new Date('2019-10-13 18:30'),
+		allDay : false
+	},
+	{
+		id : 36,
+		title : '당일 일정9',
+		start : new Date('2019-10-14 10:00'),
+		end : new Date('2019-10-14 12:00'),
+		allDay : false
+	},
+	{
+		id : 37,
+		title : '당일 일정10',
+		start : new Date('2019-10-16 3:00'),
+		end : new Date('2019-10-16 6:00'),
+		allDay : false
+	},
+	{
+		id : 38,
+		title : '당일 일정11',
+		start : new Date('2019-10-13 12:00'),
+		end : new Date('2019-10-16 14:00'),
 		allDay : false
 	}
 ];

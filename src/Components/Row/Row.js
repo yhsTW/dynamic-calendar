@@ -6,6 +6,7 @@ import BackgroundRow from '../BackgroundRow';
 import moment from 'moment';
 import styles from './styles.css';
 import { VIEW_TYPE } from '../../variables';
+import sortEventsUtil from '../../utils/sortEvents';
 
 class Row extends Component {
     row = createRef();
@@ -13,38 +14,9 @@ class Row extends Component {
     eventRowParent = createRef();
     eventRow = createRef();
 
-    sortEvents = () => {
-        const { events } = this.props;
-
-        if(!events) return [];
-
-        const sortEvents = events.sort((a, b) => {
-            const mAStart = moment(a.start);
-            const mAEnd = moment(a.end);
-            const mBStart = moment(b.start);
-            const mBEnd = moment(b.end);
-
-            if(mAStart < mBStart && mAEnd - mAStart > mBEnd - mBStart) {
-                return -4;
-            }
-            
-            if(mAStart < mBStart) {
-                return -3;
-            }
-            
-            // 시작 일정이 같은 날일 때, 일정의 길이가 긴 것이 우선순위
-            if(mAStart.isSame(mBStart) && mAEnd - mAStart > mBEnd - mBStart) {
-                return -1;
-            }
-
-            return 1;
-        });
-
-        return sortEvents;
-    };
-
     sameEventRow = () => {
-        const sortEvents = this.sortEvents();
+        const { events } = this.props;
+        const sortEvents = sortEventsUtil(events);
         let newEvents = [];
 
         if(sortEvents.length > 1) {
@@ -164,8 +136,7 @@ class Row extends Component {
                     setSelectedEnd={ setSelectedEnd } selectedStart={ selectedStart } selectedEnd={ selectedEnd }
                     lastSelectedDate={ lastSelectedDate } setLastSelectedDate={ setLastSelectedDate } defaultSelectedDate={ defaultSelectedDate }
                     limit={ limit } events={ events } openPopup={ openPopup } today={ today } 
-                    customizeBackgroundRow={{ BackgroundCell, More, customizeToday, weekdays, holiday, weekend, prevMonth, nextMonth }}
-                    currentView={ currentView } />
+                    customizeBackgroundRow={{ BackgroundCell, More, customizeToday, weekdays, holiday, weekend, prevMonth, nextMonth }} />
                 <div className={ styles.dateContent }>
                     <div className={ styles.rowHeader } ref={ this.header }>
                         { 

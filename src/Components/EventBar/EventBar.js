@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Label from '../Label';
 import styles from './styles.css';
 
 class EventBar extends Component {
@@ -30,16 +31,33 @@ class EventBar extends Component {
     };
 
     render() {
-        const { isStart, isEnd, width, isSelecting, event : { title, color } } = this.props;
+        const { 
+            isStart, isEnd, width, isSelecting,
+            event : { title, color }, height, top,
+            useTime, time
+        } = this.props;
         
         return (
-            <div className={ `${ styles.eventBar } ${ isStart ? styles.start : '' } ${ isEnd ? styles.end : '' }` } 
-                style={{ width, flexBasis : width, pointerEvents : isSelecting ? 'none' : 'auto', backgroundColor : color ? color : '' }}
+            <div className={ `${ styles.eventBar } ${ isStart ? styles.start : '' } ${ isEnd ? styles.end : '' } ${ top ? styles.timeEventBar : '' }` } 
+                style={{ 
+                    width, flexBasis : width, 
+                    pointerEvents : isSelecting ? 'none' : 'auto', 
+                    backgroundColor : color ? color : '',
+                    height,
+                    top
+                }}
                 onClick={ this.onClickEvent } onMouseDown={ this.mouseDown } onMouseMove={ this.moveMouse }>
-                <span>{ title }</span>
+                
+                {/* <span>{ title }</span> */}
+                { useTime && <Label text={ time } /> }
+                <Label text={ title } />
             </div>
         );
     };
+};
+
+EventBar.defaultProps = {
+    useTime : false
 };
 
 EventBar.propTypes = {
