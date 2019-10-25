@@ -475,11 +475,11 @@ export const events = [
 		end : new Date('2019-10-25 17:00'),
 		allDay : false
 	},
-	{
-		id : 67,
-		title : '11',
-		start : new Date('2019-10-25 17:00'),
-		end : new Date('2019-10-25 18:00'),
-		allDay : false
-	},
+	// {
+	// 	id : 67,
+	// 	title : '11',
+	// 	start : new Date('2019-10-25 17:00'),
+	// 	end : new Date('2019-10-25 18:00'),
+	// 	allDay : false
+	// },
 ];

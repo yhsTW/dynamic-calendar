@@ -32,12 +32,11 @@ const TimeContent = ({ currentDate, today, weekArr, currentView, customizeTimeCo
             </div>
             <div className={ styles.timeContents }>
                 { 
-                    weekArr.map((week, idx) => (
-                            <TimeColumn key={ `${ week.date }_${ week.type }` } itemArr={ timeArr } week={ week } 
-                                customizeTimeColumn={ customizeTimeContent }  onSelectSlot={ onSelectSlot }
-                                onSelectEvent={ onSelectEvent } currentView={ currentView } events={ newEvents[idx] } />
-                        )
-                    )
+                    weekArr.map(week => (
+                        <TimeColumn key={ `${ week.date }_${ week.type }` } itemArr={ timeArr } week={ week } 
+                            customizeTimeColumn={ customizeTimeContent }  onSelectSlot={ onSelectSlot }
+                            onSelectEvent={ onSelectEvent } currentView={ currentView } events={ newEvents[week.date.day()] } />
+                    ))
                 }
             </div>
         </div>

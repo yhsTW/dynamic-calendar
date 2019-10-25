@@ -67,7 +67,6 @@ const TimeColumn = ({ itemArr, week, customizeTimeColumn, select, onSelectSlot, 
         };
     };
 
-    // const getStyle = (length, eventLevel, last) => {
     const getStyle = (event, group) => {
         const { level, row } = getEventLevel(event, group);
         let width = 100,
