@@ -44,28 +44,41 @@ const TimeColumn = ({ itemArr, week, customizeTimeColumn, select, onSelectSlot, 
         });
     };
 
-    const isBetween = (date, rangeDate) => {
-        return moment(date).isBetween(rangeDate.start, rangeDate.end, null, '[)');
+    const isBetween = (date, rangeDate, inclusivity = '[)') => {
+        return moment(date).isBetween(rangeDate.start, rangeDate.end, null, inclusivity);
     };
 
     const getEventLevel = (event, group) => {
-        let eventLevel = 1;
-
-        const filterEvents = group.filter(current => (
-            isBetween(event.start, current) || isBetween(event.end, current)
+        const prevEvents = group.filter(current => (
+            isBetween(event.start, current) || isBetween(event.end, current, '()')
         ) && current);
 
-        return eventLevel + filterEvents.length;
+        const nextEvents = group.filter(current => (
+            current.id !== event.id &&
+            (isBetween(current.start, event, '()'))
+        ) && current);
+
+        const filterEvents = [...prevEvents, ...nextEvents];
+        const findIndex = filterEvents.findIndex(find => find.id === event.id);
+
+        return {
+            level : findIndex + 1,
+            row : [...prevEvents, ...nextEvents]
+        };
     };
 
-    const getStyle = (length, eventLevel, last) => {
-
+    // const getStyle = (length, eventLevel, last) => {
+    const getStyle = (event, group) => {
+        const { level, row } = getEventLevel(event, group);
         let width = 100,
             left = 0;
             
-        if(!last && length > 1) width = (width / length) * 1.7;
-        if(eventLevel > 1) left = `calc((100% / ${ length }) * ${ eventLevel - 1 })`;
-        if(length > 1 && last) width = `calc(${ width }% - ${ left })`;
+        if(level > 0) left = `calc((100% / ${ group.length }) * ${ level - 1 })`;
+        if(event.id === row[row.length - 1].id) {
+            width = `calc(${ width }% - ${ left })`;
+        } else {
+            width = (width / group.length) * 1.7;
+        }
 
         return {
             width : width.toString().includes('calc') ? width : `${ width }%`,
@@ -82,11 +95,8 @@ const TimeColumn = ({ itemArr, week, customizeTimeColumn, select, onSelectSlot, 
 
             for(let j = 0; j < currentGroup.length; j++) {
                 const currentEvent = currentGroup[j];
-                const last = currentGroup.length - 1 === j;
 
-                if(j > 0) currentLevel = getEventLevel(currentEvent, currentGroup.slice(0, j));
-
-                const style = getStyle(currentGroup.length, currentLevel, last);
+                const style = getStyle(currentEvent, currentGroup);
                 let newEvent = {
                     ...currentEvent,
                     style
