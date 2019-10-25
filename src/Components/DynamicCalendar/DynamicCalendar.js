@@ -181,8 +181,12 @@ DynamicCalendar.defaultProps = {
             }
         }
     },
-    onSelectSlot : () => {},
-    onSelectEvent : () => {}
+    // onSelectSlot : () => {},
+    // onSelectEvent : () => {}
+    ///////////////////// 테스트용 /////////////////////
+    onSelectSlot : (data) => console.log('onSelectSlot data : ', data),
+    onSelectEvent : (event) => console.log('onSelectEvent event : ', event)
+    ///////////////////// 테스트용 /////////////////////
 };
 
 DynamicCalendar.propTypes = {

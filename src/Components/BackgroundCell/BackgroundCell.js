@@ -4,7 +4,6 @@ import styles from './styles.css';
 import moment from 'moment';
 import More from '../More';
 import { getStyle, makeTimeFormat } from '../../utils/utils';
-import { VIEW_TYPE } from '../../variables';
 import Label from '../Label';
 
 const BACKGROUND_CELL_STYLE = 'backgroundCellStyle';
@@ -38,13 +37,15 @@ class BackgroundCell extends Component {
     };
 
     selectEnd = () => {
-        const { stopSelecting, onSelectSlot, selectedStart : start, selectedEnd : end } = this.props;
+        const { stopSelecting, onSelectSlot, selectedStart : start, selectedEnd : end, useTime } = this.props;
 
         stopSelecting();
 
         if(start) {
-            this.resetTime(start);
-            this.resetTime(end);
+            if(!useTime) {
+                this.resetTime(start);
+                this.resetTime(end);
+            }
             const slots = this.makeSlots(start, end);
     
             onSelectSlot({ slots, start, end });

@@ -33,8 +33,12 @@ const withSelection = WrappedComponent => {
         };
     
         stopSelecting = () => {
-            this.setState({ isSelecting : false });
-            this.setDates(null);
+            const { isSelecting } = this.state;
+
+            if(isSelecting) {
+                this.setState({ isSelecting : false });
+                this.setDates(null);
+            }
         };
     
         startSelecting = date => {

@@ -61,7 +61,7 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cus
     const getNotAllDayEvents = () => {
         const weekEvents = getWeekEvents();
 
-        return weekEvents ? weekEvents.filter(event => !event.allDay && event) : [];
+        return weekEvents ? weekEvents.filter(event => !event.allDay && moment(event.start).isSame(event.end, 'date') && event) : [];
     };
 
     const weekArr = getWeekArr();
