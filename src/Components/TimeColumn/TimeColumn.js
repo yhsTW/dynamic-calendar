@@ -5,6 +5,7 @@ import EventBar from '../EventBar';
 import styles from './styles.css';
 import moment from 'moment';
 import { makeTimeFormat } from '../../utils/utils';
+import sortEventsUtil from '../../utils/sortEvents';
 
 const TimeColumn = ({ itemArr, week, customizeTimeColumn, select, onSelectSlot, onSelectEvent, currentView, events }) => {
     const getEventBarHeight = event => {
@@ -27,21 +28,23 @@ const TimeColumn = ({ itemArr, week, customizeTimeColumn, select, onSelectSlot, 
     const sortEvents = () => {
         const newEvents = [ ...events ];
 
-        return newEvents.sort((a, b) => {
-            // 시작시간이 이전이고, 종료시간이 이후인 일정
-            if(moment(a.start).isBefore(b.start) && moment(a.end).isAfter(b.end)) 
-                return -4;
+        // return newEvents.sort((a, b) => {
+        //     // 시작시간이 이전이고, 종료시간이 이후인 일정
+        //     if(moment(a.start).isBefore(b.start) && moment(a.end).isAfter(b.end)) 
+        //         return -4;
 
-            // 시작 시간이 이전인 일정
-            if(moment(a.start).isBefore(b.start)) 
-                return -3;
+        //     // 시작 시간이 이전인 일정
+        //     if(moment(a.start).isBefore(b.start)) 
+        //         return -3;
 
-            // 시작시간이 같으나, 끝 시간이 이후인 일정
-            if(moment(a.start).isSame(b.start) && moment(a.end).isAfter(b.end)) 
-                return -2;
+        //     // 시작시간이 같으나, 끝 시간이 이후인 일정
+        //     if(moment(a.start).isSame(b.start) && moment(a.end).isAfter(b.end)) 
+        //         return -2;
 
-            return 1;
-        });
+        //     return 1;
+        // });
+
+        return sortEventsUtil(newEvents);
     };
 
     const isBetween = (date, rangeDate, inclusivity = '[)') => {

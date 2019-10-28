@@ -7,6 +7,7 @@ import moment from 'moment';
 import styles from './styles.css';
 import { VIEW_TYPE } from '../../variables';
 import sortEventsUtil from '../../utils/sortEvents';
+import eventLevel from '../../utils/eventLevel';
 
 class Row extends Component {
     row = createRef();
@@ -15,62 +16,9 @@ class Row extends Component {
     eventRow = createRef();
 
     sameEventRow = () => {
-        const { events } = this.props;
+        const { events, itemArr } = this.props;
         const sortEvents = sortEventsUtil(events);
-        let newEvents = [];
-
-        if(sortEvents.length > 1) {
-            sortEvents.forEach((sortEvent, index, arr) => {
-                // console.log('===================================');
-                // console.log('arr : ', arr);
-                // console.log('sortEvents : ', sortEvents, index);
-                const nextEvent = arr[index + 1];
-                // console.log('nextEvent : ', nextEvent);
-
-                if(nextEvent) {
-                    // console.log('nextEvent not empty');
-                    const currentEvent = sortEvent;
-                    // console.log('currentEvent : ', currentEvent);
-                    const mCurrentStart = moment(currentEvent.start);
-                    const mCurrentEnd = moment(currentEvent.end);
-                    const mNextStart = moment(nextEvent.start);
-                    const mNextEnd = moment(nextEvent.end);
-                    
-                    const lastEvent = newEvents[newEvents.length - 1];
-                    // console.log('lastEvent : ', lastEvent);
-                    // 앞 일정(currentEvent)과 겹치지 않는 일정일 경우
-                    if(!mNextStart.isBetween(mCurrentStart, mCurrentEnd, null, '[]') && !mNextEnd.isBetween(mCurrentStart, mCurrentEnd, null, '[]')) {
-                        // console.log('current newEvents : ', newEvents);
-                        
-                        if(lastEvent && lastEvent[lastEvent.length - 1].id === currentEvent.id) {
-                            // console.log('lastEvent[lastEvent.length - 1].id === currentEvent.id true');
-                            lastEvent.push(nextEvent);
-                        } else {
-                            // console.log('lastEvent[lastEvent.length - 1].id === currentEvent.id false');
-                            newEvents.push([currentEvent, nextEvent]);
-                            // newEvents.push([currentEvent]);
-                            // newEvents.push([nextEvent]);
-                        }
-                    } else {
-                        // 앞 일정(currentEvent)과 겹치는 일정일 경우
-                        // console.log('mCurrentStart <= mNextStart, mNextEnd <= mCurrentEnd');
-                        if(lastEvent && lastEvent[lastEvent.length - 1].id === currentEvent.id) {
-                            // console.log('lastEvent[lastEvent.length - 1].id === currentEvent.id true');
-                            newEvents.push([nextEvent]);
-                        } else {
-                            // console.log('lastEvent[lastEvent.length - 1].id === currentEvent.id false');
-                            newEvents.push([currentEvent]);
-                            newEvents.push([nextEvent]);
-                        }
-                    }
-                }
-                // console.log('===================================');
-            });
-        } else if(sortEvents.length === 1) {
-            newEvents.push([sortEvents[0]]);
-        }
-
-        // console.log('newEvents : ', newEvents);
+        let newEvents = eventLevel(itemArr[0], itemArr[itemArr.length - 1], sortEvents);
 
         return newEvents;
     };

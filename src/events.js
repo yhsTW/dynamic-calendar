@@ -475,11 +475,46 @@ export const events = [
 		end : new Date('2019-10-25 17:00'),
 		allDay : false
 	},
-	// {
-	// 	id : 67,
-	// 	title : '11',
-	// 	start : new Date('2019-10-25 17:00'),
-	// 	end : new Date('2019-10-25 18:00'),
-	// 	allDay : false
-	// },
+	{
+		id : 67,
+		title : '11',
+		start : new Date('2019-10-25 17:00'),
+		end : new Date('2019-10-25 18:00'),
+		allDay : false
+	},
+	{
+		id : 69,
+		title : '당일 종일 일정',
+		start : new Date('2019-10-13'),
+		end : new Date('2019-10-13'),
+		allDay : true
+	},
+	{
+		id : 70,
+		title : '당일 종일 일정2',
+		start : new Date('2019-10-13 13:00'),
+		end : new Date('2019-10-13 14:00'),
+		allDay : true
+	},
+	{
+		id : 71,
+		title : '당일 종일 일정3',
+		start : new Date('2019-10-17 13:00'),
+		end : new Date('2019-10-17 14:00'),
+		allDay : true
+	},
+	{
+		id : 72,
+		title : '일정',
+		start : new Date('2019-10-22 13:00'),
+		end : new Date('2019-10-22 14:00'),
+		allDay : false
+	},
+	{
+		id : 79,
+		title : '일정2',
+		start : new Date('2019-10-20 13:00'),
+		end : new Date('2019-10-30 14:00'),
+		allDay : false
+	}
 ];
