@@ -12,7 +12,9 @@ const isCurrentEvent = (event, currentDate) => {
 
 export const classification = (events, currentDate) => {
     const currentFirstWeek = moment(currentDate).startOf('month').week();
-    const currentLastWeek = moment(currentDate).month() === 11 && moment(currentDate).endOf('month').week() === 1 ? moment(currentDate).weeksInYear() + moment(currentDate).endOf('month').week() : moment(currentDate).endOf('month').week();
+    const currentLastWeek = moment(currentDate).month() === 11 && moment(currentDate).endOf('month').week() === 1 ? 
+        moment(currentDate).weeksInYear() + moment(currentDate).endOf('month').week() : 
+        moment(currentDate).endOf('month').week();
 
     events.forEach(event => {
         // console.log(isCurrentEvent(event, currentDate))

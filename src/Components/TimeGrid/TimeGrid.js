@@ -22,7 +22,9 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cus
         for(let i = 0; i < WEEK_NUM; i++) {
             const current = moment(sunday).date(sunday.date() + i);
 
-            const type = currentDate.month() === current.month() ? MONTH_TYPE.current : currentDate.month() > current.month() ? MONTH_TYPE.prev : MONTH_TYPE.next
+            const type = currentDate.month() === current.month() ? 
+                MONTH_TYPE.current : currentDate.month() > current.month() 
+                ? MONTH_TYPE.prev : MONTH_TYPE.next
             pushArr(arr, { date : current, type });
         }
     };
@@ -41,9 +43,9 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cus
 
     const getWeek = () => {
         const firstWeek = moment(currentDate).startOf('month').week();
-        const currentWeek = moment(currentDate).month() === 11 && moment(currentDate).week() === 1 ?(
-                                moment(currentDate).weeksInYear() + moment(currentDate).endOf('month').week()
-                            ) : moment(currentDate).week();
+        const currentWeek = moment(currentDate).month() === 11 && moment(currentDate).week() === 1 ? (
+            moment(currentDate).weeksInYear() + moment(currentDate).endOf('month').week()
+        ) : moment(currentDate).week();
         
         return currentWeek - firstWeek;
     };
@@ -55,13 +57,17 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cus
     const getAllDayEvents = () => {
         const weekEvents = getWeekEvents();
 
-        return weekEvents ? weekEvents.filter(event => event.allDay && event) : [];
+        return weekEvents ? weekEvents.filter(event => 
+            (event.allDay || !moment(event.start).isSame(event.end, 'date')) && event
+        ) : [];
     };
 
     const getNotAllDayEvents = () => {
         const weekEvents = getWeekEvents();
 
-        return weekEvents ? weekEvents.filter(event => !event.allDay && moment(event.start).isSame(event.end, 'date') && event) : [];
+        return weekEvents ? weekEvents.filter(event => 
+            !event.allDay && moment(event.start).isSame(event.end, 'date') && event
+        ) : [];
     };
 
     const weekArr = getWeekArr();

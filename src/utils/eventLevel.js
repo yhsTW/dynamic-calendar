@@ -1,7 +1,6 @@
 import moment from 'moment';
 
 const getEventLevel = (start, end, events) => {
-    console.log('getEventLevel : ', start, end, events)
     const newEvents = [...events];
     let returnEvents = [];
     
@@ -24,7 +23,6 @@ const getEventLevel = (start, end, events) => {
         newEvents.forEach(event => {
             if((moment(event.end).isBefore(currentStart, 'date') ||
             moment(event.start).isAfter(currentEnd, 'date'))) {
-                console.log('sameLevel : ', sameLevel);
                 let overlap = false;
 
                 sameLevel.forEach(level => {
