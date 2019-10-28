@@ -15,9 +15,8 @@ class Row extends Component {
     eventRowParent = createRef();
     eventRow = createRef();
 
-    sameEventRow = () => {
-        const { events, itemArr } = this.props;
-        const sortEvents = sortEventsUtil(events);
+    sameEventRow = (sortEvents) => {
+        const { itemArr } = this.props;
         let newEvents = eventLevel(itemArr[0], itemArr[itemArr.length - 1], sortEvents);
 
         return newEvents;
@@ -72,10 +71,15 @@ class Row extends Component {
             stopSelecting, startSelecting, setSelectedStart, setSelectedEnd,
             selectedStart, selectedEnd, lastSelectedDate, setLastSelectedDate,
             defaultSelectedDate, onSelectEvent, limit, openPopup, useDateHeader,
-            customizeRow : { BackgroundCell, More, holiday, today : customizeToday, weekdays, weekend, prevMonth, nextMonth }
+            customizeRow : { 
+                BackgroundCell, More, holiday, 
+                today : customizeToday, weekdays, 
+                weekend, prevMonth, nextMonth 
+            }
         } = this.props;
 
-        const sameEventRow = this.sameEventRow();
+        const sortEvents = sortEventsUtil(events);
+        const sameEventRow = this.sameEventRow(sortEvents);
 
         return (
             <div className={ styles.row } ref={ this.row }>
@@ -83,7 +87,7 @@ class Row extends Component {
                     stopSelecting={ stopSelecting } startSelecting={ startSelecting } setSelectedStart={ setSelectedStart }
                     setSelectedEnd={ setSelectedEnd } selectedStart={ selectedStart } selectedEnd={ selectedEnd }
                     lastSelectedDate={ lastSelectedDate } setLastSelectedDate={ setLastSelectedDate } defaultSelectedDate={ defaultSelectedDate }
-                    limit={ limit } events={ events } openPopup={ openPopup } today={ today } 
+                    limit={ limit } events={ sortEvents } openPopup={ openPopup } today={ today } 
                     customizeBackgroundRow={{ BackgroundCell, More, customizeToday, weekdays, holiday, weekend, prevMonth, nextMonth }} />
                 <div className={ styles.dateContent }>
                     <div className={ styles.rowHeader } ref={ this.header }>

@@ -32,7 +32,7 @@ class BackgroundRow extends Component {
         }
 
         return eventCountArr;
-    }
+    };
 
     render() {
         const { 
@@ -51,7 +51,7 @@ class BackgroundRow extends Component {
                         let isMore = false;
                         let more = 0;
                         let events = [];
-                        
+
                         if(current && current.more > limit) {
                             isMore = true;
                             more = current.more - limit;
