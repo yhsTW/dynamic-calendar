@@ -25,28 +25,6 @@ const TimeColumn = ({ itemArr, week, customizeTimeColumn, select, onSelectSlot, 
         return `calc((100% * ${ (startHour * 60) / 30 }) / ${ itemArr.length * 2 })`;
     };
 
-    const sortEvents = () => {
-        const newEvents = [ ...events ];
-
-        // return newEvents.sort((a, b) => {
-        //     // 시작시간이 이전이고, 종료시간이 이후인 일정
-        //     if(moment(a.start).isBefore(b.start) && moment(a.end).isAfter(b.end)) 
-        //         return -4;
-
-        //     // 시작 시간이 이전인 일정
-        //     if(moment(a.start).isBefore(b.start)) 
-        //         return -3;
-
-        //     // 시작시간이 같으나, 끝 시간이 이후인 일정
-        //     if(moment(a.start).isSame(b.start) && moment(a.end).isAfter(b.end)) 
-        //         return -2;
-
-        //     return 1;
-        // });
-
-        return sortEventsUtil(newEvents);
-    };
-
     const isBetween = (date, rangeDate, inclusivity = '[)') => {
         return moment(date).isBetween(rangeDate.start, rangeDate.end, null, inclusivity);
     };
@@ -114,7 +92,7 @@ const TimeColumn = ({ itemArr, week, customizeTimeColumn, select, onSelectSlot, 
     const makeLayout = () => {
         if(!events) return;
 
-        const sEvents = sortEvents(events);
+        const sEvents = sortEventsUtil(events);
         let notOverlap = [];
         let overlap = [];
 
