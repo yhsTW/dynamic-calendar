@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { MONTH_TYPE, WEEK_NUM } from '../variables';
+import { MONTH_TYPE, WEEK_NUM } from './constants';
 
 let dateArr = [];
 let item = [];

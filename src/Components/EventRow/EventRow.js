@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import EventBar from '../EventBar';
 import moment from 'moment';
-import { WEEK_NUM, VIEW_TYPE } from '../../variables';
+import { WEEK_NUM, VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
 
 const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSelecting, startSelecting, currentView }) => {

@@ -1,7 +1,8 @@
 import React from 'react';
 import Label from '../Label';
-import { MONTH_HEADER_DATA } from '../../variables';
+import { MONTH_HEADER_DATA, CUSTOMIZE } from '../../utils/constants';
 import styles from './styles.css';
+import withCustomize from '../../hoc/withCustomize';
 
 const getMonthHeaderStyle = (idx, dateHeaderStyle) => {
     const { saturdayStyle, sundayStyle } = dateHeaderStyle;
@@ -19,14 +20,18 @@ const getMonthHeaderStyle = (idx, dateHeaderStyle) => {
     }
 };
 
-const MonthHeader = ({ customizeWeek : { weekend : { dateHeaderStyle } } }) =>(
-    <div className={ styles.monthHeader }>
-        {
-            MONTH_HEADER_DATA.map((week, idx) => (
-                    <Label key={ week } className={ styles.label } text={ week } style={ getMonthHeaderStyle(idx, dateHeaderStyle) } />
-            )) 
-        }
-    </div>
-);
+const MonthHeader = ({ getCustomize }) => {
+    const { [CUSTOMIZE.weekend] : { dateHeaderStyle } } = getCustomize([CUSTOMIZE.weekend]);
 
-export default MonthHeader;
+    return (
+        <div className={ styles.monthHeader }>
+            {
+                MONTH_HEADER_DATA.map((week, idx) => (
+                    <Label key={ week } className={ styles.label } text={ week } customize={ getMonthHeaderStyle(idx, dateHeaderStyle) } />
+                ))
+            }
+        </div>
+    );
+}
+
+export default withCustomize(CUSTOMIZE.view)(MonthHeader);

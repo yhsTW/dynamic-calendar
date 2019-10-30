@@ -3,17 +3,11 @@ import PropTypes from 'prop-types';
 import Month from '../Month';
 import TimeGrid from '../TimeGrid';
 import moment from 'moment';
-import { VIEW_TYPE } from '../../variables';
+import { VIEW_TYPE } from '../../utils/constants';
 
 const View = props => {
-    if(props.currentView === VIEW_TYPE.month) 
-        return (
-            <Month { ...props } />
-        );
-    else 
-        return (
-            <TimeGrid { ...props } />
-        );
+    if(props.currentView === VIEW_TYPE.month) return (<Month { ...props } />)
+    else return (<TimeGrid { ...props } />)
 };
 
 View.propTypes = {

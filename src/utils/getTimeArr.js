@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { MONTH_TYPE } from '../variables';
+import { MONTH_TYPE } from './constants';
 
 const START_TIME = 0;
 const END_TIME = 23;

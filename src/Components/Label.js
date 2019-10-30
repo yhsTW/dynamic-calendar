@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Label = ({ className, text, style }) => (
+const Label = ({ className, text, customize }) => (
     <div className={ className }>
-        <span style={ style }>{ text }</span>
+        <span style={ customize ? customize : {} }>{ text }</span>
     </div>
 );
 

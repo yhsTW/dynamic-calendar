@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Header from '../Header';
 import View from '../View';
-import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, POSITION, FORMAT } from '../../variables';
+import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, POSITION, FORMAT } from '../../utils/constants';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 import { events } from '../../events';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 import styles from './styles.css';
 import { classification } from '../../utils/classification';
+import { CustomizeProvider } from '../../contexts/customize';
 
 const TODAY = moment();
 
@@ -46,24 +47,26 @@ class DynamicCalendar extends Component {
     render() {
         const { 
             views, onSelectSlot, onSelectEvent, useHeader, 
-            customize : { Header : customizeHeader, View : customizeView }
+            // customize : { Header : customizeHeader, View : customizeView }
+            customize
         } = this.props;
         const { currentDate, currentView } = this.state;
         const events = this.settingEvents();
         
         return (
-            <div className={ styles.dynamicCalendar }>
-                { 
-                    useHeader && (
-                        <Header today={ TODAY } currentDate={ currentDate } views={ views }
-                            currentView={ currentView } updateCurrentDate={ this.updateCurrentDate } updateCurrentView={ this.updateCurrentView }
-                            customizeHeader={ customizeHeader } />
-                    )
-                }
-                <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } 
-                    events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
-                    customizeView={ customizeView } />
-            </div>
+            <CustomizeProvider value={ customize }>
+                <div className={ styles.dynamicCalendar }>
+                    { 
+                        useHeader && (
+                            <Header today={ TODAY } currentDate={ currentDate } views={ views }
+                                currentView={ currentView } updateCurrentDate={ this.updateCurrentDate } updateCurrentView={ this.updateCurrentView } />
+                        )
+                    }
+                    <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } 
+                        events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent } />
+
+                </div>
+            </CustomizeProvider>
         );
     };
 }

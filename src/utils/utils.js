@@ -1,18 +1,19 @@
-import { MONTH_TYPE, AM_PM } from "../variables";
+import { MONTH_TYPE, AM_PM } from "./constants";
 import moment from "moment";
 
 // 컴포넌트를 정렬한다.
 export const orderComponents = (order, components) => order.map(type => components[type]);
 
 const getConditions = ({ styleObj, item, isToday, property }) => {
+    console.log('styleObj : ', styleObj)
     return [
         // 오늘인지 확인
         // { condition : isToday, useStyle : styleObj.customizeToday[property] },
-        { condition : item.date.day() !== 0 && item.date.day() !== 6, useStyle : styleObj.weekdays[property] },
-        { condition : item.date.day() === 0, useStyle : styleObj.weekend[property].sundayStyle },
-        { condition : item.date.day() === 6, useStyle : styleObj.weekend[property].saturdayStyle },
-        { condition : MONTH_TYPE.prev === item.type, useStyle : styleObj.prevMonth[property] },
-        { condition : MONTH_TYPE.next === item.type, useStyle : styleObj.nextMonth[property] }
+        // { condition : item.date.day() !== 0 && item.date.day() !== 6, useStyle : styleObj.weekdays[property] },
+        // { condition : item.date.day() === 0, useStyle : styleObj.weekend[property].sundayStyle },
+        // { condition : item.date.day() === 6, useStyle : styleObj.weekend[property].saturdayStyle },
+        // { condition : MONTH_TYPE.prev === item.type, useStyle : styleObj.prevMonth[property] },
+        // { condition : MONTH_TYPE.next === item.type, useStyle : styleObj.nextMonth[property] }
     ];
 };
 

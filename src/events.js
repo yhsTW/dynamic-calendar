@@ -516,5 +516,19 @@ export const events = [
 		start : new Date('2019-10-20 13:00'),
 		end : new Date('2019-10-30 14:00'),
 		allDay : false
+	},
+	{
+		id : 80,
+		title : '장기 일정',
+		start : new Date('2019-10-23'),
+		end : new Date('2019-10-30'),
+		allDay : false
+	},
+	{
+		id : 81,
+		title : '21일',
+		start : new Date('2019-10-21 10:00'),
+		end : new Date('2019-10-21 10:30'),
+		allDay : false
 	}
 ];

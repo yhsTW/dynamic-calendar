@@ -5,9 +5,10 @@ import EventRow from '../EventRow';
 import BackgroundRow from '../BackgroundRow';
 import moment from 'moment';
 import styles from './styles.css';
-import { VIEW_TYPE } from '../../variables';
+import { VIEW_TYPE, CUSTOMIZE } from '../../utils/constants';
 import sortEventsUtil from '../../utils/sortEvents';
 import eventLevel from '../../utils/eventLevel';
+import withCustomize from '../../hoc/withCustomize';
 
 class Row extends Component {
     row = createRef();
@@ -54,7 +55,8 @@ class Row extends Component {
         const rowHeight = this.row.current.clientHeight;
         const dateHeader = this.header.current.clientHeight;
         const eventSpace = rowHeight - dateHeader;
-        const eventRow = this.eventRow.current && this.eventRow.current.clientHeight ? this.eventRow.current.clientHeight : 0;
+        const eventRow = this.eventRow.current && this.eventRow.current.clientHeight ? 
+            this.eventRow.current.clientHeight : 0;
         const limit = eventRow === 0 ? 0 : Math.max(Math.floor(eventSpace / eventRow));
 
         
@@ -65,21 +67,26 @@ class Row extends Component {
         }
     };
 
+    getDateSlotCustomize = () => {
+        const { getCustomize } = this.props;
+        
+        return getCustomize([
+            CUSTOMIZE.today, CUSTOMIZE.holiday, CUSTOMIZE.weekdays, 
+            CUSTOMIZE.weekend, CUSTOMIZE.prevMonth, CUSTOMIZE.nextMonth
+        ]);
+    };
+
     render() {
         const { 
             today, itemArr, events, onSelectSlot, isSelecting, currentView,
             stopSelecting, startSelecting, setSelectedStart, setSelectedEnd,
             selectedStart, selectedEnd, lastSelectedDate, setLastSelectedDate,
             defaultSelectedDate, onSelectEvent, limit, openPopup, useDateHeader,
-            customizeRow : { 
-                BackgroundCell, More, holiday, 
-                today : customizeToday, weekdays, 
-                weekend, prevMonth, nextMonth 
-            }
+            customizeList
         } = this.props;
-
         const sortEvents = sortEventsUtil(events);
         const sameEventRow = this.sameEventRow(sortEvents);
+        const dateSlotCustomize = this.getDateSlotCustomize();
 
         return (
             <div className={ styles.row } ref={ this.row }>
@@ -87,14 +94,13 @@ class Row extends Component {
                     stopSelecting={ stopSelecting } startSelecting={ startSelecting } setSelectedStart={ setSelectedStart }
                     setSelectedEnd={ setSelectedEnd } selectedStart={ selectedStart } selectedEnd={ selectedEnd }
                     lastSelectedDate={ lastSelectedDate } setLastSelectedDate={ setLastSelectedDate } defaultSelectedDate={ defaultSelectedDate }
-                    limit={ limit } events={ sortEvents } openPopup={ openPopup } today={ today } 
-                    customizeBackgroundRow={{ BackgroundCell, More, customizeToday, weekdays, holiday, weekend, prevMonth, nextMonth }} />
+                    limit={ limit } events={ sortEvents } openPopup={ openPopup } today={ today } customizeList={ customizeList } />
                 <div className={ styles.dateContent }>
                     <div className={ styles.rowHeader } ref={ this.header }>
                         { 
                             useDateHeader && itemArr.map(item => (
-                                <DateSlot key={ `${ item.type }_${ item.date.date() }` } isToday={ today.isSame(item.date, 'date') } item={ item }
-                                    customizeDateSlot={{ customizeToday, holiday, weekend, weekdays, prevMonth, nextMonth }} />
+                                <DateSlot key={ `${ item.type }_${ item.date.date() }` } 
+                                    isToday={ today.isSame(item.date, 'date') } item={ item } customizeDateSlot={ dateSlotCustomize } />
                             ))
                         }
                     </div>
@@ -111,7 +117,7 @@ class Row extends Component {
                                 } else {
                                     return null;
                                 }
-                            }) 
+                            })
                         }
                     </div>
                 </div>
@@ -157,4 +163,4 @@ Row.propTypes = {
     stopSelecting : PropTypes.func.isRequired
 };
 
-export default Row;
+export default withCustomize(CUSTOMIZE.view)(Row);

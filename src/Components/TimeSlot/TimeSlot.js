@@ -5,7 +5,7 @@ import styles from './styles.css';
 import moment from 'moment';
 import { makeTimeFormat } from '../../utils/utils';
 
-const TimeSlot = ({ items, week, customizeTimeSlot, select, onSelectSlot, onSelectEvent, currentView }) => (
+const TimeSlot = ({ items, week, customize, select, onSelectSlot, onSelectEvent, currentView }) => (
     <div className={ styles.timeSlot }>
         { 
             !week && (
@@ -28,13 +28,11 @@ const TimeSlot = ({ items, week, customizeTimeSlot, select, onSelectSlot, onSele
                             });
 
                             return (
-                                (
-                                    <BackgroundCell key={ `${ newDate }_${ item.type }` } isMore={ false } isToday={ false } 
-                                        item={{ ...item, date : newDate }} more={ 0 } openPopup={ () => {} } { ...select }
-                                        customizeBackgroundCell={ customizeTimeSlot } onSelectSlot={ onSelectSlot }
-                                        onSelectEvent={ onSelectEvent } currentView={ currentView }
-                                        useTime={ true } />
-                                )
+                                <BackgroundCell key={ `${ newDate }_${ item.type }` } isMore={ false } isToday={ false } 
+                                    item={{ ...item, date : newDate }} more={ 0 } openPopup={ () => {} } { ...select }
+                                    customize={ customize } onSelectSlot={ onSelectSlot }
+                                    onSelectEvent={ onSelectEvent } currentView={ currentView }
+                                    useTime={ true } />
                             );
                         })
                     }

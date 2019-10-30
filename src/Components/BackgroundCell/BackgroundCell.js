@@ -110,15 +110,27 @@ class BackgroundCell extends Component {
         const { top, left, width, height } = this.cell.current.getBoundingClientRect();
 
         pOpenPopup({ top, left, width, height, events, date });
-    };
+};
 
-    getBackgroundCellStyle = (isSelected) => {
-        const { item, customizeBackgroundCell, isToday } = this.props;
-        let style = getStyle({ styleObj : customizeBackgroundCell, item, isToday, property : BACKGROUND_CELL_STYLE });
+
+    getBackgroundCellStyle = isSelected => {
+        const { item, isToday, customize } = this.props;
+        const styleObj = customize;
+        let style = getStyle({ 
+            styleObj, item, isToday, property : BACKGROUND_CELL_STYLE 
+        });
         
         // border가 겹치는 현상을 수정하기 위해 marginLeft와 marginBottom 추가
-        if(customizeBackgroundCell.BackgroundCell.useBorder) style = { ...style, ...customizeBackgroundCell.BackgroundCell.borderStyle, marginLeft : '-1px', marginBottom : '-1px' };
-        if(isSelected) style = { ...style, ...customizeBackgroundCell.BackgroundCell.selectStyle };
+        if(styleObj.BackgroundCell.useBorder) style = {
+            ...style,
+            ...styleObj.BackgroundCell.borderStyle, 
+            marginLeft : '-1px', marginBottom : '-1px'
+        };
+
+        if(isSelected) style = { 
+            ...style,
+            ...styleObj.BackgroundCell.selectStyle 
+        };
 
         return style;
     };
@@ -136,7 +148,7 @@ class BackgroundCell extends Component {
     };
 
     render() {
-        const { isMore, more, useTime, selectedStart, item : { date }, customizeBackgroundCell : { More : customizeMore } } = this.props;
+        const { isMore, more, useTime, selectedStart, item : { date } } = this.props;
         const isSelected = this.checkSelected();
         const backgroundCellStyle = this.getBackgroundCellStyle(isSelected);
         
@@ -144,7 +156,7 @@ class BackgroundCell extends Component {
             <div ref={ this.cell } className={ styles.backgroundCell } onMouseDown={ this.selectStart } onMouseUp={ this.selectEnd }
                 onMouseEnter={ this.selecting } style={ backgroundCellStyle }>
                 { (useTime && selectedStart && isSelected && selectedStart.isSame(date)) && <Label text={ this.currentSelectTime() } /> }
-                { isMore && <More more={ more } openPopup={ this.openPopup } customizeMore={ customizeMore } /> }
+                { isMore && <More more={ more } openPopup={ this.openPopup } /> }
             </div>
         );
     };

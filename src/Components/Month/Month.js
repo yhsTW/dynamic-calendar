@@ -55,24 +55,18 @@ class Month extends Component {
 
     render() {
         const { limit, usePopup } = this.state;
-        const { 
-            currentDate, today, onSelectSlot, onSelectEvent, 
-            customizeView : { 
-                BackgroundCell, More, Popup : customizePopup, holiday, today : customizeToday,
-                weekdays, weekend, prevMonth, nextMonth
-            }, currentView, events
-        } = this.props;
+        const { currentDate, today, onSelectSlot, onSelectEvent, currentView, events } = this.props;
         
         return (
             <div className={ styles.month } onMouseLeave={ this.stopSelecting }>
-                <MonthHeader customizeWeek={{ weekend }} />
+                <MonthHeader />
                 <MonthContent today={ today } events={ events } onSelectSlot={ onSelectSlot } currentDate={ currentDate }
                     onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit } currentView={ currentView }
-                    openPopup={ this.openPopup } customizeRow={{ BackgroundCell, More, holiday, today : customizeToday, weekdays, weekend, prevMonth, nextMonth }} />
+                    openPopup={ this.openPopup } />
                 {
                     usePopup && (
                         <Popup popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent }
-                            customizePopup={ customizePopup } />
+                            events={ events } />
                     )
                 }
             </div>

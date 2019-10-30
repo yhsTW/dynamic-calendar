@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import BackgroundCell from '../BackgroundCell';
 import moment from 'moment';
 import styles from './styles.css';
+import withCustomize from '../../hoc/withCustomize';
+import { CUSTOMIZE } from '../../utils/constants';
 
 class BackgroundRow extends Component {
     // Slot별로 event의 갯수를 센다.
@@ -33,15 +35,25 @@ class BackgroundRow extends Component {
 
         return eventCountArr;
     };
-
+    
+    // BackgroundCell에서 하면,
+    // Cell마다 동일한 스타일을 여러번 불러와야 하니
+    // BackgroundRow에서 가져와 각 BackgroundCell에 넘겨준다.
+    getBackgroundCustomize = () => {
+        const { getCustomize, customizeList } = this.props;
+        
+        return getCustomize(customizeList);
+    };
+    
     render() {
         const { 
             itemArr, onSelectSlot, isSelecting, stopSelecting, startSelecting,
             setSelectedStart, setSelectedEnd, selectedStart, selectedEnd,
             lastSelectedDate, setLastSelectedDate, defaultSelectedDate, limit,
-            openPopup, today, customizeBackgroundRow
+            openPopup, today
         } = this.props;
         const eventCountArr = this.settingEventCount();
+        const customize = this.getBackgroundCustomize();
 
         return (
             <div className={ styles.backgroundRow }>
@@ -65,7 +77,7 @@ class BackgroundRow extends Component {
                                 selectedStart={ selectedStart } selectedEnd={ selectedEnd } lastSelectedDate={ lastSelectedDate }
                                 setLastSelectedDate={ setLastSelectedDate } defaultSelectedDate={ defaultSelectedDate }
                                 isMore={ isMore } events={ events } more={ more } openPopup={ openPopup }
-                                isToday={ today.isSame(item.date, 'date') } customizeBackgroundCell={ customizeBackgroundRow } />
+                                isToday={ today.isSame(item.date, 'date') } customize={ customize } />
                         );
                     })
                 }
@@ -103,4 +115,4 @@ BackgroundRow.propTypes = {
     stopSelecting : PropTypes.func
 };
 
-export default BackgroundRow;
+export default withCustomize(CUSTOMIZE.view)(BackgroundRow);

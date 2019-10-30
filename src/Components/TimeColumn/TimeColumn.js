@@ -6,8 +6,10 @@ import styles from './styles.css';
 import moment from 'moment';
 import { makeTimeFormat } from '../../utils/utils';
 import sortEventsUtil from '../../utils/sortEvents';
+import withCustomize from '../../hoc/withCustomize';
+import { CUSTOMIZE } from '../../utils/constants';
 
-const TimeColumn = ({ itemArr, week, customizeTimeColumn, select, onSelectSlot, onSelectEvent, currentView, events }) => {
+const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, currentView, events, getCustomize }) => {
     const getEventBarHeight = event => {
         const start = moment(event.start);
         const end = moment(event.end);
@@ -71,7 +73,6 @@ const TimeColumn = ({ itemArr, week, customizeTimeColumn, select, onSelectSlot, 
 
         for(let i = 0; i < eventGroup.length; i++) {
             const currentGroup = eventGroup[i];
-            let currentLevel = 1;
 
             for(let j = 0; j < currentGroup.length; j++) {
                 const currentEvent = currentGroup[j];
@@ -119,14 +120,18 @@ const TimeColumn = ({ itemArr, week, customizeTimeColumn, select, onSelectSlot, 
         return eventGroup;
     };
 
+    const getSlotStyle = () => {
+        return getCustomize([CUSTOMIZE.backgroundCell]);
+    };
+
     return (
         <div className={ styles.timeColumn }>
             <div className={ styles.backgroundColumn }>
                 {
                     itemArr.map((item, index) => (
                         <TimeSlot key={ `${ item[0].date }${ week ? `_${ week.date }` : '' }_${ index }` } items={ item } week={ week } 
-                            customizeTimeSlot={ customizeTimeColumn } select={ select } onSelectSlot={ onSelectSlot }
-                            onSelectEvent={ onSelectEvent } currentView={ currentView } />
+                            select={ select } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent } currentView={ currentView }
+                            customize={ getSlotStyle() } />
                     ))
                 }
             </div>
@@ -144,4 +149,4 @@ const TimeColumn = ({ itemArr, week, customizeTimeColumn, select, onSelectSlot, 
     );
 };
 
-export default withSelection(TimeColumn);
+export default withCustomize(CUSTOMIZE.view)(withSelection(TimeColumn));

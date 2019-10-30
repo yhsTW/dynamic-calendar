@@ -2,10 +2,10 @@ import React from 'react';
 import TimeHeader from '../TimeHeader';
 import TimeContent from '../TimeContent';
 import moment from 'moment';
-import { MONTH_TYPE, WEEK_NUM, VIEW_TYPE } from '../../variables';
+import { MONTH_TYPE, WEEK_NUM, VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
 
-const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, customizeView, currentView }) => {
+const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView }) => {
     const getSunday = () => {
         const currentDay = currentDate.day();
 
@@ -75,12 +75,11 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cus
     return (
         <div className={ styles.week }>
             <TimeHeader today={ today } currentView={ currentView } weekArr={ weekArr }
-                customizeTimeHeader={customizeView} onSelectSlot={ onSelectSlot }
-                events={ getAllDayEvents() } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent } />
+                onSelectSlot={ onSelectSlot } events={ getAllDayEvents() } onSelectSlot={ onSelectSlot }
+                onSelectEvent={ onSelectEvent } />
             <TimeContent today={ today } currentDate={ currentDate } currentView={ currentView } 
-                customizeTimeContent={customizeView} onSelectSlot={ onSelectSlot }
-                events={ getNotAllDayEvents() } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
-                weekArr={ weekArr } />
+                conSelectSlot={ onSelectSlot } events={ getNotAllDayEvents() } onSelectSlot={ onSelectSlot }
+                onSelectEvent={ onSelectEvent } weekArr={ weekArr } />
         </div>
     );
 };
