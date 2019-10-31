@@ -14,12 +14,14 @@ const Controls = ({ today, currentDate, updateCurrentDate, currentView, getCusto
         }
     } = getCustomize([CUSTOMIZE.controls]);
 
+    // currentDate의 값이 변경되지 않도록 새로운 new Date를 만든다.
     const getDate = () => {
         const date = moment(currentDate);
 
         return date;
     };
 
+    // 현재 보고있는 달력 타입에 따라 이전의 월 또는 일로 이동한다.
     const movePrevDate = () => {
         const date = getDate();
 
@@ -34,17 +36,18 @@ const Controls = ({ today, currentDate, updateCurrentDate, currentView, getCusto
         updateCurrentDate(date);
     };
     
+    // 현재 날짜로 바로 이동한다.
     const goToday = () => {
         const date = getDate();
 
-        if(
-            (currentView === VIEW_TYPE.month && date.isSame(today, 'month')) ||
-            (currentView !== VIEW_TYPE.month && date.isSame(today, 'date'))
-        ) return;
+        if((currentView === VIEW_TYPE.month && date.isSame(today, 'month')) ||
+            (currentView !== VIEW_TYPE.month && date.isSame(today, 'date'))) 
+            return;
 
         updateCurrentDate(today);
-    }
+    };
     
+    // 현재 보고있는 달력 타입에 따라 이후의 월 또는 일로 이동한다.
     const moveNextDate = () => {
         const date = getDate();
         
@@ -59,6 +62,7 @@ const Controls = ({ today, currentDate, updateCurrentDate, currentView, getCusto
         updateCurrentDate(date);
     };
 
+    // Controls 컴포넌트에서 사용하는 컴포넌트들을 가져온다.
     const getComponents = () => {
         return ({
             [CONTROLS_TYPE.today] : (
@@ -84,8 +88,10 @@ const Controls = ({ today, currentDate, updateCurrentDate, currentView, getCusto
 };
 
 Controls.propTypes = {
-    today : PropTypes.instanceOf(moment).isRequired,
     currentDate : PropTypes.instanceOf(moment).isRequired,
+    currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]).isRequired,
+    today : PropTypes.instanceOf(moment).isRequired,
+    getCustomize : PropTypes.func.isRequired,
     updateCurrentDate : PropTypes.func.isRequired
 };
 
