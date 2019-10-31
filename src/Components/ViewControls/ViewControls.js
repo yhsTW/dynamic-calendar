@@ -5,23 +5,23 @@ import { VIEW_TYPE, CUSTOMIZE} from '../../utils/constants';
 import styles from './styles.css';
 import withCustomize from '../../hoc/withCustomize';
 
-const showViewType = view => {
-    switch(view) {
-        case VIEW_TYPE.month : 
-            return '월간';
-        
-        case VIEW_TYPE.week :
-            return '주간';
-
-        case VIEW_TYPE.day :
-            return '일간';
-    }
-};
-
 const ViewControls = ({ views, currentView, updateCurrentView, getCustomize }) => {
     const { 
         [CUSTOMIZE.viewControls] : { viewControlsStyle, viewControlStyle } 
     } = getCustomize([CUSTOMIZE.viewControls]);
+
+    const showViewType = view => {
+        switch(view) {
+            case VIEW_TYPE.month : 
+                return '월간';
+            
+            case VIEW_TYPE.week :
+                return '주간';
+    
+            case VIEW_TYPE.day :
+                return '일간';
+        }
+    };
 
     return (
         <div className={ styles.viewControls } style={ viewControlsStyle }>
@@ -36,8 +36,9 @@ const ViewControls = ({ views, currentView, updateCurrentView, getCustomize }) =
 };
 
 ViewControls.propTypes = {
-    views : PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]).isRequired,
+    views : PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    getCustomize : PropTypes.func.isRequired,
     updateCurrentView : PropTypes.func.isRequired
 };
 
