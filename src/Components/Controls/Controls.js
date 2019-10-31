@@ -37,7 +37,10 @@ const Controls = ({ today, currentDate, updateCurrentDate, currentView, getCusto
     const goToday = () => {
         const date = getDate();
 
-        if(date.isSame(today, 'month')) return;
+        if(
+            (currentView === VIEW_TYPE.month && date.isSame(today, 'month')) ||
+            (currentView !== VIEW_TYPE.month && date.isSame(today, 'date'))
+        ) return;
 
         updateCurrentDate(today);
     }
