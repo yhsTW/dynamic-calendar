@@ -11,22 +11,33 @@ import styles from './styles.css';
 import { getSunday, getSaturday } from '../../utils/dateUtil';
 
 const Header = ({ today, currentDate, views, currentView, updateCurrentDate, updateCurrentView, getCustomize }) => {
+    // customize의 값들 중 필요한 값들만 불러온다.
     const { 
         order, style, Label : customize
     } = getCustomize([CUSTOMIZE.order, CUSTOMIZE.style, CUSTOMIZE.label]);
 
+    // 일요일과 현재 날짜의 월(month)이 동일한지 확인한다.
     const isSameSunday = () => getSunday(currentDate).isSame(currentDate, 'month');
     
+    // 토요일과 현재 날짜의 월(month)이 동일한지 확인한다.
     const isSameSaturday = () => getSaturday(currentDate).isSame(currentDate, 'month');
 
+    // 현재 사용자가 보고있는 달력 타입에 따라 label을 형식에 맞게 변경한다.
     const viewLabel = () => {
         let currentViewDate = `${ currentDate.year() }년 ${ currentDate.month() + 1 }월`;
 
+        // 현재 보고있는 달력 타입이 주간(week)일 경우
         if(currentView === VIEW_TYPE.week) {
+            // 일, 토요일의 달이 기준이 되는 날(currentDate)와 다를 경우
             if(!isSameSunday() || !isSameSaturday()) {
+                // currentDate와 비교할 월을 가져온다.
+                // 일요일이 다르면 일요일의 월을, 토요일이 다르다면 토요일의 월을 가져온다.
                 const compareMonth = isSameSunday() ? getSaturday(currentDate).month() : getSunday(currentDate).month();
+                // currentDate의 월을 가져온다.
                 const currentMonth = currentDate.month();
+                // 먼저 작성할 월을 가져온다.
                 const prevMonth = compareMonth > currentMonth ? currentMonth : compareMonth;
+                // 다음 작성할 월을 가져온다.
                 const nextMonth = compareMonth > currentMonth ? compareMonth : currentMonth;
                 
                 currentViewDate = `
@@ -37,6 +48,7 @@ const Header = ({ today, currentDate, views, currentView, updateCurrentDate, upd
                 `;
             }
         } else if(currentView === VIEW_TYPE.day) {
+            // 사용자가 보고있는 달력 타입이 일간(day)일 경우
             currentViewDate = `
                 ${ currentViewDate }
                 ${ currentDate.date() }일
@@ -47,6 +59,7 @@ const Header = ({ today, currentDate, views, currentView, updateCurrentDate, upd
         return currentViewDate;
     };
 
+    // Header 컴포넌트에서 사용하는 컴포넌트들을 가져온다.
     const getComponents = () => ({
         [COMPONENT_NAMES.controls] : (
             <Controls key={ COMPONENT_NAMES.controls } today={ today } currentDate={ currentDate } 

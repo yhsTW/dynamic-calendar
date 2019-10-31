@@ -25,9 +25,12 @@ class DynamicCalendar extends Component {
 
     // 현재 사용자가 보고있는 날짜를 변경한다.
     updateCurrentDate = date => {
+        const { onNavigate } = this.props;
+
         this.setState({
             currentDate : date
         });
+        onNavigate(date);
     };
     
     // 사용자가 보고있는 달력 타입을 변경한다.
@@ -37,6 +40,7 @@ class DynamicCalendar extends Component {
         });
     };
 
+    // 사용자로부터 받은 이벤트를 그룹별로 묶는다.
     settingEvents = () => {
         const { events } = this.props;
         const { currentDate } = this.state;
@@ -66,7 +70,6 @@ class DynamicCalendar extends Component {
                         events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
                         popup={ popup } updateCurrentDate={ this.updateCurrentDate } updateCurrentView={ this.updateCurrentView }
                         selectable={ selectable } />
-
                 </div>
             </CustomizeProvider>
         );
@@ -187,11 +190,13 @@ DynamicCalendar.defaultProps = {
             }
         }
     },
+    // onNavigate : () => {},
     // onSelectSlot : () => {},
     // onSelectEvent : () => {}
     ///////////////////// 테스트용 /////////////////////
-    onSelectSlot : (data) => console.log('onSelectSlot data : ', data),
-    onSelectEvent : (event) => console.log('onSelectEvent event : ', event)
+    onNavigate : date => console.log('onNavigate date : ', date),
+    onSelectSlot : data => console.log('onSelectSlot data : ', data),
+    onSelectEvent : event => console.log('onSelectEvent event : ', event)
     ///////////////////// 테스트용 /////////////////////
 };
 
@@ -315,7 +320,7 @@ DynamicCalendar.propTypes = {
         })
     }),
     // 현재 보고 있는 날짜가 변경되면 실행된다.
-    onMoveMonth : PropTypes.func,
+    onNavigate : PropTypes.func,
     // 달력의 Slot을 누르면 발생하는 이벤트
     onSelectSlot : PropTypes.func,
     // 달력의 event를 클릭하면 발생하는 이벤트
