@@ -62,7 +62,7 @@ class DynamicCalendar extends Component {
                                 updateCurrentView={ this.updateCurrentView } />
                         )
                     }
-                    <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } 
+                    <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } views={ views }
                         events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
                         popup={ popup } updateCurrentDate={ this.updateCurrentDate } updateCurrentView={ this.updateCurrentView } />
 
@@ -86,6 +86,7 @@ DynamicCalendar.defaultProps = {
     ///////////////////// 테스트용 /////////////////////
     ///////////////////// 테스트용 /////////////////////
     views : [VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day],
+    // views : [VIEW_TYPE.month],
     ///////////////////// 테스트용 /////////////////////
     components : null,
     selectable : false,

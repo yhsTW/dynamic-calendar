@@ -47,10 +47,12 @@ class Month extends Component {
     
             this.setState({ usePopup : true });
         } else {
-            const { updateCurrentDate, updateCurrentView } = this.props;
+            const { updateCurrentDate, updateCurrentView, views } = this.props;
 
-            updateCurrentDate(date);
-            updateCurrentView(VIEW_TYPE.day);
+            if(views.indexOf(VIEW_TYPE.day) !== -1) {
+                updateCurrentDate(date);
+                updateCurrentView(VIEW_TYPE.day);
+            }
         }
     };
 
