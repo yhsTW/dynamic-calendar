@@ -4,7 +4,7 @@ import TimeContent from '../TimeContent';
 import moment from 'moment';
 import { MONTH_TYPE, WEEK_NUM, VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
-import { getSunday } from '../../utils/utils';
+import { getSunday } from '../../utils/dateUtil';
 
 const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView }) => {
     const pushArr = (arr, data) => {

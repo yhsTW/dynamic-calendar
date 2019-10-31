@@ -4,7 +4,7 @@ import withSelection from '../../hoc/withSelection';
 import EventBar from '../EventBar';
 import styles from './styles.css';
 import moment from 'moment';
-import { makeTimeFormat } from '../../utils/utils';
+import { makeTimeFormat } from '../../utils/dateUtil';
 import sortEventsUtil from '../../utils/sortEvents';
 import withCustomize from '../../hoc/withCustomize';
 import { CUSTOMIZE } from '../../utils/constants';

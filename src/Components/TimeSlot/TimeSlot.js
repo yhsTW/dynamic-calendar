@@ -3,7 +3,7 @@ import Label from '../Label';
 import BackgroundCell from '../BackgroundCell';
 import styles from './styles.css';
 import moment from 'moment';
-import { makeTimeFormat } from '../../utils/utils';
+import { makeTimeFormat } from '../../utils/dateUtil';
 
 const TimeSlot = ({ items, week, customize, select, onSelectSlot, onSelectEvent, currentView }) => (
     <div className={ styles.timeSlot }>

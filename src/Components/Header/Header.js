@@ -8,7 +8,7 @@ import { VIEW_TYPE, COMPONENT_NAMES, CUSTOMIZE, WEEK_DATA } from '../../utils/co
 import moment from 'moment';
 import sortComponents from '../../utils/sortComponents';
 import styles from './styles.css';
-import { getSunday, getSaturday } from '../../utils/utils';
+import { getSunday, getSaturday } from '../../utils/dateUtil';
 
 const Header = ({ today, currentDate, views, currentView, updateCurrentDate, updateCurrentView, getCustomize }) => {
     const { 

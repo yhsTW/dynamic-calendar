@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './styles.css';
 import moment from 'moment';
 import More from '../More';
-import { makeTimeFormat } from '../../utils/utils';
+import { makeTimeFormat } from '../../utils/dateUtil';
 import combineStyle from '../../utils/combineStyle';
 import { PROPERTY } from '../../utils/constants';
 import Label from '../Label';

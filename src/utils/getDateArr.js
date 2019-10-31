@@ -57,8 +57,10 @@ const monthDate = currentDate => {
     }
 };
 
-export const getDateArr = currentDate => {
+const getDateArr = currentDate => {
     monthDate(currentDate);
 
     return dateArr;
 };
+
+export default getDateArr;

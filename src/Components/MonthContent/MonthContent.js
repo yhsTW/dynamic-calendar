@@ -1,6 +1,6 @@
 import React from 'react';
 import Row from '../Row';
-import { getDateArr } from '../../utils/monthDate';
+import getDateArr from '../../utils/getDateArr';
 import withSelection from '../../hoc/withSelection';
 import { CUSTOMIZE } from '../../utils/constants';
 
