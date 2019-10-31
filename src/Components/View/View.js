@@ -11,7 +11,6 @@ const View = props => {
 };
 
 View.propTypes = {
-    today : PropTypes.instanceOf(moment).isRequired,
     currentDate : PropTypes.instanceOf(moment).isRequired,
     currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]).isRequired,
     events : PropTypes.arrayOf(
@@ -26,8 +25,14 @@ View.propTypes = {
             }
         )
     ),
-    onSelectSlot : PropTypes.func,
-    onSelectEvent : PropTypes.func
+    popup : PropTypes.bool.isRequired,
+    selectable : PropTypes.bool.isRequired,
+    today : PropTypes.instanceOf(moment).isRequired,
+    views : PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    onSelectSlot : PropTypes.func.isRequired,
+    onSelectEvent : PropTypes.func.isRequired,
+    updateCurrentDate : PropTypes.func.isRequired,
+    updateCurrentView : PropTypes.func.isRequired
 };
 
 export default View;
