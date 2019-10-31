@@ -71,14 +71,14 @@ class Month extends Component {
 
     render() {
         const { limit, usePopup } = this.state;
-        const { currentDate, today, onSelectSlot, onSelectEvent, currentView, events } = this.props;
+        const { currentDate, today, onSelectSlot, onSelectEvent, currentView, events, selectable } = this.props;
         
         return (
             <div className={ styles.month } onMouseLeave={ this.stopSelecting }>
                 <MonthHeader />
                 <MonthContent today={ today } events={ events } onSelectSlot={ onSelectSlot } currentDate={ currentDate }
                     onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit } currentView={ currentView }
-                    openPopup={ this.openPopup } moveDayView={ this.moveDayView } />
+                    openPopup={ this.openPopup } moveDayView={ this.moveDayView } selectable={ selectable } />
                 {
                     usePopup && (
                         <Popup popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent }

@@ -42,10 +42,14 @@ const withSelection = WrappedComponent => {
         };
     
         startSelecting = date => {
-            const { isSelecting } = this.state;
-    
-            if(!isSelecting) this.setState({ isSelecting : true });
-            if(date) this.setDates(date);
+            const { selectable } = this.props;
+            
+            if(selectable) {
+                const { isSelecting } = this.state;
+        
+                if(!isSelecting) this.setState({ isSelecting : true });
+                if(date) this.setDates(date);
+            }
         };
     
         render() {
