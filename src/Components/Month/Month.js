@@ -5,6 +5,7 @@ import moment from 'moment';
 import Popup from '../Popup/Popup';
 import styles from './styles.css';
 import MonthContent from '../MonthContent';
+import { VIEW_TYPE } from '../../utils/constants';
 
 class Month extends Component {
     month = createRef();
@@ -32,16 +33,25 @@ class Month extends Component {
     };
 
     openPopup = ({ top, left, width, height, events, date }) => {
-        this.popup = { 
-            top,
-            left,
-            width : width + width * 0.1,
-            height : height + height * 0.4,
-            events,
-            date
-        };
+        const { popup } = this.props;
 
-        this.setState({ usePopup : true });
+        if(popup) {
+            this.popup = { 
+                top,
+                left,
+                width : width + width * 0.1,
+                height : height + height * 0.4,
+                events,
+                date
+            };
+    
+            this.setState({ usePopup : true });
+        } else {
+            const { updateCurrentDate, updateCurrentView } = this.props;
+
+            updateCurrentDate(date);
+            updateCurrentView(VIEW_TYPE.day);
+        }
     };
 
     closePopup = () => {

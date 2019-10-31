@@ -6,8 +6,8 @@ import moment from 'moment';
 import { VIEW_TYPE } from '../../utils/constants';
 
 const View = props => {
-    if(props.currentView === VIEW_TYPE.month) return (<Month { ...props } />)
-    else return (<TimeGrid { ...props } />)
+    if(props.currentView === VIEW_TYPE.month) return (<Month { ...props } />);
+    else return (<TimeGrid { ...props } />);
 };
 
 View.propTypes = {

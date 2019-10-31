@@ -46,7 +46,8 @@ class DynamicCalendar extends Component {
 
     render() {
         const { 
-            views, onSelectSlot, onSelectEvent, useHeader, customize
+            views, onSelectSlot, onSelectEvent, useHeader, customize,
+            popup
         } = this.props;
         const { currentDate, currentView } = this.state;
         const events = this.settingEvents();
@@ -62,7 +63,8 @@ class DynamicCalendar extends Component {
                         )
                     }
                     <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } 
-                        events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent } />
+                        events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
+                        popup={ popup } updateCurrentDate={ this.updateCurrentDate } updateCurrentView={ this.updateCurrentView } />
 
                 </div>
             </CustomizeProvider>
