@@ -23,17 +23,6 @@ class Row extends Component {
         return newEvents;
     };
 
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     const { limit } = this.state;
-    //     const { events, isSelecting } = this.props;
-
-    //     if(events === nextProps.events || isSelecting === nextProps.isSelecting || limit === nextState.limit) {
-    //         return false;
-    //     }
-
-    //     return true;
-    // }
-
     componentDidMount = () => {
         this.isMonth() && (
             this.getRowLimit(),
