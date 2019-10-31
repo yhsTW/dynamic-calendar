@@ -6,7 +6,7 @@ import ViewControls from '../ViewControls';
 import withCustomize from '../../hoc/withCustomize';
 import { VIEW_TYPE, COMPONENT_NAMES, CUSTOMIZE } from '../../utils/constants';
 import moment from 'moment';
-import { orderComponents } from '../../utils/utils';
+import sortComponents from '../../utils/sortComponents';
 import styles from './styles.css';
 
 const Header = ({ today, currentDate, views, currentView, updateCurrentDate, updateCurrentView, getCustomize }) => {
@@ -31,7 +31,7 @@ const Header = ({ today, currentDate, views, currentView, updateCurrentDate, upd
 
     return (
         <div className={ styles.header } style={ style }>
-            { orderComponents(order, getComponents()) }
+            { sortComponents(order, getComponents()) }
         </div>
     );
 };

@@ -4,7 +4,7 @@ import { MONTH_HEADER_DATA, CUSTOMIZE } from '../../utils/constants';
 import styles from './styles.css';
 import TimeAllDay from '../TimeAllDay/TimeAllDay';
 import withCustomize from '../../hoc/withCustomize';
-import { getStyle } from '../../utils/utils';
+import combineStyle from '../../utils/combineStyle';
 import { PROPERTY } from '../../utils/constants';
 
 const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelectEvent, getCustomize }) => {
@@ -14,7 +14,7 @@ const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelec
 
     const getTimeHeaderStyle = week => {
         const styleObj = getCustomize([CUSTOMIZE.today, CUSTOMIZE.weekend, CUSTOMIZE.weekdays]);
-        const dateHeaderStyle = getStyle({ 
+        const dateHeaderStyle = combineStyle({ 
             styleObj, 
             isToday : isToday(week.date), 
             item : week, 

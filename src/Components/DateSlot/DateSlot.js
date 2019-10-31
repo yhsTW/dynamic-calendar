@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Label from '../Label';
 import styles from './styles.css';
 import moment from 'moment';
-import { getStyle } from '../../utils/utils';
+import combineStyle from '../../utils/combineStyle';
 import { PROPERTY } from '../../utils/constants';
 
 const DateSlot = ({ isToday, item, customize }) => {
-    const getDateSlotStyle = () => getStyle({ 
+    const getDateSlotStyle = () => combineStyle({ 
         styleObj : customize, 
         item, isToday, 
         property : PROPERTY.dateHeaderStyle

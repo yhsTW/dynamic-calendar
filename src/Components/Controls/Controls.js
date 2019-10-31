@@ -4,7 +4,7 @@ import Button from '../Button';
 import withCustomize from '../../hoc/withCustomize';
 import moment from 'moment';
 import { CONTROLS_TYPE, VIEW_TYPE, WEEK_NUM, CUSTOMIZE } from '../../utils/constants';
-import { orderComponents } from '../../utils/utils';
+import sortComponents from '../../utils/sortComponents';
 import styles from './styles.css';
 
 const Controls = ({ today, currentDate, updateCurrentDate, currentView, getCustomize }) => {
@@ -76,7 +76,7 @@ const Controls = ({ today, currentDate, updateCurrentDate, currentView, getCusto
 
     return (
         <div className={ styles.controls } style={ controlsStyle }>
-            { orderComponents(order, getComponents()) }
+            { sortComponents(order, getComponents()) }
         </div>
     );
 };

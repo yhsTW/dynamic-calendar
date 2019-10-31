@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import styles from './styles.css';
 import moment from 'moment';
 import More from '../More';
-import { getStyle, makeTimeFormat } from '../../utils/utils';
+import { makeTimeFormat } from '../../utils/utils';
+import combineStyle from '../../utils/combineStyle';
 import { PROPERTY } from '../../utils/constants';
 import Label from '../Label';
 
@@ -116,7 +117,7 @@ class BackgroundCell extends Component {
     getBackgroundCellStyle = isSelected => {
         const { item, isToday, customize } = this.props;
         const styleObj = customize;
-        let style = getStyle({ 
+        let style = combineStyle({ 
             styleObj, item, isToday, property : PROPERTY.backgroundCellStyle 
         });
         
