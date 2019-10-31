@@ -63,7 +63,6 @@ const Controls = ({ today, currentDate, updateCurrentDate, currentView, getCusto
         return ({
             [CONTROLS_TYPE.today] : (
                 <Button key={ CONTROLS_TYPE.today } className={ `${ styles.buttons } ${ styles.todayBtn }` } 
-                    // style={ Controls.controlStyle } text={ Controls.todayContent } onClick={ goToday } />
                     style={ controlStyle } text={ todayContent } onClick={ goToday } />
             ),
             [CONTROLS_TYPE.prev] : (
