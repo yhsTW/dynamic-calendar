@@ -4,15 +4,18 @@ import Label from '../Label';
 import styles from './styles.css';
 import moment from 'moment';
 import { getStyle } from '../../utils/utils';
+import { PROPERTY } from '../../utils/constants';
 
-const DATE_HEADER_STYLE = 'dateHeaderStyle';
-
-const DateSlot = ({ isToday, item, customizeDateSlot }) => {
-    const getDateSlotStyle = () => getStyle({ styleObj : customizeDateSlot, item, isToday, property : DATE_HEADER_STYLE });
+const DateSlot = ({ isToday, item, customize }) => {
+    const getDateSlotStyle = () => getStyle({ 
+        styleObj : customize, 
+        item, isToday, 
+        property : PROPERTY.dateHeaderStyle
+    });
     
     return (
         <Label className={ styles.dateHeader } text={ `${ item.date.date() }` }
-            style={ getDateSlotStyle() } />
+            customize={ getDateSlotStyle() } />
     );
 };
 

@@ -4,11 +4,23 @@ import { MONTH_HEADER_DATA, CUSTOMIZE } from '../../utils/constants';
 import styles from './styles.css';
 import TimeAllDay from '../TimeAllDay/TimeAllDay';
 import withCustomize from '../../hoc/withCustomize';
+import { getStyle } from '../../utils/utils';
+import { PROPERTY } from '../../utils/constants';
 
 const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelectEvent, getCustomize }) => {
-    const getTodayStyle = () => {
-        const { [CUSTOMIZE.today] : { dateHeaderStyle } } = getCustomize([CUSTOMIZE.today]);
-        
+    const isToday = date => {
+        return date.isSame(today, 'date');
+    };
+
+    const getTimeHeaderStyle = week => {
+        const styleObj = getCustomize([CUSTOMIZE.today, CUSTOMIZE.weekend, CUSTOMIZE.weekdays]);
+        const dateHeaderStyle = getStyle({ 
+            styleObj, 
+            isToday : isToday(week.date), 
+            item : week, 
+            property : PROPERTY.dateHeaderStyle 
+        });
+
         return dateHeaderStyle;
     };
 
@@ -20,9 +32,9 @@ const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelec
             <div className={ styles.timeHeaderContent }>
                 <div className={ styles.timeHeaderHeaders }>
                     { 
-                        weekArr.map(({ date }) => (
-                            <Label key={ date } customize={ date.isSame(today, 'date') ? getTodayStyle() : {} } 
-                                className={ styles.timeHeaderItem } text={ `${ date.date() } ${ MONTH_HEADER_DATA[date.day()] }` } />
+                        weekArr.map(week => (
+                            <Label key={ week.date } customize={ getTimeHeaderStyle(week) } className={ styles.timeHeaderItem } 
+                                text={ `${ week.date.date() } ${ MONTH_HEADER_DATA[week.date.day()] }` } />
                             )
                         )
                     }

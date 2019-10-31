@@ -8,7 +8,7 @@ import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, POSITION, FORMAT } from '../
 import { events } from '../../events';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 import styles from './styles.css';
-import { classification } from '../../utils/classification';
+import { makeEventGroup } from '../../utils/makeEventGroup';
 import { CustomizeProvider } from '../../contexts/customize';
 
 const TODAY = moment();
@@ -41,14 +41,12 @@ class DynamicCalendar extends Component {
         const { events } = this.props;
         const { currentDate } = this.state;
 
-        return classification(events, currentDate);
+        return makeEventGroup(events, currentDate);
     };
 
     render() {
         const { 
-            views, onSelectSlot, onSelectEvent, useHeader, 
-            // customize : { Header : customizeHeader, View : customizeView }
-            customize
+            views, onSelectSlot, onSelectEvent, useHeader, customize
         } = this.props;
         const { currentDate, currentView } = this.state;
         const events = this.settingEvents();
@@ -59,7 +57,8 @@ class DynamicCalendar extends Component {
                     { 
                         useHeader && (
                             <Header today={ TODAY } currentDate={ currentDate } views={ views }
-                                currentView={ currentView } updateCurrentDate={ this.updateCurrentDate } updateCurrentView={ this.updateCurrentView } />
+                                currentView={ currentView } updateCurrentDate={ this.updateCurrentDate }
+                                updateCurrentView={ this.updateCurrentView } />
                         )
                     }
                     <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } 

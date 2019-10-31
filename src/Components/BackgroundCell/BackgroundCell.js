@@ -4,9 +4,9 @@ import styles from './styles.css';
 import moment from 'moment';
 import More from '../More';
 import { getStyle, makeTimeFormat } from '../../utils/utils';
+import { PROPERTY } from '../../utils/constants';
 import Label from '../Label';
 
-const BACKGROUND_CELL_STYLE = 'backgroundCellStyle';
 
 class BackgroundCell extends Component {
     cell = createRef();
@@ -117,20 +117,22 @@ class BackgroundCell extends Component {
         const { item, isToday, customize } = this.props;
         const styleObj = customize;
         let style = getStyle({ 
-            styleObj, item, isToday, property : BACKGROUND_CELL_STYLE 
+            styleObj, item, isToday, property : PROPERTY.backgroundCellStyle 
         });
         
         // border가 겹치는 현상을 수정하기 위해 marginLeft와 marginBottom 추가
-        if(styleObj.BackgroundCell.useBorder) style = {
-            ...style,
-            ...styleObj.BackgroundCell.borderStyle, 
-            marginLeft : '-1px', marginBottom : '-1px'
-        };
+        if(styleObj.BackgroundCell.useBorder) 
+            style = {
+                ...style,
+                ...styleObj.BackgroundCell.borderStyle, 
+                marginLeft : '-1px', marginBottom : '-1px'
+            };
 
-        if(isSelected) style = { 
-            ...style,
-            ...styleObj.BackgroundCell.selectStyle 
-        };
+        if(isSelected) 
+            style = { 
+                ...style,
+                ...styleObj.BackgroundCell.selectStyle 
+            };
 
         return style;
     };

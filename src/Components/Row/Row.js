@@ -100,7 +100,7 @@ class Row extends Component {
                         { 
                             useDateHeader && itemArr.map(item => (
                                 <DateSlot key={ `${ item.type }_${ item.date.date() }` } 
-                                    isToday={ today.isSame(item.date, 'date') } item={ item } customizeDateSlot={ dateSlotCustomize } />
+                                    isToday={ today.isSame(item.date, 'date') } item={ item } customize={ dateSlotCustomize } />
                             ))
                         }
                     </div>

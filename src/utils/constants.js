@@ -47,6 +47,14 @@ const CUSTOMIZE_WEEKDAYS = 'weekdays';
 const CUSTOMIZE_PREV_MONTH = 'prevMonth';
 const CUSTOMIZE_NEXT_MONTH = 'nextMonth';
 
+// Weekend Type
+const SATURDAY_STYLE = 'saturdayStyle';
+const SUNDAY_STYLE = 'sundayStyle';
+
+// property
+const BACKGROUND_CELL_STYLE = 'backgroundCellStyle';
+const DATE_HEADER_STYLE = 'dateHeaderStyle';
+
 export const MONTH_HEADER_DATA = ['일', '월', '화', '수', '목', '금', '토'];
 
 // format
@@ -109,4 +117,14 @@ export const CUSTOMIZE = {
     weekdays : CUSTOMIZE_WEEKDAYS,
     prevMonth : CUSTOMIZE_PREV_MONTH,
     nextMonth : CUSTOMIZE_NEXT_MONTH
+};
+
+export const WEEKEND_TYPE = {
+    saturdayStyle : SATURDAY_STYLE,
+    sundayStyle : SUNDAY_STYLE
+};
+
+export const PROPERTY = {
+    backgroundCellStyle : BACKGROUND_CELL_STYLE,
+    dateHeaderStyle : DATE_HEADER_STYLE
 };
