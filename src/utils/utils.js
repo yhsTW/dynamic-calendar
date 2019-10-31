@@ -10,3 +10,7 @@ export const makeTimeFormat = date => {
         ${ hour > 12 ? AM_PM.pm : AM_PM.am }
     `;
 };
+
+export const getSunday = date => moment(date).day(0);
+
+export const getSaturday = date => moment(date).day(6);

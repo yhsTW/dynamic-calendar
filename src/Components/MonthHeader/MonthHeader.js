@@ -1,6 +1,6 @@
 import React from 'react';
 import Label from '../Label';
-import { MONTH_HEADER_DATA, CUSTOMIZE } from '../../utils/constants';
+import { WEEK_DATA, CUSTOMIZE } from '../../utils/constants';
 import styles from './styles.css';
 import withCustomize from '../../hoc/withCustomize';
 
@@ -26,7 +26,7 @@ const MonthHeader = ({ getCustomize }) => {
     return (
         <div className={ styles.monthHeader }>
             {
-                MONTH_HEADER_DATA.map((week, idx) => (
+                WEEK_DATA.map((week, idx) => (
                     <Label key={ week } className={ styles.label } text={ week } customize={ getMonthHeaderStyle(idx, dateHeaderStyle) } />
                 ))
             }

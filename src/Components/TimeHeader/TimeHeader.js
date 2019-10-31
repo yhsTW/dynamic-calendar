@@ -1,6 +1,6 @@
 import React from 'react';
 import Label from '../Label';
-import { MONTH_HEADER_DATA, CUSTOMIZE } from '../../utils/constants';
+import { WEEK_DATA, CUSTOMIZE } from '../../utils/constants';
 import styles from './styles.css';
 import TimeAllDay from '../TimeAllDay/TimeAllDay';
 import withCustomize from '../../hoc/withCustomize';
@@ -34,7 +34,7 @@ const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelec
                     { 
                         weekArr.map(week => (
                             <Label key={ week.date } customize={ getTimeHeaderStyle(week) } className={ styles.timeHeaderItem } 
-                                text={ `${ week.date.date() } ${ MONTH_HEADER_DATA[week.date.day()] }` } />
+                                text={ `${ week.date.date() } ${ WEEK_DATA[week.date.day()] }` } />
                             )
                         )
                     }

@@ -55,7 +55,7 @@ const SUNDAY_STYLE = 'sundayStyle';
 const BACKGROUND_CELL_STYLE = 'backgroundCellStyle';
 const DATE_HEADER_STYLE = 'dateHeaderStyle';
 
-export const MONTH_HEADER_DATA = ['일', '월', '화', '수', '목', '금', '토'];
+export const WEEK_DATA = ['일', '월', '화', '수', '목', '금', '토'];
 
 // format
 export const FORMAT = 'yyyy년 mm월';

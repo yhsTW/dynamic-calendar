@@ -4,20 +4,15 @@ import TimeContent from '../TimeContent';
 import moment from 'moment';
 import { MONTH_TYPE, WEEK_NUM, VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
+import { getSunday } from '../../utils/utils';
 
 const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView }) => {
-    const getSunday = () => {
-        const currentDay = currentDate.day();
-
-        return moment(currentDate).date(currentDate.date() - currentDay);
-    };
-
     const pushArr = (arr, data) => {
         arr.push(data);
     };
 
     const setWeek = arr => {
-        const sunday = getSunday();
+        const sunday = getSunday(currentDate);
 
         for(let i = 0; i < WEEK_NUM; i++) {
             const current = moment(sunday).date(sunday.date() + i);
