@@ -47,12 +47,16 @@ class Month extends Component {
     
             this.setState({ usePopup : true });
         } else {
-            const { updateCurrentDate, updateCurrentView, views } = this.props;
+            this.moveDayView(date);
+        }
+    };
 
-            if(views.indexOf(VIEW_TYPE.day) !== -1) {
-                updateCurrentDate(date);
-                updateCurrentView(VIEW_TYPE.day);
-            }
+    moveDayView = date => {
+        const { updateCurrentDate, updateCurrentView, views } = this.props;
+
+        if(views.indexOf(VIEW_TYPE.day) !== -1) {
+            updateCurrentDate(date);
+            updateCurrentView(VIEW_TYPE.day);
         }
     };
 
@@ -74,7 +78,7 @@ class Month extends Component {
                 <MonthHeader />
                 <MonthContent today={ today } events={ events } onSelectSlot={ onSelectSlot } currentDate={ currentDate }
                     onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit } currentView={ currentView }
-                    openPopup={ this.openPopup } />
+                    openPopup={ this.openPopup } moveDayView={ this.moveDayView } />
                 {
                     usePopup && (
                         <Popup popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent }

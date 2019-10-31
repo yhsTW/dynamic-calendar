@@ -82,7 +82,7 @@ class Row extends Component {
             stopSelecting, startSelecting, setSelectedStart, setSelectedEnd,
             selectedStart, selectedEnd, lastSelectedDate, setLastSelectedDate,
             defaultSelectedDate, onSelectEvent, limit, openPopup, useDateHeader,
-            customizeList
+            customizeList, moveDayView
         } = this.props;
         const sortEvents = sortEventsUtil(events);
         const sameEventRow = this.sameEventRow(sortEvents);
@@ -100,7 +100,8 @@ class Row extends Component {
                         { 
                             useDateHeader && itemArr.map(item => (
                                 <DateSlot key={ `${ item.type }_${ item.date.date() }` } 
-                                    isToday={ today.isSame(item.date, 'date') } item={ item } customize={ dateSlotCustomize } />
+                                    isToday={ today.isSame(item.date, 'date') } item={ item } customize={ dateSlotCustomize }
+                                    moveDayView={ moveDayView } isSelecting={ isSelecting } startSelecting={ startSelecting } />
                             ))
                         }
                     </div>
