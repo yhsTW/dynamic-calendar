@@ -141,19 +141,17 @@ Row.propTypes = {
     lastSelectedDate : PropTypes.instanceOf(moment),
     limit : PropTypes.number,
     select : PropTypes.shape({
-        top : PropTypes.number,
-        left : PropTypes.number.isRequired,
-        width : PropTypes.number.isRequired,
-        height : PropTypes.number.isRequired,
-        events : PropTypes.arrayOf(PropTypes.shape({
-            id : PropTypes.number.isRequired,
-            title : PropTypes.string.isRequired,
-            start : PropTypes.instanceOf(Date).isRequired,
-            end : PropTypes.instanceOf(Date).isRequired,
-            color : PropTypes.string,
-            allDay : PropTypes.bool.isRequired
-        })),
-        date : PropTypes.instanceOf(moment).isRequired
+        defaultSelectedDate : PropTypes.instanceOf(moment),
+        isSelecting : PropTypes.bool.isRequired,
+        lastSelectedDate : PropTypes.instanceOf(moment),
+        selectedEnd : PropTypes.instanceOf(moment),
+        selectedStart : PropTypes.instanceOf(moment),
+        setDefaultSelectedDate : PropTypes.func.isRequired,
+        setLastSelectedDate : PropTypes.func.isRequired,
+        setSelectedEnd : PropTypes.func.isRequired,
+        setSelectedStart : PropTypes.func.isRequired,
+        startSelecting : PropTypes.func.isRequired,
+        stopSelecting : PropTypes.func.isRequired
     }).isRequired,
     selectable : PropTypes.bool.isRequired,
     selectedEnd : PropTypes.instanceOf(moment),

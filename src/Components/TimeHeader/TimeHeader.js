@@ -1,11 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Label from '../Label';
-import { WEEK_DATA, CUSTOMIZE } from '../../utils/constants';
+import { WEEK_DATA, CUSTOMIZE, VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
 import TimeAllDay from '../TimeAllDay/TimeAllDay';
 import withCustomize from '../../hoc/withCustomize';
 import combineStyle from '../../utils/combineStyle';
 import { PROPERTY } from '../../utils/constants';
+import moment from 'moment';
 
 const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelectEvent, getCustomize }) => {
     const isToday = date => {
@@ -44,6 +46,26 @@ const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelec
             </div>
         </div>
     );
+};
+
+TimeHeader.propTypes = {
+    currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]),
+    events : PropTypes.arrayOf(PropTypes.shape({
+        id : PropTypes.number.isRequired,
+        title : PropTypes.string.isRequired,
+        start : PropTypes.instanceOf(Date).isRequired,
+        end : PropTypes.instanceOf(Date).isRequired,
+        color : PropTypes.string,
+        allDay : PropTypes.bool.isRequired
+    })).isRequired,
+    today : PropTypes.instanceOf(moment).isRequired,
+    weekArr : PropTypes.arrayOf( PropTypes.shape({
+        date : PropTypes.instanceOf(moment).isRequired,
+        type : PropTypes.string.isRequired
+    }).isRequired).isRequired,
+    getCustomize : PropTypes.func.isRequired,
+    onSelectEvent : PropTypes.func.isRequired,
+    onSelectSlot : PropTypes.func.isRequired
 };
 
 export default withCustomize(CUSTOMIZE.view)(TimeHeader);
