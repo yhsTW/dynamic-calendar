@@ -78,10 +78,10 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
     return (
         <div className={ styles.week }>
             <TimeHeader today={ today } currentView={ currentView } weekArr={ weekArr }
-                onSelectSlot={ onSelectSlot } events={ getAllDayEvents() } onSelectSlot={ onSelectSlot }
-                onSelectEvent={ onSelectEvent } />
+                onSelectSlot={ onSelectSlot } events={ getAllDayEvents() }
+                onSelectEvent={ onSelectEvent } selectable={ selectable } />
             <TimeContent today={ today } currentDate={ currentDate } currentView={ currentView } 
-                conSelectSlot={ onSelectSlot } events={ getNotAllDayEvents() } onSelectSlot={ onSelectSlot }
+                events={ getNotAllDayEvents() } onSelectSlot={ onSelectSlot }
                 onSelectEvent={ onSelectEvent } weekArr={ weekArr } selectable={ selectable } />
         </div>
     );

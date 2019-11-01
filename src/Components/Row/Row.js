@@ -121,7 +121,6 @@ Row.defaultProps = {
 };
 
 Row.propTypes = {
-    currentDate : PropTypes.instanceOf(moment).isRequired,
     currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]).isRequired,
     customizeList : PropTypes.array.isRequired,
     defaultSelectedDate : PropTypes.instanceOf(moment),
@@ -159,12 +158,12 @@ Row.propTypes = {
     today : PropTypes.instanceOf(moment).isRequired,
     useDateHeader : PropTypes.bool.isRequired,
     getCustomize : PropTypes.func.isRequired,
-    moveDayView : PropTypes.func.isRequired,
+    moveDayView : PropTypes.func,
     onSelectEvent : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired,
     openPopup : PropTypes.func,
     setLastSelectedDate : PropTypes.func.isRequired,
-    setLimit : PropTypes.func.isRequired,
+    setLimit : PropTypes.func,
     setSelectedStart : PropTypes.func.isRequired,
     setSelectedEnd : PropTypes.func.isRequired,
     startSelecting : PropTypes.func.isRequired,
