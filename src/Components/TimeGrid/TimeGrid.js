@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TimeHeader from '../TimeHeader';
 import TimeContent from '../TimeContent';
 import moment from 'moment';
@@ -7,10 +8,12 @@ import styles from './styles.css';
 import { getSunday } from '../../utils/dateUtil';
 
 const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView, selectable }) => {
+    // 전달받은 배열에 data를 집어넣는다.
     const pushArr = (arr, data) => {
         arr.push(data);
     };
 
+    // 일주일의 날짜 정보를 집어 넣는다.
     const setWeek = arr => {
         const sunday = getSunday(currentDate);
 
@@ -24,6 +27,7 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         }
     };
 
+    // week, day에 맞게 주(week) 배열을 가져온다.
     const getWeekArr = () => {
         let weekArr = [];
 
@@ -36,6 +40,7 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         return weekArr;
     };
 
+    // 현재의 주(week)가 현재의 월(month)의 기준으로 몇 번째 주인지 확인한다.
     const getWeek = () => {
         const firstWeek = moment(currentDate).startOf('month').week();
         const currentWeek = moment(currentDate).month() === 11 && moment(currentDate).week() === 1 ? (
@@ -45,10 +50,12 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         return currentWeek - firstWeek;
     };
 
+    // 현재의 주(week)에 맞는 일정 리스트를 가져온다.
     const getWeekEvents = () => {
         return events[getWeek()];
     };
 
+    // 종일 일정 목록을 가져온다.
     const getAllDayEvents = () => {
         const weekEvents = getWeekEvents();
 
@@ -57,6 +64,7 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         ) : [];
     };
 
+    // 종일 일정이 아닌 일정 목록을 가져온다.
     const getNotAllDayEvents = () => {
         const weekEvents = getWeekEvents();
 
@@ -77,6 +85,25 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
                 onSelectEvent={ onSelectEvent } weekArr={ weekArr } selectable={ selectable } />
         </div>
     );
+};
+
+TimeGrid.propTypes = {
+    currentDate : PropTypes.instanceOf(moment).isRequired,
+    currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]),
+    events : PropTypes.arrayOf(PropTypes.shape({
+            id : PropTypes.number.isRequired,
+            title : PropTypes.string.isRequired,
+            start : PropTypes.instanceOf(Date).isRequired,
+            end : PropTypes.instanceOf(Date).isRequired,
+            color : PropTypes.string,
+            allDay : PropTypes.bool.isRequired
+        })
+    ).isRequired,
+    selectable : PropTypes.bool.isRequired,
+    today : PropTypes.instanceOf(moment).isRequired,
+    views : PropTypes.arrayOf(PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day])),
+    onSelectEvent : PropTypes.func.isRequired,
+    onSelectSlot : PropTypes.func.isRequired
 };
 
 export default TimeGrid;
