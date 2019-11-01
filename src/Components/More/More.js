@@ -6,7 +6,7 @@ import { CUSTOMIZE } from '../../utils/constants';
 
 const More = ({ more, openPopup, getCustomize }) => {
     const { 
-        [CUSTOMIZE.more] : { moreStyle, numFrontText, numBackText, position } 
+        [CUSTOMIZE.more] : { moreStyle, prefix, suffix, position } 
     } = getCustomize([CUSTOMIZE.more]);
 
     const showMore = e => {
@@ -17,13 +17,14 @@ const More = ({ more, openPopup, getCustomize }) => {
 
     return (
         <span className={ styles.more } style={ moreStyle } onMouseDown={ showMore }>
-            { `${ numFrontText }${ more }${ numBackText }` }
+            { `${ prefix }${ more }${ suffix }` }
         </span>
     );
 };
 
 More.propTypes = {
     more : PropTypes.number.isRequired,
+    getCustomize : PropTypes.func.isRequired,
     openPopup : PropTypes.func.isRequired
 };
 

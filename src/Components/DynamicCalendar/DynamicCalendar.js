@@ -137,8 +137,8 @@ DynamicCalendar.defaultProps = {
             },
             Popup : {},
             More : {
-                numFrontText : '+',
-                numBackText : ' more',
+                prefix : '+',
+                suffix : ' more',
                 moreStyle : {},
                 position : [
                     POSITION.top,
@@ -290,8 +290,8 @@ DynamicCalendar.propTypes = {
             }),
             Popup : PropTypes.shape({}),
             More : PropTypes.shape({
-                numFrontText : PropTypes.string,
-                numBackText : PropTypes.string,
+                prefix : PropTypes.string,
+                suffix : PropTypes.string,
                 moreStyle : PropTypes.object,
                 position : PropTypes.arrayOf(
                     PropTypes.oneOf([

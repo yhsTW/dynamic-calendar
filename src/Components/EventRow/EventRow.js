@@ -21,20 +21,15 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
     };
 
     const getSegmentWidth = (event, idx) => {
-        // console.log('===================================');
-        // console.log('event, idx : ', event, idx);
         let segmentWidth = 0;
 
         if(getStartCondition(event)) {
             if(idx > 0) {
-                // segmentWidth = `calc(100% * ${ moment(events[idx - 1].end).day() - moment(event.start).day() }/7)`;
                 segmentWidth = `calc(100% * ${ moment(event.start).day() - moment(events[idx - 1].end).day() - 1 }/${ WEEK_NUM })`;
             } else {
                 segmentWidth = `calc(100% * ${ moment(event.start).day() }/${ WEEK_NUM })`;
             }
         }
-
-        // console.log('===================================');
 
         return segmentWidth;
     };

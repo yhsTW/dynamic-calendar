@@ -45,28 +45,40 @@ const DateSlot = ({ isToday, item, customize, moveDayView, isSelecting, startSel
 };
 
 DateSlot.propTypes = {
+    customize : PropTypes.shape({
+        holiday : PropTypes.shape({
+            backgroundCellStyle : PropTypes.object,
+            dateHeaderStyle : PropTypes.object.isRequired
+        }),
+        nextMonth : PropTypes.shape({
+            backgroundCellStyle : PropTypes.object,
+            dateHeaderStyle : PropTypes.object.isRequired
+        }),
+        prevMonth : PropTypes.shape({
+            backgroundCellStyle : PropTypes.object,
+            dateHeaderStyle : PropTypes.object.isRequired
+        }),
+        today : PropTypes.shape({
+            backgroundCellStyle : PropTypes.object,
+            dateHeaderStyle : PropTypes.object.isRequired
+        }),
+        weekdays : PropTypes.shape({
+            backgroundCellStyle : PropTypes.object,
+            dateHeaderStyle : PropTypes.object.isRequired
+        }),
+        weekend : PropTypes.shape({
+            backgroundCellStyle : PropTypes.object,
+            dateHeaderStyle : PropTypes.object.isRequired
+        })
+    }).isRequired,
+    isSelecting : PropTypes.bool.isRequired,
     isToday : PropTypes.bool.isRequired,
     item : PropTypes.shape({
         type : PropTypes.oneOf(['prev', 'current', 'next']).isRequired,
         date : PropTypes.instanceOf(moment).isRequired
     }),
-    customizeDateSlot : PropTypes.shape({
-        customizeToday : PropTypes.shape({
-            dateHeaderStyle : PropTypes.object
-        }),
-        holiday : PropTypes.shape({
-            dateHeaderStyle : PropTypes.object
-        }),
-        weekdays : PropTypes.shape({
-            dateHeaderStyle : PropTypes.object
-        }),
-        weekend : PropTypes.shape({
-            dateHeaderStyle : PropTypes.shape({
-                saturdayStyle : PropTypes.object,
-                sundayStyle : PropTypes.object
-            })
-        })
-    })
+    moveDayView : PropTypes.func.isRequired,
+    startSelecting : PropTypes.func.isRequired
 };
 
 export default DateSlot;
