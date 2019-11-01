@@ -13,7 +13,6 @@ import withCustomize from '../../hoc/withCustomize';
 class Row extends Component {
     row = createRef();
     header = createRef();
-    eventRowParent = createRef();
     eventRow = createRef();
 
     sameEventRow = (sortEvents) => {
@@ -122,6 +121,9 @@ Row.defaultProps = {
 };
 
 Row.propTypes = {
+    currentDate : PropTypes.instanceOf(moment).isRequired,
+    currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]).isRequired,
+    customizeList : PropTypes.array.isRequired,
     defaultSelectedDate : PropTypes.instanceOf(moment),
     events : PropTypes.arrayOf(PropTypes.shape({
         id : PropTypes.number.isRequired,
@@ -138,15 +140,33 @@ Row.propTypes = {
     }).isRequired).isRequired,
     lastSelectedDate : PropTypes.instanceOf(moment),
     limit : PropTypes.number,
-    selectedStart : PropTypes.instanceOf(moment),
+    select : PropTypes.shape({
+        top : PropTypes.number.isRequired,
+        left : PropTypes.number.isRequired,
+        width : PropTypes.number.isRequired,
+        height : PropTypes.number.isRequired,
+        events : PropTypes.arrayOf(PropTypes.shape({
+            id : PropTypes.number.isRequired,
+            title : PropTypes.string.isRequired,
+            start : PropTypes.instanceOf(Date).isRequired,
+            end : PropTypes.instanceOf(Date).isRequired,
+            color : PropTypes.string,
+            allDay : PropTypes.bool.isRequired
+        })),
+        date : PropTypes.instanceOf(moment).isRequired
+    }).isRequired,
+    selectable : PropTypes.bool.isRequired,
     selectedEnd : PropTypes.instanceOf(moment),
+    selectedStart : PropTypes.instanceOf(moment),
     today : PropTypes.instanceOf(moment).isRequired,
-    useDateHeader : PropTypes.bool,
-    onSelectEvent : PropTypes.func,
-    onSelectSlot : PropTypes.func,
+    useDateHeader : PropTypes.bool.isRequired,
+    getCustomize : PropTypes.func.isRequired,
+    moveDayView : PropTypes.func.isRequired,
+    onSelectEvent : PropTypes.func.isRequired,
+    onSelectSlot : PropTypes.func.isRequired,
     openPopup : PropTypes.func,
-    setLastSelectedDate : PropTypes.func,
-    setLimit : PropTypes.func,
+    setLastSelectedDate : PropTypes.func.isRequired,
+    setLimit : PropTypes.func.isRequired,
     setSelectedStart : PropTypes.func.isRequired,
     setSelectedEnd : PropTypes.func.isRequired,
     startSelecting : PropTypes.func.isRequired,

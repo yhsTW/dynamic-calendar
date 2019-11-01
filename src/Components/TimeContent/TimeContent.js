@@ -4,7 +4,7 @@ import TimeColumn from '../TimeColumn';
 import getTimeArr from '../../utils/getTimeArr';
 import moment from 'moment'
 
-const TimeContent = ({ currentDate, today, weekArr, currentView, onSelectSlot, events, onSelectEvent }) => {
+const TimeContent = ({ currentDate, today, weekArr, currentView, onSelectSlot, events, onSelectEvent, selectable }) => {
 
     const timeArr = getTimeArr();
     const sortEvents = () => {
@@ -35,7 +35,7 @@ const TimeContent = ({ currentDate, today, weekArr, currentView, onSelectSlot, e
                     weekArr.map(week => (
                         <TimeColumn key={ `${ week.date }_${ week.type }` } itemArr={ timeArr } week={ week } 
                             onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent } currentView={ currentView }
-                            events={ newEvents[week.date.day()] } />
+                            events={ newEvents[week.date.day()] } selectable={ selectable } />
                     ))
                 }
             </div>

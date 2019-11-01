@@ -93,8 +93,10 @@ DynamicCalendar.defaultProps = {
     // views : [VIEW_TYPE.month],
     ///////////////////// 테스트용 /////////////////////
     components : null,
-    selectable : false,
-    popup : false,
+    // selectable : false,
+    // popup : false,
+    selectable : true,
+    popup : true,
     useHeader : true,
     customize : {
         Header : {

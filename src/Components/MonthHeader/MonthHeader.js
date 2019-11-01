@@ -4,24 +4,24 @@ import { WEEK_DATA, CUSTOMIZE } from '../../utils/constants';
 import styles from './styles.css';
 import withCustomize from '../../hoc/withCustomize';
 
-const getMonthHeaderStyle = (idx, dateHeaderStyle) => {
-    const { saturdayStyle, sundayStyle } = dateHeaderStyle;
-    let style = {};
-
-    switch(idx) {
-        case 0 :
-            return style = { ...style, ...sundayStyle };
-
-        case 6 :
-            return style = { ...style, ...saturdayStyle };
-
-        default : 
-            return style;
-    }
-};
-
 const MonthHeader = ({ getCustomize }) => {
     const { [CUSTOMIZE.weekend] : { dateHeaderStyle } } = getCustomize([CUSTOMIZE.weekend]);
+
+    const getMonthHeaderStyle = (idx, dateHeaderStyle) => {
+        const { saturdayStyle, sundayStyle } = dateHeaderStyle;
+        let style = {};
+    
+        switch(idx) {
+            case 0 :
+                return style = { ...style, ...sundayStyle };
+    
+            case 6 :
+                return style = { ...style, ...saturdayStyle };
+    
+            default : 
+                return style;
+        }
+    };
 
     return (
         <div className={ styles.monthHeader }>

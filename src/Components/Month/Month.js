@@ -91,8 +91,12 @@ class Month extends Component {
 }
 
 Month.propTypes = {
-    today : PropTypes.instanceOf(moment).isRequired,
     currentDate : PropTypes.instanceOf(moment).isRequired,
+    currentView : PropTypes.oneOf([
+        VIEW_TYPE.month, 
+        VIEW_TYPE.week, 
+        VIEW_TYPE.day
+    ]).isRequired,
     events : PropTypes.arrayOf(
         PropTypes.shape(
             {
@@ -101,10 +105,24 @@ Month.propTypes = {
                 start : PropTypes.instanceOf(Date).isRequired,
                 end : PropTypes.instanceOf(Date).isRequired,
                 color : PropTypes.string,
-                allDay : PropTypes.bool.isRequired
+                allDay : PropTypes.bool
             }
         )
-    )
+    ),
+    popup : PropTypes.bool.isRequired,
+    selectable : PropTypes.bool.isRequired,
+    today : PropTypes.instanceOf(moment).isRequired,
+    views : PropTypes.arrayOf(
+        PropTypes.oneOf([
+            VIEW_TYPE.month, 
+            VIEW_TYPE.week, 
+            VIEW_TYPE.day
+        ])
+    ).isRequired,
+    onSelectEvent : PropTypes.func.isRequired,
+    onSelectSlot : PropTypes.func.isRequired,
+    updateCurrentDate : PropTypes.func.isRequired,
+    updateCurrentView : PropTypes.func.isRequired
 };
 
 export default Month;

@@ -6,7 +6,7 @@ import { MONTH_TYPE, WEEK_NUM, VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
 import { getSunday } from '../../utils/dateUtil';
 
-const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView }) => {
+const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView, selectable }) => {
     const pushArr = (arr, data) => {
         arr.push(data);
     };
@@ -74,7 +74,7 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
                 onSelectEvent={ onSelectEvent } />
             <TimeContent today={ today } currentDate={ currentDate } currentView={ currentView } 
                 conSelectSlot={ onSelectSlot } events={ getNotAllDayEvents() } onSelectSlot={ onSelectSlot }
-                onSelectEvent={ onSelectEvent } weekArr={ weekArr } />
+                onSelectEvent={ onSelectEvent } weekArr={ weekArr } selectable={ selectable } />
         </div>
     );
 };
