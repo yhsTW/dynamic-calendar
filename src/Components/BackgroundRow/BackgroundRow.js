@@ -87,6 +87,7 @@ class BackgroundRow extends Component {
 }
 
 BackgroundRow.propTypes = {
+    customizeList : PropTypes.array.isRequired,
     defaultSelectedDate : PropTypes.instanceOf(moment),
     events : PropTypes.arrayOf(PropTypes.shape({
         id : PropTypes.number.isRequired,
@@ -103,16 +104,17 @@ BackgroundRow.propTypes = {
     })).isRequired,
     lastSelectedDate : PropTypes.instanceOf(moment),
     limit : PropTypes.number,
-    selectedStart : PropTypes.instanceOf(moment),
     selectedEnd : PropTypes.instanceOf(moment),
+    selectedStart : PropTypes.instanceOf(moment),
     today : PropTypes.instanceOf(moment),
-    onSelectSlot : PropTypes.func,
-    openPopup : PropTypes.func,
-    setLastSelectedDate : PropTypes.func,
-    setSelectedStart : PropTypes.func,
-    setSelectedEnd : PropTypes.func,
-    startSelecting : PropTypes.func,
-    stopSelecting : PropTypes.func
+    getCustomize : PropTypes.func.isRequired,
+    onSelectSlot : PropTypes.func.isRequired,
+    openPopup : PropTypes.func.isRequired,
+    setLastSelectedDate : PropTypes.func.isRequired,
+    setSelectedStart : PropTypes.func.isRequired,
+    setSelectedEnd : PropTypes.func.isRequired,
+    startSelecting : PropTypes.func.isRequired,
+    stopSelecting : PropTypes.func.isRequired
 };
 
 export default withCustomize(CUSTOMIZE.view)(BackgroundRow);
