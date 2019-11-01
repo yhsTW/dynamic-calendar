@@ -170,6 +170,7 @@ BackgroundCell.defaultProps = {
 };
 
 BackgroundCell.propTypes = {
+    customize : PropTypes.object.isRequired,
     defaultSelectedDate : PropTypes.instanceOf(moment),
     events : PropTypes.arrayOf(PropTypes.shape({
         id : PropTypes.number.isRequired,
@@ -188,8 +189,9 @@ BackgroundCell.propTypes = {
     }).isRequired,
     lastSelectedDate : PropTypes.instanceOf(moment),
     more : PropTypes.number.isRequired,
-    selectedStart : PropTypes.instanceOf(moment),
     selectedEnd : PropTypes.instanceOf(moment),
+    selectedStart : PropTypes.instanceOf(moment),
+    useTime : PropTypes.bool,
     onSelectSlot : PropTypes.func,
     openPopup : PropTypes.func.isRequired,
     setLastSelectedDate : PropTypes.func,
