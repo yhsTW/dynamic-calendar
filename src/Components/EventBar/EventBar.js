@@ -67,9 +67,11 @@ EventBar.propTypes = {
     }).isRequired,
     isEnd : PropTypes.bool.isRequired,
     isSelecting : PropTypes.bool.isRequired,
+    isStart : PropTypes.bool.isRequired,
+    useTime : PropTypes.bool.isRequired,
     width : PropTypes.string.isRequired,
-    startSelecting : PropTypes.func.isRequired,
-    onSelectEvent : PropTypes.func.isRequired
+    onSelectEvent : PropTypes.func.isRequired,
+    startSelecting : PropTypes.func.isRequired
 };
 
 export default EventBar;
