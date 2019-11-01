@@ -76,6 +76,8 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
 };
 
 EventRow.propTypes = {
+    currentView : PropTypes.string.isRequired,
+    eventRowRef : PropTypes.object,
     events : PropTypes.arrayOf(PropTypes.shape({
         id : PropTypes.number.isRequired,
         title : PropTypes.string.isRequired,
@@ -85,15 +87,14 @@ EventRow.propTypes = {
         allDay : PropTypes.bool.isRequired
     })),
     isSelecting : PropTypes.bool.isRequired,
-    slotStart : PropTypes.shape({
-        date : PropTypes.instanceOf(moment).isRequired,
-        type : PropTypes.oneOf(['prev', 'current', 'next']).isRequired
-    }),
     slotEnd : PropTypes.shape({
         date : PropTypes.instanceOf(moment).isRequired,
         type : PropTypes.oneOf(['prev', 'current', 'next']).isRequired
     }),
-    eventRowRef : PropTypes.object,
+    slotStart : PropTypes.shape({
+        date : PropTypes.instanceOf(moment).isRequired,
+        type : PropTypes.oneOf(['prev', 'current', 'next']).isRequired
+    }),
     onSelectEvent : PropTypes.func.isRequired,
     startSelecting : PropTypes.func.isRequired
 };

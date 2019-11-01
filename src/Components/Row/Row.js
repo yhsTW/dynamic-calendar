@@ -98,7 +98,7 @@ class Row extends Component {
                             events && sameEventRow.map((event, idx) => {
                                 if(currentView !== VIEW_TYPE.month || (limit === 0 || idx < limit)) {
                                     return (
-                                        <EventRow ref={ this.eventRowParent } eventRowRef={ this.eventRow } key={ `event-row_${ idx }` } 
+                                        <EventRow eventRowRef={ this.eventRow } key={ `event-row_${ idx }` } 
                                             events={ event } slotStart={ itemArr[0] } slotEnd={ itemArr[itemArr.length - 1] } 
                                             onSelectEvent={ onSelectEvent } isSelecting={ isSelecting } startSelecting={ startSelecting }
                                             currentView={ currentView } />
@@ -141,7 +141,7 @@ Row.propTypes = {
     lastSelectedDate : PropTypes.instanceOf(moment),
     limit : PropTypes.number,
     select : PropTypes.shape({
-        top : PropTypes.number.isRequired,
+        top : PropTypes.number,
         left : PropTypes.number.isRequired,
         width : PropTypes.number.isRequired,
         height : PropTypes.number.isRequired,
