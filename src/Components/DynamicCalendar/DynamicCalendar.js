@@ -140,10 +140,10 @@ DynamicCalendar.defaultProps = {
                 prefix : '+',
                 suffix : ' more',
                 moreStyle : {},
-                position : [
-                    POSITION.top,
-                    POSITION.right
-                ]
+                position : {
+                    alignItems : 'flex-start',
+                    justifyContent : 'flex-end'
+                }
             },
             today : {
                 dateHeaderStyle : {
@@ -293,15 +293,10 @@ DynamicCalendar.propTypes = {
                 prefix : PropTypes.string,
                 suffix : PropTypes.string,
                 moreStyle : PropTypes.object,
-                position : PropTypes.arrayOf(
-                    PropTypes.oneOf([
-                        POSITION.top,
-                        POSITION.right,
-                        POSITION.bottom,
-                        POSITION.left,
-                        POSITION.center
-                    ])
-                )
+                position : PropTypes.shape({
+                    alignItems : PropTypes.string,
+                    justifyContent : PropTypes.string
+                })
             }),
             today : PropTypes.shape({
                 dateHeaderStyle : PropTypes.object,

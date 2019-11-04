@@ -9,7 +9,7 @@ const MonthContent = props => getDateArr(props.currentDate).map((itemArr, idx) =
             customizeList={[
                 CUSTOMIZE.today, CUSTOMIZE.holiday, CUSTOMIZE.weekdays, 
                 CUSTOMIZE.weekend, CUSTOMIZE.prevMonth, CUSTOMIZE.nextMonth,
-                CUSTOMIZE.backgroundCell
+                CUSTOMIZE.backgroundCell, CUSTOMIZE.more
             ]}/>
     )
 );

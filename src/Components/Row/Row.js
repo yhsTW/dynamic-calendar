@@ -64,6 +64,14 @@ class Row extends Component {
         ]);
     };
 
+    getMorePosition = () => {
+        const { getCustomize } = this.props;
+        const { [CUSTOMIZE.more] : { position : { alignItems } } } = getCustomize([CUSTOMIZE.more]);
+
+
+        return alignItems;
+    };
+
     render() {
         const { 
             today, itemArr, events, onSelectSlot, isSelecting, currentView,
@@ -75,6 +83,7 @@ class Row extends Component {
         const sortEvents = sortEventsUtil(events);
         const sameEventRow = this.sameEventRow(sortEvents);
         const dateSlotCustomize = this.getDateSlotCustomize();
+        const newLimit =  limit !== 0 && this.getMorePosition() === 'flex-end' ? limit - 1 : limit;
 
         return (
             <div className={ styles.row } ref={ this.row }>
@@ -96,7 +105,7 @@ class Row extends Component {
                     <div className="eventBox">
                         {  
                             events && sameEventRow.map((event, idx) => {
-                                if(currentView !== VIEW_TYPE.month || (limit === 0 || idx < limit)) {
+                                if(currentView !== VIEW_TYPE.month || (newLimit === 0 || idx < newLimit)) {
                                     return (
                                         <EventRow eventRowRef={ this.eventRow } key={ `event-row_${ idx }` } 
                                             events={ event } slotStart={ itemArr[0] } slotEnd={ itemArr[itemArr.length - 1] } 

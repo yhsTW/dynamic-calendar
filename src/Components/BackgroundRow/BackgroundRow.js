@@ -44,6 +44,12 @@ class BackgroundRow extends Component {
         
         return getCustomize(customizeList);
     };
+
+    getAlignItems = customize => {
+        console.log('customize : ', customize)
+
+        return customize[CUSTOMIZE.more].position.alignItems;
+    };
     
     render() {
         const { 
@@ -54,6 +60,8 @@ class BackgroundRow extends Component {
         } = this.props;
         const eventCountArr = this.settingEventCount();
         const customize = this.getBackgroundCustomize();
+        const alignItems = this.getAlignItems(customize);
+        console.log('eventCountArr : ', eventCountArr)
 
         return (
             <div className={ styles.backgroundRow }>
@@ -66,7 +74,7 @@ class BackgroundRow extends Component {
 
                         if(current && current.more > limit) {
                             isMore = true;
-                            more = current.more - limit;
+                            more = alignItems === 'flex-end' ? current.more - (limit - 1) : current.more - limit;
                             events = current.events
                         }
 

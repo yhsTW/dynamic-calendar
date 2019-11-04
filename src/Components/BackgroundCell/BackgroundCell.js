@@ -5,7 +5,7 @@ import moment from 'moment';
 import More from '../More';
 import { makeTimeFormat } from '../../utils/dateUtil';
 import combineStyle from '../../utils/combineStyle';
-import { PROPERTY } from '../../utils/constants';
+import { PROPERTY, CUSTOMIZE } from '../../utils/constants';
 import Label from '../Label';
 
 
@@ -134,6 +134,8 @@ class BackgroundCell extends Component {
                 ...style,
                 ...styleObj.BackgroundCell.selectStyle 
             };
+
+        style = { ...style, ...customize[CUSTOMIZE.more].position };
 
         return style;
     };
