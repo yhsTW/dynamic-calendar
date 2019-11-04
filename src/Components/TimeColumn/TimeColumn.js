@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TimeSlot from '../TimeSlot';
 import withSelection from '../../hoc/withSelection';
 import EventBar from '../EventBar';
@@ -130,8 +131,7 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
                 {
                     itemArr.map((item, index) => (
                         <TimeSlot key={ `${ item[0].date }${ week ? `_${ week.date }` : '' }_${ index }` } items={ item } week={ week } 
-                            select={ select } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent } currentView={ currentView }
-                            customize={ getSlotStyle() } />
+                            select={ select } onSelectSlot={ onSelectSlot } currentView={ currentView } customize={ getSlotStyle() } />
                     ))
                 }
             </div>
@@ -147,6 +147,45 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
             </div>
         </div>
     );
+};
+
+TimeColumn.propTypes = {
+    currentView : PropTypes.string,
+    events : PropTypes.arrayOf(PropTypes.shape({
+        id : PropTypes.number.isRequired,
+        title : PropTypes.string.isRequired,
+        start : PropTypes.instanceOf(Date).isRequired,
+        end : PropTypes.instanceOf(Date).isRequired,
+        color : PropTypes.string,
+        allDay : PropTypes.bool
+    })),
+    itemArr : PropTypes.arrayOf(PropTypes.arrayOf(
+        PropTypes.shape({
+            date : PropTypes.instanceOf(moment),
+            type : PropTypes.string.isRequired
+        }).isRequired
+    ).isRequired).isRequired,
+    select : PropTypes.shape({
+        defaultSelectedDate : PropTypes.instanceOf(moment),
+        isSelecting : PropTypes.bool.isRequired,
+        lastSelectedDate : PropTypes.instanceOf(moment),
+        selectedEnd : PropTypes.instanceOf(moment),
+        selectedStart : PropTypes.instanceOf(moment),
+        setDefaultSelectedDate : PropTypes.func.isRequired,
+        setLastSelectedDate : PropTypes.func.isRequired,
+        setSelectedEnd : PropTypes.func.isRequired,
+        setSelectedStart : PropTypes.func.isRequired,
+        startSelecting : PropTypes.func.isRequired,
+        stopSelecting : PropTypes.func.isRequired
+    }).isRequired,
+    selectable : PropTypes.bool,
+    week : PropTypes.shape({
+        date : PropTypes.instanceOf(moment),
+        type : PropTypes.string.isRequired
+    }),
+    getCustomize : PropTypes.func.isRequired,
+    onSelectEvent : PropTypes.func,
+    onSelectSlot : PropTypes.func
 };
 
 export default withCustomize(CUSTOMIZE.view)(withSelection(TimeColumn));

@@ -20,7 +20,7 @@ TimeAllDay.propTypes = {
         start : PropTypes.instanceOf(Date).isRequired,
         end : PropTypes.instanceOf(Date).isRequired,
         color : PropTypes.string,
-        allDay : PropTypes.bool.isRequired
+        allDay : PropTypes.bool
     })),
     itemArr : PropTypes.arrayOf( PropTypes.shape({
         date : PropTypes.instanceOf(moment).isRequired,

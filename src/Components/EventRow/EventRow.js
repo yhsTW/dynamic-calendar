@@ -84,7 +84,7 @@ EventRow.propTypes = {
         start : PropTypes.instanceOf(Date).isRequired,
         end : PropTypes.instanceOf(Date).isRequired,
         color : PropTypes.string,
-        allDay : PropTypes.bool.isRequired
+        allDay : PropTypes.bool
     })),
     isSelecting : PropTypes.bool.isRequired,
     slotEnd : PropTypes.shape({
