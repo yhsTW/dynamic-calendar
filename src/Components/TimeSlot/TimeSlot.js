@@ -5,9 +5,10 @@ import BackgroundCell from '../BackgroundCell';
 import styles from './styles.css';
 import moment from 'moment';
 import { makeTimeFormat } from '../../utils/dateUtil';
+import { CUSTOMIZE } from '../../utils/constants';
 
 const TimeSlot = ({ items, week, customize, select, onSelectSlot, currentView }) => (
-    <div className={ styles.timeSlot }>
+    <div className={ styles.timeSlot } style={ !week && customize[CUSTOMIZE.backgroundCell].useBorder ? { ...customize[CUSTOMIZE.backgroundCell].borderStyle, marginLeft : '-1px', marginBottom : '-1px' } : {} }>
         { 
             !week && (
                 <Fragment>
