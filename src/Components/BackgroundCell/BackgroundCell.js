@@ -122,20 +122,24 @@ class BackgroundCell extends Component {
         });
         
         // border가 겹치는 현상을 수정하기 위해 marginLeft와 marginBottom 추가
-        if(styleObj.BackgroundCell.useBorder) 
+        if(styleObj.BackgroundCell.useBorder) {
             style = {
                 ...style,
                 ...styleObj.BackgroundCell.borderStyle, 
                 marginLeft : '-1px', marginBottom : '-1px'
             };
+        }
 
-        if(isSelected) 
+        if(isSelected) {
             style = { 
                 ...style,
                 ...styleObj.BackgroundCell.selectStyle 
             };
+        }
 
-        style = { ...style, ...customize[CUSTOMIZE.more].position };
+        if(customize[CUSTOMIZE.more]) {
+            style = { ...style, ...customize[CUSTOMIZE.more].position };
+        }
 
         return style;
     };

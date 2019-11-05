@@ -46,9 +46,7 @@ class BackgroundRow extends Component {
     };
 
     getAlignItems = customize => {
-        console.log('customize : ', customize)
-
-        return customize[CUSTOMIZE.more].position.alignItems;
+        return customize[CUSTOMIZE.more] && customize[CUSTOMIZE.more].position.alignItems;
     };
     
     render() {
@@ -61,7 +59,6 @@ class BackgroundRow extends Component {
         const eventCountArr = this.settingEventCount();
         const customize = this.getBackgroundCustomize();
         const alignItems = this.getAlignItems(customize);
-        console.log('eventCountArr : ', eventCountArr)
 
         return (
             <div className={ styles.backgroundRow }>

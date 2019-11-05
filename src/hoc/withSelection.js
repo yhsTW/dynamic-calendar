@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import PropTypes from 'prop-types';
 
 const withSelection = WrappedComponent => {
     return class Selection extends Component {
@@ -65,6 +66,10 @@ const withSelection = WrappedComponent => {
             return <WrappedComponent { ...this.props } select={ select } />
         };
     };
+};
+
+withSelection.propTypes = {
+    selectable : PropTypes.bool.isRequired
 };
 
 export default withSelection;
