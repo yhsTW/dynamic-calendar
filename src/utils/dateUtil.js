@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { AM_PM } from './constants';
 
+// 시간을 '01:00 PM'과 같은 형식으로 변경한다.
 export const makeTimeFormat = date => {
     const hour = moment(date).hour();
     const min = moment(date).minute();
@@ -11,6 +12,8 @@ export const makeTimeFormat = date => {
     `;
 };
 
+// parameter로 받은 date를 기준으로 해당 주의 일요일을 가져온다.
 export const getSunday = date => moment(date).day(0);
 
+// parameter로 받은 date를 기준으로 해당 주의 토요일을 가져온다.
 export const getSaturday = date => moment(date).day(6);
