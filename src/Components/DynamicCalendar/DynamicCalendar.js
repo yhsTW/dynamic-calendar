@@ -313,6 +313,14 @@ DynamicCalendar.propTypes = {
             weekdays : PropTypes.shape({
                 dateHeaderStyle : PropTypes.object,
                 backgroundCellStyle : PropTypes.object
+            }),
+            prevMonth : PropTypes.shape({
+                dateHeaderStyle : PropTypes.object,
+                backgroundCellStyle : PropTypes.object
+            }),
+            nextMonth : PropTypes.shape({
+                dateHeaderStyle : PropTypes.object,
+                backgroundCellStyle : PropTypes.object
             })
         })
     }),
