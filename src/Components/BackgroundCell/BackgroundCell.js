@@ -111,7 +111,7 @@ class BackgroundCell extends Component {
         const { top, left, width, height } = this.cell.current.getBoundingClientRect();
 
         pOpenPopup({ top, left, width, height, events, date });
-};
+    };
 
 
     getBackgroundCellStyle = isSelected => {
