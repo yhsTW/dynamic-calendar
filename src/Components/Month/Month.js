@@ -97,7 +97,7 @@ Month.propTypes = {
         VIEW_TYPE.week, 
         VIEW_TYPE.day
     ]).isRequired,
-    events : PropTypes.arrayOf(
+    events : PropTypes.arrayOf(PropTypes.arrayOf(
         PropTypes.shape(
             {
                 id : PropTypes.number.isRequired,
@@ -108,7 +108,7 @@ Month.propTypes = {
                 allDay : PropTypes.bool
             }
         )
-    ),
+    )),
     popup : PropTypes.bool.isRequired,
     selectable : PropTypes.bool.isRequired,
     today : PropTypes.instanceOf(moment).isRequired,

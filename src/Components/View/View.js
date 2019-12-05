@@ -17,18 +17,16 @@ View.propTypes = {
         VIEW_TYPE.week, 
         VIEW_TYPE.day
     ]).isRequired,
-    events : PropTypes.arrayOf(
-        PropTypes.shape(
-            {
+    events : PropTypes.arrayOf(PropTypes.arrayOf(
+        PropTypes.shape({
                 id : PropTypes.number.isRequired,
                 title : PropTypes.string.isRequired,
                 start : PropTypes.instanceOf(Date).isRequired,
                 end : PropTypes.instanceOf(Date).isRequired,
                 color : PropTypes.string,
                 allDay : PropTypes.bool
-            }
-        )
-    ),
+        })
+    )),
     popup : PropTypes.bool.isRequired,
     selectable : PropTypes.bool.isRequired,
     today : PropTypes.instanceOf(moment).isRequired,
