@@ -15,11 +15,13 @@ class BackgroundCell extends Component {
         isSelected : false
     };
 
-    componentWillReceiveProps(nextProps) {
-        if(!nextProps.isSelecting && this.state.isSelected) {
-            this.setState({ isSelected : false });
+    static getDerivedStateFromProps = (nextProps, prevState) => {
+        if(!nextProps.isSelecting && prevState.isSelecting) {
+            return { isSelected : false };
         }
-    };
+
+        return null;
+    }
 
     resetTime = date => {
         date.set({ hour : 0, minute : 0, second : 0 });

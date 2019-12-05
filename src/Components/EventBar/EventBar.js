@@ -6,9 +6,17 @@ import styles from './styles.css';
 class EventBar extends Component {
     isMouseDown = false;
 
-    componentWillReceiveProps = nextProps => {
-        if(!nextProps.isSelecting) this.resetIsMouseDown();
+    componentDidMount = () => {
+        const { isSelecting } = this.props;
+        
+        if(!isSelecting) this.resetIsMouseDown();
     };
+
+    componentDidUpdate = () => {
+        const { isSelecting } = this.props;
+        
+        if(!isSelecting) this.resetIsMouseDown();
+    }
 
     resetIsMouseDown = () => this.isMouseDown = false;
 
