@@ -46,6 +46,12 @@ MonthContent.propTypes = {
     selectable : PropTypes.bool.isRequired,
     today : PropTypes.instanceOf(moment).isRequired,
     useExtend : PropTypes.bool.isRequired,
+    components : PropTypes.shape({
+        header : PropTypes.elementType,
+        dateSlot : PropTypes.elementType,
+        eventBar : PropTypes.elementType,
+        popup : PropTypes.elementType
+    }),
     moveDayView : PropTypes.func.isRequired,
     onSelectEvent : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired,

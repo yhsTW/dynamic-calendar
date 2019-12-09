@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TimeSlot from '../TimeSlot';
 import withSelection from '../../hoc/withSelection';
-import EventBar from '../EventBar';
+import EventBar from '../EventBarWrapper';
 import styles from './styles.css';
 import moment from 'moment';
 import { makeTimeFormat } from '../../utils/dateUtil';

@@ -1,5 +1,5 @@
 import React from 'react';
-import EventBar from '../EventBar';
+import EventBar from '../EventBarWrapper';
 import { WEEK_DATA, CUSTOMIZE } from '../../utils/constants';
 import styles from './styles.css';
 import withCustomize from '../../hoc/withCustomize';

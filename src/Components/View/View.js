@@ -37,6 +37,12 @@ View.propTypes = {
             VIEW_TYPE.day
         ]).isRequired
     ).isRequired,
+    components : PropTypes.shape({
+        header : PropTypes.elementType,
+        dateSlot : PropTypes.elementType,
+        eventBar : PropTypes.elementType,
+        popup : PropTypes.elementType
+    }),
     useExtend : PropTypes.bool.isRequired,
     onSelectSlot : PropTypes.func.isRequired,
     onSelectEvent : PropTypes.func.isRequired,

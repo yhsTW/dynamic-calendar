@@ -10,6 +10,7 @@ import { events } from '../../events';
 import styles from './styles.css';
 import { makeEventGroup } from '../../utils/makeEventGroup';
 import { CustomizeProvider } from '../../contexts/customize';
+import HeaderTest from '../../HeaderTest';
 
 const TODAY = moment();
 
@@ -51,17 +52,18 @@ class DynamicCalendar extends Component {
     render() {
         const { 
             views, onSelectSlot, onSelectEvent, useHeader, customize,
-            popup, selectable, useExtend
+            popup, selectable, useExtend, components
         } = this.props;
         const { currentDate, currentView } = this.state;
         const events = this.settingEvents();
+        const HeaderComponent = (components && components.header) || Header;
         
         return (
             <CustomizeProvider value={ customize }>
                 <div className={ styles.dynamicCalendar }>
                     { 
                         useHeader && (
-                            <Header today={ TODAY } currentDate={ currentDate } views={ views }
+                            <HeaderComponent today={ TODAY } currentDate={ currentDate } views={ views }
                                 currentView={ currentView } updateCurrentDate={ this.updateCurrentDate }
                                 updateCurrentView={ this.updateCurrentView } />
                         )
@@ -69,7 +71,7 @@ class DynamicCalendar extends Component {
                     <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } views={ views }
                         events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
                         popup={ popup } updateCurrentDate={ this.updateCurrentDate } updateCurrentView={ this.updateCurrentView }
-                        selectable={ selectable } useExtend={ useExtend } />
+                        selectable={ selectable } useExtend={ useExtend } components={ components } />
                 </div>
             </CustomizeProvider>
         );
@@ -92,6 +94,9 @@ DynamicCalendar.defaultProps = {
     views : [VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day],
     // views : [VIEW_TYPE.month],
     ///////////////////// 테스트용 /////////////////////
+    // components : {
+    //     header : HeaderTest
+    // },
     components : null,
     // selectable : false,
     // popup : false,
@@ -243,7 +248,12 @@ DynamicCalendar.propTypes = {
     ]),
     // 달력 타입 모음
     views : PropTypes.arrayOf(PropTypes.string.isRequired),
-    components : PropTypes.object,
+    components : PropTypes.shape({
+        header : PropTypes.elementType,
+        dateSlot : PropTypes.elementType,
+        eventBar : PropTypes.elementType,
+        popup : PropTypes.elementType
+    }),
     // defaultWidth : PropTypes.string,
     // defaultHeight : PropTypes.string,
     // Slot 선택 여부. false일 경우에 onSelectSlot이 실행되지 않는다.

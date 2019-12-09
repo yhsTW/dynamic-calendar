@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import EventBar from '../EventBar';
+import EventBarWrapper from '../EventBarWrapper';
 import moment from 'moment';
 import { WEEK_NUM, VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
 
-const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSelecting, startSelecting, currentView }) => {
+const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSelecting, startSelecting, currentView, components }) => {
     const getStartCondition = (event) => {
         const slotStartDate = moment(slotStart.date);
         const start = moment(event.start);
@@ -58,16 +58,16 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
             return `100%`;
         }
     };
-    
+
     return (
         <div className={ styles.eventRow } ref={ eventRowRef }>
             {
                 events.map((event, idx) => (
                     <Fragment key={ event.id }>
                         { currentView !== VIEW_TYPE.day && <div className="segment" style={{ width : getSegmentWidth(event, idx), flexBasis : getSegmentWidth(event, idx) }}></div> }
-                        <EventBar event={ event } width={ getEventBarWidth(event) } isStart={ getStartCondition(event) } 
+                        <EventBarWrapper event={ event } width={ getEventBarWidth(event) } isStart={ getStartCondition(event) } 
                             isEnd={ getEndCondition(event) } onSelectEvent={ onSelectEvent } isSelecting={ isSelecting }
-                            startSelecting={ startSelecting } />
+                            startSelecting={ startSelecting } components={ components } />
                     </Fragment>
                 ))
             }
@@ -94,6 +94,12 @@ EventRow.propTypes = {
     slotStart : PropTypes.shape({
         date : PropTypes.instanceOf(moment).isRequired,
         type : PropTypes.oneOf(['prev', 'current', 'next']).isRequired
+    }),
+    components : PropTypes.shape({
+        header : PropTypes.elementType,
+        dateSlot : PropTypes.elementType,
+        eventBar : PropTypes.elementType,
+        popup : PropTypes.elementType
     }),
     onSelectEvent : PropTypes.func.isRequired,
     startSelecting : PropTypes.func.isRequired

@@ -74,7 +74,7 @@ class Month extends Component {
         const { 
             currentDate, today, onSelectSlot, 
             onSelectEvent, currentView, events, 
-            selectable, useExtend
+            selectable, useExtend, components
         } = this.props;
         
         return (
@@ -83,7 +83,7 @@ class Month extends Component {
                 <MonthContent today={ today } events={ events } onSelectSlot={ onSelectSlot } currentDate={ currentDate }
                     onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit } currentView={ currentView }
                     openPopup={ this.openPopup } moveDayView={ this.moveDayView } selectable={ selectable }
-                    useExtend={ useExtend } />
+                    useExtend={ useExtend } components={ components } />
                 {
                     usePopup && (
                         <Popup popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent }
@@ -124,6 +124,12 @@ Month.propTypes = {
             VIEW_TYPE.day
         ])
     ).isRequired,
+    components : PropTypes.shape({
+        header : PropTypes.elementType,
+        dateSlot : PropTypes.elementType,
+        eventBar : PropTypes.elementType,
+        popup : PropTypes.elementType
+    }),
     useExtend : PropTypes.bool,
     onSelectEvent : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired,

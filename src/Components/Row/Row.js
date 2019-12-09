@@ -82,7 +82,7 @@ class Row extends Component {
             stopSelecting, startSelecting, setSelectedStart, setSelectedEnd,
             selectedStart, selectedEnd, lastSelectedDate, setLastSelectedDate,
             defaultSelectedDate, onSelectEvent, limit, openPopup, useDateHeader,
-            customizeList, moveDayView, useExtend
+            customizeList, moveDayView, useExtend, components
         } = this.props;
         const sortEvents = sortEventsUtil(events);
         const sameEventRow = this.sameEventRow(sortEvents);
@@ -115,8 +115,8 @@ class Row extends Component {
                                         <EventRow eventRowRef={ this.eventRow } key={ `event-row_${ idx }` } 
                                             events={ event } slotStart={ itemArr[0] } slotEnd={ itemArr[itemArr.length - 1] } 
                                             onSelectEvent={ onSelectEvent } isSelecting={ isSelecting } startSelecting={ startSelecting }
-                                            currentView={ currentView } />
-                                    )
+                                            currentView={ currentView } components={ components } />
+                                    );
                                 } else {
                                     return null;
                                 }
@@ -172,6 +172,12 @@ Row.propTypes = {
     today : PropTypes.instanceOf(moment).isRequired,
     useDateHeader : PropTypes.bool.isRequired,
     useExtend : PropTypes.bool.isRequired,
+    components : PropTypes.shape({
+        header : PropTypes.elementType,
+        dateSlot : PropTypes.elementType,
+        eventBar : PropTypes.elementType,
+        popup : PropTypes.elementType
+    }),
     getCustomize : PropTypes.func.isRequired,
     moveDayView : PropTypes.func,
     onSelectEvent : PropTypes.func.isRequired,

@@ -1,0 +1,28 @@
+.event-bar-wrapper {
+    background-color: #9FE1E7;
+    margin-bottom: 3px;
+    padding: 2px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    z-index: 5;
+}
+
+.event-bar-wrapper.start {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.event-bar-wrapper.end {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.time-event-bar-wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    border: 1px solid;
+}
