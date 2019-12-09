@@ -45,6 +45,7 @@ MonthContent.propTypes = {
     }).isRequired,
     selectable : PropTypes.bool.isRequired,
     today : PropTypes.instanceOf(moment).isRequired,
+    useExtend : PropTypes.bool.isRequired,
     moveDayView : PropTypes.func.isRequired,
     onSelectEvent : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired,

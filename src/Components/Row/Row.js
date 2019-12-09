@@ -40,6 +40,10 @@ class Row extends Component {
     }
     
     getRowLimit = () => {
+        const { useExtend } = this.props;
+
+        if(useExtend) return;
+
         const rowHeight = this.row.current.clientHeight;
         const dateHeader = this.header.current.clientHeight;
         const eventSpace = rowHeight - dateHeader;
@@ -78,7 +82,7 @@ class Row extends Component {
             stopSelecting, startSelecting, setSelectedStart, setSelectedEnd,
             selectedStart, selectedEnd, lastSelectedDate, setLastSelectedDate,
             defaultSelectedDate, onSelectEvent, limit, openPopup, useDateHeader,
-            customizeList, moveDayView
+            customizeList, moveDayView, useExtend
         } = this.props;
         const sortEvents = sortEventsUtil(events);
         const sameEventRow = this.sameEventRow(sortEvents);
@@ -91,7 +95,8 @@ class Row extends Component {
                     stopSelecting={ stopSelecting } startSelecting={ startSelecting } setSelectedStart={ setSelectedStart }
                     setSelectedEnd={ setSelectedEnd } selectedStart={ selectedStart } selectedEnd={ selectedEnd }
                     lastSelectedDate={ lastSelectedDate } setLastSelectedDate={ setLastSelectedDate } defaultSelectedDate={ defaultSelectedDate }
-                    limit={ limit } events={ sortEvents } openPopup={ openPopup } today={ today } customizeList={ customizeList } />
+                    limit={ limit } events={ sortEvents } openPopup={ openPopup } today={ today } customizeList={ customizeList }
+                    useExtend={ useExtend } />
                 <div className={ styles.dateContent }>
                     <div className={ styles.rowHeader } ref={ this.header }>
                         { 
@@ -166,6 +171,7 @@ Row.propTypes = {
     selectedStart : PropTypes.instanceOf(moment),
     today : PropTypes.instanceOf(moment).isRequired,
     useDateHeader : PropTypes.bool.isRequired,
+    useExtend : PropTypes.bool.isRequired,
     getCustomize : PropTypes.func.isRequired,
     moveDayView : PropTypes.func,
     onSelectEvent : PropTypes.func.isRequired,

@@ -54,7 +54,7 @@ class BackgroundRow extends Component {
             itemArr, onSelectSlot, isSelecting, stopSelecting, startSelecting,
             setSelectedStart, setSelectedEnd, selectedStart, selectedEnd,
             lastSelectedDate, setLastSelectedDate, defaultSelectedDate, limit,
-            openPopup, today
+            openPopup, today, useExtend
         } = this.props;
         const eventCountArr = this.settingEventCount();
         const customize = this.getBackgroundCustomize();
@@ -70,8 +70,10 @@ class BackgroundRow extends Component {
                         let events = [];
 
                         if(current && current.more > limit) {
-                            isMore = true;
-                            more = alignItems === 'flex-end' ? current.more - (limit - 1) : current.more - limit;
+                            if(!useExtend) {
+                                isMore = true;
+                                more = alignItems === 'flex-end' ? current.more - (limit - 1) : current.more - limit;
+                            }
                             events = current.events
                         }
 
@@ -112,6 +114,7 @@ BackgroundRow.propTypes = {
     selectedEnd : PropTypes.instanceOf(moment),
     selectedStart : PropTypes.instanceOf(moment),
     today : PropTypes.instanceOf(moment),
+    useExtend : PropTypes.bool.isRequired,
     getCustomize : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired,
     openPopup : PropTypes.func.isRequired,

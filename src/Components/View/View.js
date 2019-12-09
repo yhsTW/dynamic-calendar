@@ -37,6 +37,7 @@ View.propTypes = {
             VIEW_TYPE.day
         ]).isRequired
     ).isRequired,
+    useExtend : PropTypes.bool.isRequired,
     onSelectSlot : PropTypes.func.isRequired,
     onSelectEvent : PropTypes.func.isRequired,
     updateCurrentDate : PropTypes.func.isRequired,

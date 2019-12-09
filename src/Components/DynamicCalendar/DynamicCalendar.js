@@ -51,7 +51,7 @@ class DynamicCalendar extends Component {
     render() {
         const { 
             views, onSelectSlot, onSelectEvent, useHeader, customize,
-            popup, selectable
+            popup, selectable, useExtend
         } = this.props;
         const { currentDate, currentView } = this.state;
         const events = this.settingEvents();
@@ -69,7 +69,7 @@ class DynamicCalendar extends Component {
                     <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } views={ views }
                         events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
                         popup={ popup } updateCurrentDate={ this.updateCurrentDate } updateCurrentView={ this.updateCurrentView }
-                        selectable={ selectable } />
+                        selectable={ selectable } useExtend={ useExtend } />
                 </div>
             </CustomizeProvider>
         );
@@ -98,6 +98,7 @@ DynamicCalendar.defaultProps = {
     selectable : true,
     popup : true,
     useHeader : true,
+    useExtend : true,
     customize : {
         Header : {
             order : [
@@ -250,6 +251,7 @@ DynamicCalendar.propTypes = {
     // 팝업 사용 여부. 이것이 false일 경우, 더보기 버튼을 누르면 일간 일정으로 이동한다.
     popup : PropTypes.bool,
     useHeader : PropTypes.bool,
+    useExtend : PropTypes.bool,
     customize : PropTypes.shape({
         Header : PropTypes.shape({
             order : PropTypes.arrayOf(
