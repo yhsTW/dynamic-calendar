@@ -94,13 +94,14 @@ DynamicCalendar.defaultProps = {
     views : [VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day],
     // views : [VIEW_TYPE.month],
     ///////////////////// 테스트용 /////////////////////
-    // components : {
-    //     eventBar : {
-    //         components : HeaderTest,
-    //         key : 'ddd'
-    //     }
-    // },
-    components : null,
+    components : {
+        // eventBar : {
+        //     components : HeaderTest,
+        //     key : 'ddd'
+        // }
+        eventBar : HeaderTest
+    },
+    // components : null,
     // selectable : false,
     // popup : false,
     selectable : true,
@@ -254,10 +255,10 @@ DynamicCalendar.propTypes = {
     components : PropTypes.shape({
         header : PropTypes.elementType,
         dateSlot : PropTypes.elementType,
-        eventBar : PropTypes.shape({
-            components : PropTypes.oneOfType([PropTypes.elementType, PropTypes.instanceOf(Map)]),
-            key : PropTypes.string
-        }),
+        eventBar : PropTypes.oneOfType([PropTypes.elementType, PropTypes.shape({
+            components : PropTypes.instanceOf(Map).isRequired,
+            key : PropTypes.string.isRequired
+        })]),
         popup : PropTypes.elementType
     }),
     // defaultWidth : PropTypes.string,

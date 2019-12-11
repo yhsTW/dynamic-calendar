@@ -127,10 +127,10 @@ Month.propTypes = {
     components : PropTypes.shape({
         header : PropTypes.elementType,
         dateSlot : PropTypes.elementType,
-        eventBar : PropTypes.shape({
-            components : PropTypes.oneOfType([PropTypes.elementType, PropTypes.instanceOf(Map)]),
-            key : PropTypes.string
-        }),
+        eventBar : PropTypes.oneOfType([PropTypes.elementType, PropTypes.shape({
+            components : PropTypes.instanceOf(Map).isRequired,
+            key : PropTypes.string.isRequired
+        })]),
         popup : PropTypes.elementType
     }),
     useExtend : PropTypes.bool,

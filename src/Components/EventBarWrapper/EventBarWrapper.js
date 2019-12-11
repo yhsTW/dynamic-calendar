@@ -42,9 +42,9 @@ class EventBarWrapper extends Component {
         let component = EventBar;
 
         if(components && components.eventBar) {
-            const { event, components : { eventBar : { components }, eventBar } } = this.props;
+            const { event, components : { eventBar } } = this.props;
 
-            component = eventBar instanceof Map ? components.get(event[eventBar.key]) : components;
+            component = eventBar.components ? eventBar.components.get(event[eventBar.key]) : eventBar;
         }
 
         return component;
