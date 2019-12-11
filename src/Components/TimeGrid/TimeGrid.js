@@ -7,7 +7,7 @@ import { MONTH_TYPE, WEEK_NUM, VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
 import { getSunday } from '../../utils/dateUtil';
 
-const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView, selectable }) => {
+const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView, selectable, useExtend }) => {
     // 전달받은 배열에 data를 집어넣는다.
     const pushArr = (arr, data) => {
         arr.push(data);
@@ -78,8 +78,8 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
     return (
         <div className={ styles.week }>
             <TimeHeader today={ today } currentView={ currentView } weekArr={ weekArr }
-                onSelectSlot={ onSelectSlot } events={ getAllDayEvents() }
-                onSelectEvent={ onSelectEvent } selectable={ selectable } />
+                onSelectSlot={ onSelectSlot } events={ getAllDayEvents() } onSelectEvent={ onSelectEvent }
+                selectable={ selectable } useExtend={ useExtend } />
             <TimeContent today={ today } currentDate={ currentDate } currentView={ currentView } 
                 events={ getNotAllDayEvents() } onSelectSlot={ onSelectSlot }
                 onSelectEvent={ onSelectEvent } weekArr={ weekArr } selectable={ selectable } />
@@ -103,6 +103,7 @@ TimeGrid.propTypes = {
     selectable : PropTypes.bool.isRequired,
     today : PropTypes.instanceOf(moment).isRequired,
     views : PropTypes.arrayOf(PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day])),
+    useExtend : PropTypes.bool.isRequired,
     onSelectEvent : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired
 };

@@ -41,6 +41,7 @@ TimeAllDay.propTypes = {
     }).isRequired,
     today : PropTypes.instanceOf(moment).isRequired,
     useDateHeader : PropTypes.bool.isRequired,
+    useExtend : PropTypes.bool.isRequired,
     onSelectEvent : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired
 };

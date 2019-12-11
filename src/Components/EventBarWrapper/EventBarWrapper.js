@@ -37,13 +37,26 @@ class EventBarWrapper extends Component {
         }
     };
 
+    getEventBarComponent = () => {
+        const { components } = this.props;
+        let component = EventBar;
+
+        if(components && components.eventBar) {
+            const { event, components : { eventBar : { components }, eventBar } } = this.props;
+
+            component = eventBar instanceof Map ? components.get(event[eventBar.key]) : components;
+        }
+
+        return component;
+    };
+
     render() {
         const { 
             isStart, isEnd, width, isSelecting,
             event : { color }, height, top,
-            useTime, time, left, event, components
+            useTime, time, left, event
         } = this.props;
-        const EventBarComponent = (components && components.eventBar) || EventBar;
+        const EventBarComponent = this.getEventBarComponent();
         
         return (
             <div className={ `${ styles.eventBarWrapper } ${ isStart ? styles.start : '' } ${ isEnd ? styles.end : '' } ${ top ? styles.timeEventBarWrapper : '' }` } 

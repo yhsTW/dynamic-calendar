@@ -9,7 +9,7 @@ import combineStyle from '../../utils/combineStyle';
 import { PROPERTY } from '../../utils/constants';
 import moment from 'moment';
 
-const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelectEvent, getCustomize, selectable }) => {
+const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelectEvent, getCustomize, selectable, useExtend }) => {
     const isToday = date => {
         return date.isSame(today, 'date');
     };
@@ -42,7 +42,8 @@ const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelec
                     }
                 </div>
                 <TimeAllDay today={ today } itemArr={ weekArr } useDateHeader={ false } onSelectSlot={ onSelectSlot }
-                    events={ events } currentView={ currentView } onSelectEvent={ onSelectEvent } selectable={ selectable } />
+                    events={ events } currentView={ currentView } onSelectEvent={ onSelectEvent } selectable={ selectable }
+                    useExtend={ useExtend } />
             </div>
         </div>
     );
@@ -63,6 +64,7 @@ TimeHeader.propTypes = {
         date : PropTypes.instanceOf(moment).isRequired,
         type : PropTypes.string.isRequired
     }).isRequired).isRequired,
+    useExtend : PropTypes.bool.isRequired,
     getCustomize : PropTypes.func.isRequired,
     onSelectEvent : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired
