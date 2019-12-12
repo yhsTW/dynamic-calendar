@@ -10,7 +10,9 @@ import { events } from '../../events';
 import styles from './styles.css';
 import { makeEventGroup } from '../../utils/makeEventGroup';
 import { CustomizeProvider } from '../../contexts/customize';
+//////////////////////////////////// 테스트용 ////////////////////////////////////
 import HeaderTest from '../../HeaderTest';
+//////////////////////////////////// 테스트용 ////////////////////////////////////
 
 const TODAY = moment();
 
@@ -78,6 +80,11 @@ class DynamicCalendar extends Component {
     };
 }
 
+///////////////////// 테스트용 /////////////////////
+const testEventBarMap = new Map();
+testEventBarMap.set('ddd', HeaderTest);
+///////////////////// 테스트용 /////////////////////
+
 DynamicCalendar.defaultProps = {
     // events : [],
     ///////////////////// 테스트용 /////////////////////
@@ -86,28 +93,29 @@ DynamicCalendar.defaultProps = {
     date : TODAY,
     min : null,
     max : null,
-    ///////////////////// 테스트용 /////////////////////
-    // defaultView : VIEW_TYPE.month,
     defaultView : VIEW_TYPE.month,
-    ///////////////////// 테스트용 /////////////////////
-    ///////////////////// 테스트용 /////////////////////
     views : [VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day],
-    // views : [VIEW_TYPE.month],
     ///////////////////// 테스트용 /////////////////////
-    components : {
-        // eventBar : {
-        //     components : HeaderTest,
-        //     key : 'ddd'
-        // }
-        eventBar : HeaderTest
-    },
-    // components : null,
+    // components : {
+    //     eventBar : {
+    //         components : testEventBarMap,
+    //         key : 'type'
+    //     }
+    //     // eventBar : HeaderTest
+    // },
+    ///////////////////// 테스트용 /////////////////////
+    components : null,
     // selectable : false,
     // popup : false,
+    ///////////////////// 테스트용 /////////////////////
     selectable : true,
     popup : true,
+    ///////////////////// 테스트용 /////////////////////
     useHeader : true,
+    // useExtend : false,
+    ///////////////////// 테스트용 /////////////////////
     useExtend : true,
+    ///////////////////// 테스트용 /////////////////////
     customize : {
         Header : {
             order : [
