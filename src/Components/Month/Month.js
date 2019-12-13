@@ -76,6 +76,7 @@ class Month extends Component {
             onSelectEvent, currentView, events, 
             selectable, useExtend, components
         } = this.props;
+        const PopupComponent = (components && components.popup) ? components.popup : Popup;
         
         return (
             <div className={ styles.month } onMouseLeave={ this.stopSelecting }>
@@ -86,7 +87,7 @@ class Month extends Component {
                     useExtend={ useExtend } components={ components } />
                 {
                     usePopup && (
-                        <Popup popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent }
+                        <PopupComponent popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent }
                             events={ events } />
                     )
                 }
