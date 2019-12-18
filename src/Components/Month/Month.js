@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MonthHeader from '../MonthHeader';
 import moment from 'moment';
@@ -8,7 +8,6 @@ import MonthContent from '../MonthContent';
 import { VIEW_TYPE } from '../../utils/constants';
 
 class Month extends Component {
-    month = createRef();
     limit = 0;
     popup = {
         top : 0,

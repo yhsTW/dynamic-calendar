@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.css';
 import moment from 'moment';
@@ -10,7 +10,6 @@ import Label from '../Label';
 
 
 class BackgroundCell extends Component {
-    cell = createRef();
     state = {
         isSelected : false
     };
@@ -110,7 +109,7 @@ class BackgroundCell extends Component {
 
     openPopup = () => {
         const { events, item : { date }, openPopup : pOpenPopup } = this.props;
-        const { top, left, width, height } = this.cell.current.getBoundingClientRect();
+        const { top, left, width, height } = this.cell.getBoundingClientRect();
 
         pOpenPopup({ top, left, width, height, events, date });
     };
@@ -164,7 +163,7 @@ class BackgroundCell extends Component {
         const backgroundCellStyle = this.getBackgroundCellStyle(isSelected);
         
         return (
-            <div ref={ this.cell } className={ styles.backgroundCell } onMouseDown={ this.selectStart } onMouseUp={ this.selectEnd }
+            <div ref={ ref => this.cell = ref } className={ styles.backgroundCell } onMouseDown={ this.selectStart } onMouseUp={ this.selectEnd }
                 onMouseEnter={ this.selecting } style={ backgroundCellStyle }>
                 { (useTime && selectedStart && isSelected && selectedStart.isSame(date)) && <Label text={ this.currentSelectTime() } /> }
                 { isMore && <More more={ more } openPopup={ this.openPopup } customize={ customize.More } /> }

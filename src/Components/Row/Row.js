@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DateSlot from '../DateSlot';
 import EventRow from '../EventRow';
@@ -10,10 +10,6 @@ import sortEventsUtil from '../../utils/sortEvents';
 import eventLevel from '../../utils/eventLevel';
 
 class Row extends Component {
-    row = createRef();
-    header = createRef();
-    eventRow = createRef();
-
     sameEventRow = (sortEvents) => {
         const { itemArr } = this.props;
         let newEvents = eventLevel(itemArr[0], itemArr[itemArr.length - 1], sortEvents);
@@ -43,11 +39,11 @@ class Row extends Component {
 
         if(useExtend) return;
 
-        const rowHeight = this.row.current.clientHeight;
-        const dateHeader = this.header.current.clientHeight;
+        const rowHeight = this.row.clientHeight;
+        const dateHeader = this.header.clientHeight;
         const eventSpace = rowHeight - dateHeader;
-        const eventRow = this.eventRow.current && this.eventRow.current.clientHeight ? 
-            this.eventRow.current.clientHeight : 0;
+        const eventRow = this.eventRow && this.eventRow.clientHeight ? 
+            this.eventRow.clientHeight : 0;
         const limit = eventRow === 0 ? 0 : Math.max(Math.floor(eventSpace / eventRow));
 
         
@@ -91,7 +87,7 @@ class Row extends Component {
         const newLimit =  limit !== 0 && this.getMorePosition() === 'flex-end' ? limit - 1 : limit;
 
         return (
-            <div className={ styles.row } ref={ this.row }>
+            <div className={ styles.row } ref={ ref => this.row = ref }>
                 <BackgroundRow itemArr={ itemArr } onSelectSlot={ onSelectSlot } isSelecting={ isSelecting }
                     stopSelecting={ stopSelecting } startSelecting={ startSelecting } setSelectedStart={ setSelectedStart }
                     setSelectedEnd={ setSelectedEnd } selectedStart={ selectedStart } selectedEnd={ selectedEnd }
@@ -99,7 +95,7 @@ class Row extends Component {
                     limit={ limit } events={ sortEvents } openPopup={ openPopup } today={ today } customize={ customize }
                     useExtend={ useExtend } />
                 <div className={ styles.dateContent }>
-                    <div className={ styles.rowHeader } ref={ this.header }>
+                    <div className={ styles.rowHeader } ref={ ref => this.header = ref }>
                         { 
                             useDateHeader && itemArr.map(item => (
                                 <DateSlot key={ `${ item.type }_${ item.date.date() }` } 
@@ -113,7 +109,7 @@ class Row extends Component {
                             events && sameEventRow.map((event, idx) => {
                                 if(currentView !== VIEW_TYPE.month || (newLimit === 0 || idx < newLimit)) {
                                     return (
-                                        <EventRow eventRowRef={ this.eventRow } key={ `event-row_${ idx }` } 
+                                        <EventRow eventRowRef={ ref => this.eventRow = ref } key={ `event-row_${ idx }` } 
                                             events={ event } slotStart={ itemArr[0] } slotEnd={ itemArr[itemArr.length - 1] } 
                                             onSelectEvent={ onSelectEvent } isSelecting={ isSelecting } startSelecting={ startSelecting }
                                             currentView={ currentView } components={ components } />

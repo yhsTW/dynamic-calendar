@@ -1,9 +1,8 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const withSelection = WrappedComponent => {
     return class Selection extends Component {
-        wrappedComponent = createRef();
         lastSelectedDate = null;
         defaultSelectedDate = null;
     
