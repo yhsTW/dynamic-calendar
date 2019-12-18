@@ -3,18 +3,14 @@ import PropTypes from 'prop-types';
 import Controls from '../Controls';
 import Label from '../Label';
 import ViewControls from '../ViewControls';
-import withCustomize from '../../hoc/withCustomize';
-import { VIEW_TYPE, COMPONENT_NAMES, CUSTOMIZE, WEEK_DATA } from '../../utils/constants';
+import { VIEW_TYPE, COMPONENT_NAMES, WEEK_DATA, CONTROLS_TYPE } from '../../utils/constants';
 import moment from 'moment';
 import sortComponents from '../../utils/sortComponents';
 import styles from './styles.css';
 import { getSunday, getSaturday } from '../../utils/dateUtil';
 
-const Header = ({ today, currentDate, views, currentView, updateCurrentDate, updateCurrentView, getCustomize }) => {
-    // customize의 값들 중 필요한 값들만 불러온다.
-    const { 
-        order, style, Label : customize
-    } = getCustomize([CUSTOMIZE.order, CUSTOMIZE.style, CUSTOMIZE.label]);
+const Header = ({ today, currentDate, views, currentView, updateCurrentDate, updateCurrentView, customize }) => {
+    const { order, style, Label : labelCustom } = customize;
 
     // 일요일과 현재 날짜의 월(month)이 동일한지 확인한다.
     const isSameSunday = () => getSunday(currentDate).isSame(currentDate, 'month');
@@ -63,15 +59,15 @@ const Header = ({ today, currentDate, views, currentView, updateCurrentDate, upd
     const getComponents = () => ({
         [COMPONENT_NAMES.controls] : (
             <Controls key={ COMPONENT_NAMES.controls } today={ today } currentDate={ currentDate } 
-                updateCurrentDate={ updateCurrentDate } currentView={ currentView } />
+                updateCurrentDate={ updateCurrentDate } currentView={ currentView } customize={ customize.Controls } />
         ),
         [COMPONENT_NAMES.label] : (
-            <Label key={ COMPONENT_NAMES.label } className={ styles.currentViewDate } customize={ customize.style }
-                fortmat={ customize.fortmat } text={ viewLabel() } />
+            <Label key={ COMPONENT_NAMES.label } className={ styles.currentViewDate } customize={ labelCustom.style }
+                fortmat={ labelCustom.fortmat } text={ viewLabel() } />
         ),
         [COMPONENT_NAMES.viewControls] : (
             <ViewControls key={ COMPONENT_NAMES.viewControls } views={ views } currentView={ currentView } 
-                updateCurrentView={ updateCurrentView } />
+                updateCurrentView={ updateCurrentView } customize={ customize.ViewControls } />
         )
     });
 
@@ -87,9 +83,39 @@ Header.propTypes = {
     currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]).isRequired,
     today : PropTypes.instanceOf(moment).isRequired,
     views : PropTypes.arrayOf(PropTypes.string.isRequired),
-    getCustomize : PropTypes.func.isRequired,
+    customize : PropTypes.shape({
+        order : PropTypes.arrayOf(
+            PropTypes.oneOf([
+                COMPONENT_NAMES.controls,
+                COMPONENT_NAMES.label,
+                COMPONENT_NAMES.viewControls
+            ])
+        ),
+        style : PropTypes.object,
+        Controls : PropTypes.shape({
+            order : PropTypes.arrayOf(
+                PropTypes.oneOf([CONTROLS_TYPE.today,
+                    CONTROLS_TYPE.prev,
+                    CONTROLS_TYPE.next
+                ])
+            ),
+            prevContent : PropTypes.string,
+            todayContent : PropTypes.string,
+            nextContent : PropTypes.string,
+            controlsStyle : PropTypes.object,
+            controlStyle : PropTypes.object
+        }),
+        Label : PropTypes.shape({
+            format : PropTypes.string,
+            style : PropTypes.object
+        }),
+        ViewControls : PropTypes.shape({
+            viewControlsStyle : PropTypes.object,
+            viewControlStyle : PropTypes.object
+        })
+    }).isRequired,
     updateCurrentDate : PropTypes.func.isRequired,
     updateCurrentView : PropTypes.func.isRequired
 };
 
-export default withCustomize(CUSTOMIZE.header)(Header);
+export default Header;

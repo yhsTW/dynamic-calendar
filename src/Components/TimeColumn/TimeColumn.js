@@ -7,10 +7,8 @@ import styles from './styles.css';
 import moment from 'moment';
 import { makeTimeFormat } from '../../utils/dateUtil';
 import sortEventsUtil from '../../utils/sortEvents';
-import withCustomize from '../../hoc/withCustomize';
-import { CUSTOMIZE } from '../../utils/constants';
 
-const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, currentView, events, getCustomize }) => {
+const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, currentView, events, customize }) => {
     const getEventBarHeight = event => {
         const start = moment(event.start);
         const end = moment(event.end);
@@ -122,7 +120,7 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
     };
 
     const getSlotStyle = () => {
-        return getCustomize([CUSTOMIZE.backgroundCell]);
+        return customize;
     };
 
     return (
@@ -183,9 +181,49 @@ TimeColumn.propTypes = {
         date : PropTypes.instanceOf(moment),
         type : PropTypes.string.isRequired
     }),
-    getCustomize : PropTypes.func.isRequired,
+    customize : PropTypes.shape({
+        BackgroundCell : PropTypes.shape({
+            useBorder : PropTypes.bool,
+            borderStyle : PropTypes.object,
+            selectStyle : PropTypes.object
+        }),
+        Popup : PropTypes.shape({}),
+        More : PropTypes.shape({
+            prefix : PropTypes.string,
+            suffix : PropTypes.string,
+            moreStyle : PropTypes.object,
+            position : PropTypes.shape({
+                alignItems : PropTypes.string,
+                justifyContent : PropTypes.string
+            })
+        }),
+        today : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        holiday : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        weekend : PropTypes.shape({
+            saturdayStyle : PropTypes.object,
+            sundayStyle : PropTypes.object
+        }),
+        weekdays : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        prevMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        nextMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        })
+    }),
     onSelectEvent : PropTypes.func,
     onSelectSlot : PropTypes.func
 };
 
-export default withCustomize(CUSTOMIZE.view)(withSelection(TimeColumn));
+export default withSelection(TimeColumn);

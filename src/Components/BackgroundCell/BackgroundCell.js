@@ -159,7 +159,7 @@ class BackgroundCell extends Component {
     };
 
     render() {
-        const { isMore, more, useTime, selectedStart, item : { date } } = this.props;
+        const { isMore, more, useTime, selectedStart, item : { date }, customize } = this.props;
         const isSelected = this.checkSelected();
         const backgroundCellStyle = this.getBackgroundCellStyle(isSelected);
         
@@ -167,7 +167,7 @@ class BackgroundCell extends Component {
             <div ref={ this.cell } className={ styles.backgroundCell } onMouseDown={ this.selectStart } onMouseUp={ this.selectEnd }
                 onMouseEnter={ this.selecting } style={ backgroundCellStyle }>
                 { (useTime && selectedStart && isSelected && selectedStart.isSame(date)) && <Label text={ this.currentSelectTime() } /> }
-                { isMore && <More more={ more } openPopup={ this.openPopup } /> }
+                { isMore && <More more={ more } openPopup={ this.openPopup } customize={ customize.More } /> }
             </div>
         );
     };
@@ -200,6 +200,47 @@ BackgroundCell.propTypes = {
     selectedEnd : PropTypes.instanceOf(moment),
     selectedStart : PropTypes.instanceOf(moment),
     useTime : PropTypes.bool,
+    customize : PropTypes.shape({
+        BackgroundCell : PropTypes.shape({
+            useBorder : PropTypes.bool,
+            borderStyle : PropTypes.object,
+            selectStyle : PropTypes.object
+        }),
+        Popup : PropTypes.shape({}),
+        More : PropTypes.shape({
+            prefix : PropTypes.string,
+            suffix : PropTypes.string,
+            moreStyle : PropTypes.object,
+            position : PropTypes.shape({
+                alignItems : PropTypes.string,
+                justifyContent : PropTypes.string
+            })
+        }),
+        today : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        holiday : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        weekend : PropTypes.shape({
+            saturdayStyle : PropTypes.object,
+            sundayStyle : PropTypes.object
+        }),
+        weekdays : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        prevMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        nextMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        })
+    }).isRequired,
     onSelectSlot : PropTypes.func,
     openPopup : PropTypes.func.isRequired,
     setLastSelectedDate : PropTypes.func,

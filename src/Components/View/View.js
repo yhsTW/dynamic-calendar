@@ -47,6 +47,47 @@ View.propTypes = {
         popup : PropTypes.elementType
     }),
     useExtend : PropTypes.bool.isRequired,
+    customize : PropTypes.shape({
+        BackgroundCell : PropTypes.shape({
+            useBorder : PropTypes.bool,
+            borderStyle : PropTypes.object,
+            selectStyle : PropTypes.object
+        }),
+        Popup : PropTypes.shape({}),
+        More : PropTypes.shape({
+            prefix : PropTypes.string,
+            suffix : PropTypes.string,
+            moreStyle : PropTypes.object,
+            position : PropTypes.shape({
+                alignItems : PropTypes.string,
+                justifyContent : PropTypes.string
+            })
+        }),
+        today : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        holiday : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        weekend : PropTypes.shape({
+            saturdayStyle : PropTypes.object,
+            sundayStyle : PropTypes.object
+        }),
+        weekdays : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        prevMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        nextMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        })
+    }),
     onSelectSlot : PropTypes.func.isRequired,
     onSelectEvent : PropTypes.func.isRequired,
     updateCurrentDate : PropTypes.func.isRequired,

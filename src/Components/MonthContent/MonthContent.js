@@ -3,16 +3,11 @@ import PropTypes from 'prop-types';
 import Row from '../Row';
 import getDateArr from '../../utils/getDateArr';
 import withSelection from '../../hoc/withSelection';
-import { CUSTOMIZE, VIEW_TYPE } from '../../utils/constants';
+import { VIEW_TYPE } from '../../utils/constants';
 import moment from 'moment';
 
 const MonthContent = props => getDateArr(props.currentDate).map((itemArr, idx) => (
-        <Row key={ idx } { ...props } itemArr={ itemArr } { ...props.select } events={ props.events[idx] }
-            customizeList={[
-                CUSTOMIZE.today, CUSTOMIZE.holiday, CUSTOMIZE.weekdays, 
-                CUSTOMIZE.weekend, CUSTOMIZE.prevMonth, CUSTOMIZE.nextMonth,
-                CUSTOMIZE.backgroundCell, CUSTOMIZE.more
-            ]}/>
+        <Row key={ idx } { ...props } itemArr={ itemArr } { ...props.select } events={ props.events[idx] } />
     )
 );
 
@@ -55,6 +50,47 @@ MonthContent.propTypes = {
         })]),
         popup : PropTypes.elementType
     }),
+    customize : PropTypes.shape({
+        BackgroundCell : PropTypes.shape({
+            useBorder : PropTypes.bool,
+            borderStyle : PropTypes.object,
+            selectStyle : PropTypes.object
+        }),
+        Popup : PropTypes.shape({}),
+        More : PropTypes.shape({
+            prefix : PropTypes.string,
+            suffix : PropTypes.string,
+            moreStyle : PropTypes.object,
+            position : PropTypes.shape({
+                alignItems : PropTypes.string,
+                justifyContent : PropTypes.string
+            })
+        }),
+        today : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        holiday : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        weekend : PropTypes.shape({
+            saturdayStyle : PropTypes.object,
+            sundayStyle : PropTypes.object
+        }),
+        weekdays : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        prevMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        nextMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        })
+    }).isRequired,
     moveDayView : PropTypes.func.isRequired,
     onSelectEvent : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired,

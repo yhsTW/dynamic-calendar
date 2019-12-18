@@ -1,11 +1,9 @@
 import React from 'react';
 import EventBar from '../EventBarWrapper';
-import { WEEK_DATA, CUSTOMIZE } from '../../utils/constants';
+import { WEEK_DATA } from '../../utils/constants';
 import styles from './styles.css';
-import withCustomize from '../../hoc/withCustomize';
 
-const Popup = ({ popup : { events, top, left, width, height, date }, closePopup, onSelectEvent, getCustomize }) => {
-    const result = getCustomize([CUSTOMIZE.popup]);
+const Popup = ({ popup : { events, top, left, width, height, date }, closePopup, onSelectEvent, customize }) => {
 
     return (
         <div className={ styles.popupBackground } onClick={ closePopup }>
@@ -27,4 +25,4 @@ const Popup = ({ popup : { events, top, left, width, height, date }, closePopup,
     );
 };
 
-export default withCustomize(CUSTOMIZE.view)(Popup);
+export default Popup;

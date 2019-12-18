@@ -74,21 +74,21 @@ class Month extends Component {
         const { 
             currentDate, today, onSelectSlot, 
             onSelectEvent, currentView, events, 
-            selectable, useExtend, components
+            selectable, useExtend, components, customize
         } = this.props;
         const PopupComponent = (components && components.popup) ? components.popup : Popup;
         
         return (
             <div className={ styles.month } onMouseLeave={ this.stopSelecting }>
-                <MonthHeader />
+                <MonthHeader customize={ customize.weekend } />
                 <MonthContent today={ today } events={ events } onSelectSlot={ onSelectSlot } currentDate={ currentDate }
                     onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit } currentView={ currentView }
                     openPopup={ this.openPopup } moveDayView={ this.moveDayView } selectable={ selectable }
-                    useExtend={ useExtend } components={ components } />
+                    useExtend={ useExtend } components={ components } customize={ customize } />
                 {
                     usePopup && (
                         <PopupComponent popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent }
-                            events={ events } />
+                            events={ events } customize={ customize.Popup } />
                     )
                 }
             </div>
@@ -134,7 +134,48 @@ Month.propTypes = {
         })]),
         popup : PropTypes.elementType
     }),
-    useExtend : PropTypes.bool,
+    useExtend : PropTypes.bool.isRequired,
+    customize : PropTypes.shape({
+        BackgroundCell : PropTypes.shape({
+            useBorder : PropTypes.bool,
+            borderStyle : PropTypes.object,
+            selectStyle : PropTypes.object
+        }),
+        Popup : PropTypes.shape({}),
+        More : PropTypes.shape({
+            prefix : PropTypes.string,
+            suffix : PropTypes.string,
+            moreStyle : PropTypes.object,
+            position : PropTypes.shape({
+                alignItems : PropTypes.string,
+                justifyContent : PropTypes.string
+            })
+        }),
+        today : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        holiday : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        weekend : PropTypes.shape({
+            saturdayStyle : PropTypes.object,
+            sundayStyle : PropTypes.object
+        }),
+        weekdays : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        prevMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        nextMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        })
+    }).isRequired,
     onSelectEvent : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired,
     updateCurrentDate : PropTypes.func.isRequired,

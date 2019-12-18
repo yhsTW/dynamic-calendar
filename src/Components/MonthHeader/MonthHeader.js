@@ -1,11 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Label from '../Label';
-import { WEEK_DATA, CUSTOMIZE } from '../../utils/constants';
+import { WEEK_DATA } from '../../utils/constants';
 import styles from './styles.css';
-import withCustomize from '../../hoc/withCustomize';
 
-const MonthHeader = ({ getCustomize }) => {
-    const { [CUSTOMIZE.weekend] : { dateHeaderStyle } } = getCustomize([CUSTOMIZE.weekend]);
+const MonthHeader = ({ customize }) => {
+    const { dateHeaderStyle } = customize;
 
     const getMonthHeaderStyle = (idx, dateHeaderStyle) => {
         const { saturdayStyle, sundayStyle } = dateHeaderStyle;
@@ -34,4 +34,13 @@ const MonthHeader = ({ getCustomize }) => {
     );
 }
 
-export default withCustomize(CUSTOMIZE.view)(MonthHeader);
+MonthHeader.propTypes = {
+    customize : PropTypes.shape({
+        dateHeaderStyle : PropTypes.shape({
+            saturdayStyle : PropTypes.object,
+            sundayStyle : PropTypes.object
+        }).isRequired
+    }).isRequired
+};
+
+export default MonthHeader;

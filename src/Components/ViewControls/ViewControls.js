@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
-import { VIEW_TYPE, CUSTOMIZE} from '../../utils/constants';
+import { VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
-import withCustomize from '../../hoc/withCustomize';
 
-const ViewControls = ({ views, currentView, updateCurrentView, getCustomize }) => {
-    const { 
-        [CUSTOMIZE.viewControls] : { viewControlsStyle, viewControlStyle } 
-    } = getCustomize([CUSTOMIZE.viewControls]);
+const ViewControls = ({ views, currentView, updateCurrentView, customize }) => {
+    const { viewControlsStyle, viewControlStyle } = customize;
 
     const showViewType = view => {
         switch(view) {
@@ -38,8 +35,11 @@ const ViewControls = ({ views, currentView, updateCurrentView, getCustomize }) =
 ViewControls.propTypes = {
     currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]).isRequired,
     views : PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    getCustomize : PropTypes.func.isRequired,
+    customize : PropTypes.shape({
+        viewControlsStyle : PropTypes.object,
+        viewControlStyle : PropTypes.object
+    }),
     updateCurrentView : PropTypes.func.isRequired
 };
 
-export default withCustomize(CUSTOMIZE.header)(ViewControls);
+export default ViewControls;

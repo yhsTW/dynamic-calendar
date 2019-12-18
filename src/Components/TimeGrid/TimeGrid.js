@@ -7,7 +7,7 @@ import { MONTH_TYPE, WEEK_NUM, VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
 import { getSunday } from '../../utils/dateUtil';
 
-const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView, selectable, useExtend }) => {
+const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView, selectable, useExtend, customize }) => {
     // 전달받은 배열에 data를 집어넣는다.
     const pushArr = (arr, data) => {
         arr.push(data);
@@ -79,10 +79,11 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         <div className={ styles.week }>
             <TimeHeader today={ today } currentView={ currentView } weekArr={ weekArr }
                 onSelectSlot={ onSelectSlot } events={ getAllDayEvents() } onSelectEvent={ onSelectEvent }
-                selectable={ selectable } useExtend={ useExtend } />
+                selectable={ selectable } useExtend={ useExtend } customize={ customize } />
             <TimeContent today={ today } currentDate={ currentDate } currentView={ currentView } 
                 events={ getNotAllDayEvents() } onSelectSlot={ onSelectSlot }
-                onSelectEvent={ onSelectEvent } weekArr={ weekArr } selectable={ selectable } />
+                onSelectEvent={ onSelectEvent } weekArr={ weekArr } selectable={ selectable }
+                customize={ customize } />
         </div>
     );
 };
@@ -104,6 +105,47 @@ TimeGrid.propTypes = {
     today : PropTypes.instanceOf(moment).isRequired,
     views : PropTypes.arrayOf(PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day])),
     useExtend : PropTypes.bool.isRequired,
+    customize : PropTypes.shape({
+        BackgroundCell : PropTypes.shape({
+            useBorder : PropTypes.bool,
+            borderStyle : PropTypes.object,
+            selectStyle : PropTypes.object
+        }),
+        Popup : PropTypes.shape({}),
+        More : PropTypes.shape({
+            prefix : PropTypes.string,
+            suffix : PropTypes.string,
+            moreStyle : PropTypes.object,
+            position : PropTypes.shape({
+                alignItems : PropTypes.string,
+                justifyContent : PropTypes.string
+            })
+        }),
+        today : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        holiday : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        weekend : PropTypes.shape({
+            saturdayStyle : PropTypes.object,
+            sundayStyle : PropTypes.object
+        }),
+        weekdays : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        prevMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        nextMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        })
+    }),
     onSelectEvent : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired
 };

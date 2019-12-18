@@ -5,10 +5,9 @@ import EventRow from '../EventRow';
 import BackgroundRow from '../BackgroundRow';
 import moment from 'moment';
 import styles from './styles.css';
-import { VIEW_TYPE, CUSTOMIZE } from '../../utils/constants';
+import { VIEW_TYPE } from '../../utils/constants';
 import sortEventsUtil from '../../utils/sortEvents';
 import eventLevel from '../../utils/eventLevel';
-import withCustomize from '../../hoc/withCustomize';
 
 class Row extends Component {
     row = createRef();
@@ -60,18 +59,20 @@ class Row extends Component {
     };
 
     getDateSlotCustomize = () => {
-        const { getCustomize } = this.props;
-        
-        return getCustomize([
-            CUSTOMIZE.today, CUSTOMIZE.holiday, CUSTOMIZE.weekdays, 
-            CUSTOMIZE.weekend, CUSTOMIZE.prevMonth, CUSTOMIZE.nextMonth
-        ]);
+        const { customize : { today, holiday, weekdays, weekend, prevMonth, nextMonth } } = this.props;
+
+        return {
+            today,
+            holiday,
+            weekdays,
+            weekend, 
+            prevMonth,
+            nextMonth
+        };
     };
 
     getMorePosition = () => {
-        const { getCustomize } = this.props;
-        const { [CUSTOMIZE.more] : { position : { alignItems } } } = getCustomize([CUSTOMIZE.more]);
-
+        const { customize : { More : { alignItems } } } = this.props;
 
         return alignItems;
     };
@@ -82,7 +83,7 @@ class Row extends Component {
             stopSelecting, startSelecting, setSelectedStart, setSelectedEnd,
             selectedStart, selectedEnd, lastSelectedDate, setLastSelectedDate,
             defaultSelectedDate, onSelectEvent, limit, openPopup, useDateHeader,
-            customizeList, moveDayView, useExtend, components
+            moveDayView, useExtend, components, customize
         } = this.props;
         const sortEvents = sortEventsUtil(events);
         const sameEventRow = this.sameEventRow(sortEvents);
@@ -95,7 +96,7 @@ class Row extends Component {
                     stopSelecting={ stopSelecting } startSelecting={ startSelecting } setSelectedStart={ setSelectedStart }
                     setSelectedEnd={ setSelectedEnd } selectedStart={ selectedStart } selectedEnd={ selectedEnd }
                     lastSelectedDate={ lastSelectedDate } setLastSelectedDate={ setLastSelectedDate } defaultSelectedDate={ defaultSelectedDate }
-                    limit={ limit } events={ sortEvents } openPopup={ openPopup } today={ today } customizeList={ customizeList }
+                    limit={ limit } events={ sortEvents } openPopup={ openPopup } today={ today } customize={ customize }
                     useExtend={ useExtend } />
                 <div className={ styles.dateContent }>
                     <div className={ styles.rowHeader } ref={ this.header }>
@@ -136,7 +137,6 @@ Row.defaultProps = {
 
 Row.propTypes = {
     currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]).isRequired,
-    customizeList : PropTypes.array.isRequired,
     defaultSelectedDate : PropTypes.instanceOf(moment),
     events : PropTypes.arrayOf(PropTypes.shape({
         id : PropTypes.number.isRequired,
@@ -181,7 +181,47 @@ Row.propTypes = {
         })]),
         popup : PropTypes.elementType
     }),
-    getCustomize : PropTypes.func.isRequired,
+    customize : PropTypes.shape({
+        BackgroundCell : PropTypes.shape({
+            useBorder : PropTypes.bool,
+            borderStyle : PropTypes.object,
+            selectStyle : PropTypes.object
+        }),
+        Popup : PropTypes.shape({}),
+        More : PropTypes.shape({
+            prefix : PropTypes.string,
+            suffix : PropTypes.string,
+            moreStyle : PropTypes.object,
+            position : PropTypes.shape({
+                alignItems : PropTypes.string,
+                justifyContent : PropTypes.string
+            })
+        }),
+        today : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        holiday : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        weekend : PropTypes.shape({
+            saturdayStyle : PropTypes.object,
+            sundayStyle : PropTypes.object
+        }),
+        weekdays : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        prevMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        nextMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        })
+    }).isRequired,
     moveDayView : PropTypes.func,
     onSelectEvent : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired,
@@ -194,4 +234,4 @@ Row.propTypes = {
     stopSelecting : PropTypes.func.isRequired
 };
 
-export default withCustomize(CUSTOMIZE.view)(Row);
+export default Row;

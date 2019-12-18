@@ -1,18 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
-import withCustomize from '../../hoc/withCustomize';
 import moment from 'moment';
-import { CONTROLS_TYPE, VIEW_TYPE, WEEK_NUM, CUSTOMIZE } from '../../utils/constants';
+import { CONTROLS_TYPE, VIEW_TYPE, WEEK_NUM } from '../../utils/constants';
 import sortComponents from '../../utils/sortComponents';
 import styles from './styles.css';
 
-const Controls = ({ today, currentDate, updateCurrentDate, currentView, getCustomize }) => {
-    const { 
-        [CUSTOMIZE.controls] : {
-            order, prevContent, todayContent, nextContent, controlsStyle, controlStyle 
-        }
-    } = getCustomize([CUSTOMIZE.controls]);
+const Controls = ({ today, currentDate, updateCurrentDate, currentView, customize }) => {
+    const { order, prevContent, todayContent, nextContent, controlsStyle, controlStyle } = customize;
 
     // currentDate의 값이 변경되지 않도록 새로운 new Date를 만든다.
     const getDate = () => {
@@ -91,8 +86,20 @@ Controls.propTypes = {
     currentDate : PropTypes.instanceOf(moment).isRequired,
     currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]).isRequired,
     today : PropTypes.instanceOf(moment).isRequired,
-    getCustomize : PropTypes.func.isRequired,
+    customize : PropTypes.shape({
+        order : PropTypes.arrayOf(
+            PropTypes.oneOf([CONTROLS_TYPE.today,
+                CONTROLS_TYPE.prev,
+                CONTROLS_TYPE.next
+            ])
+        ),
+        prevContent : PropTypes.string,
+        todayContent : PropTypes.string,
+        nextContent : PropTypes.string,
+        controlsStyle : PropTypes.object,
+        controlStyle : PropTypes.object
+    }),
     updateCurrentDate : PropTypes.func.isRequired
 };
 
-export default withCustomize(CUSTOMIZE.header)(Controls);
+export default Controls;

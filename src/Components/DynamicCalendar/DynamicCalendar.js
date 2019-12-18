@@ -9,7 +9,6 @@ import { events } from '../../events';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 import styles from './styles.css';
 import { makeEventGroup } from '../../utils/makeEventGroup';
-import { CustomizeProvider } from '../../contexts/customize';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 import HeaderTest from '../../HeaderTest';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
@@ -61,21 +60,19 @@ class DynamicCalendar extends Component {
         const HeaderComponent = (components && components.header) || Header;
         
         return (
-            <CustomizeProvider value={ customize }>
-                <div className={ styles.dynamicCalendar }>
-                    { 
-                        useHeader && (
-                            <HeaderComponent today={ TODAY } currentDate={ currentDate } views={ views }
-                                currentView={ currentView } updateCurrentDate={ this.updateCurrentDate }
-                                updateCurrentView={ this.updateCurrentView } />
-                        )
-                    }
-                    <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } views={ views }
-                        events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
-                        popup={ popup } updateCurrentDate={ this.updateCurrentDate } updateCurrentView={ this.updateCurrentView }
-                        selectable={ selectable } useExtend={ useExtend } components={ components } />
-                </div>
-            </CustomizeProvider>
+            <div className={ styles.dynamicCalendar }>
+                { 
+                    useHeader && (
+                        <HeaderComponent today={ TODAY } currentDate={ currentDate } views={ views }
+                            currentView={ currentView } updateCurrentDate={ this.updateCurrentDate }
+                            updateCurrentView={ this.updateCurrentView } customize={ customize.Header } />
+                    )
+                }
+                <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } views={ views }
+                    events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
+                    popup={ popup } updateCurrentDate={ this.updateCurrentDate } updateCurrentView={ this.updateCurrentView }
+                    selectable={ selectable } useExtend={ useExtend } components={ components } customize={ customize.View } />
+            </div>
         );
     };
 }
@@ -112,9 +109,9 @@ DynamicCalendar.defaultProps = {
     popup : true,
     ///////////////////// 테스트용 /////////////////////
     useHeader : true,
-    // useExtend : false,
+    useExtend : false,
     ///////////////////// 테스트용 /////////////////////
-    useExtend : true,
+    // useExtend : true,
     ///////////////////// 테스트용 /////////////////////
     customize : {
         Header : {

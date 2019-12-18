@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import BackgroundCell from '../BackgroundCell';
 import moment from 'moment';
 import styles from './styles.css';
-import withCustomize from '../../hoc/withCustomize';
 import { CUSTOMIZE } from '../../utils/constants';
 
 class BackgroundRow extends Component {
@@ -40,9 +39,18 @@ class BackgroundRow extends Component {
     // Cell마다 동일한 스타일을 여러번 불러와야 하니
     // BackgroundRow에서 가져와 각 BackgroundCell에 넘겨준다.
     getBackgroundCustomize = () => {
-        const { getCustomize, customizeList } = this.props;
-        
-        return getCustomize(customizeList);
+        const { customize : { today, holiday, weekdays, weekend, prevMonth, nextMonth, BackgroundCell, More } } = this.props;
+
+        return {
+            today,
+            holiday,
+            weekdays,
+            weekend,
+            prevMonth,
+            nextMonth,
+            BackgroundCell,
+            More
+        };
     };
 
     getAlignItems = customize => {
@@ -94,7 +102,6 @@ class BackgroundRow extends Component {
 }
 
 BackgroundRow.propTypes = {
-    customizeList : PropTypes.array.isRequired,
     defaultSelectedDate : PropTypes.instanceOf(moment),
     events : PropTypes.arrayOf(PropTypes.shape({
         id : PropTypes.number.isRequired,
@@ -115,7 +122,47 @@ BackgroundRow.propTypes = {
     selectedStart : PropTypes.instanceOf(moment),
     today : PropTypes.instanceOf(moment),
     useExtend : PropTypes.bool.isRequired,
-    getCustomize : PropTypes.func.isRequired,
+    customize : PropTypes.shape({
+        BackgroundCell : PropTypes.shape({
+            useBorder : PropTypes.bool,
+            borderStyle : PropTypes.object,
+            selectStyle : PropTypes.object
+        }),
+        Popup : PropTypes.shape({}),
+        More : PropTypes.shape({
+            prefix : PropTypes.string,
+            suffix : PropTypes.string,
+            moreStyle : PropTypes.object,
+            position : PropTypes.shape({
+                alignItems : PropTypes.string,
+                justifyContent : PropTypes.string
+            })
+        }),
+        today : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        holiday : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        weekend : PropTypes.shape({
+            saturdayStyle : PropTypes.object,
+            sundayStyle : PropTypes.object
+        }),
+        weekdays : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        prevMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        nextMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        })
+    }).isRequired,
     onSelectSlot : PropTypes.func.isRequired,
     openPopup : PropTypes.func.isRequired,
     setLastSelectedDate : PropTypes.func.isRequired,
@@ -125,4 +172,4 @@ BackgroundRow.propTypes = {
     stopSelecting : PropTypes.func.isRequired
 };
 
-export default withCustomize(CUSTOMIZE.view)(BackgroundRow);
+export default BackgroundRow;

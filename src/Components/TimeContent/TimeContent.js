@@ -6,8 +6,7 @@ import getTimeArr from '../../utils/getTimeArr';
 import moment from 'moment'
 import { VIEW_TYPE } from '../../utils/constants';
 
-const TimeContent = ({ currentDate, today, weekArr, currentView, onSelectSlot, events, onSelectEvent, selectable }) => {
-
+const TimeContent = ({ currentDate, today, weekArr, currentView, onSelectSlot, events, onSelectEvent, selectable, customize }) => {
     const timeArr = getTimeArr();
     const sortEvents = () => {
         let newEvents = [];
@@ -26,18 +25,18 @@ const TimeContent = ({ currentDate, today, weekArr, currentView, onSelectSlot, e
     };
 
     const newEvents = sortEvents();
-
+    
     return (
         <div className={ styles.timeContent }>
             <div className={ styles.timeContentHeader }>
-                <TimeColumn itemArr={ timeArr } />
+                <TimeColumn itemArr={ timeArr } customize={ customize } />
             </div>
             <div className={ styles.timeContents }>
                 { 
                     weekArr.map(week => (
                         <TimeColumn key={ `${ week.date }_${ week.type }` } itemArr={ timeArr } week={ week } 
                             onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent } currentView={ currentView }
-                            events={ newEvents[week.date.day()] } selectable={ selectable } />
+                            events={ newEvents[week.date.day()] } selectable={ selectable } customize={ customize } />
                     ))
                 }
             </div>
@@ -62,6 +61,47 @@ TimeContent.propTypes = {
         date : PropTypes.instanceOf(moment),
         type : PropTypes.string.isRequired
     })).isRequired,
+    customize : PropTypes.shape({
+        BackgroundCell : PropTypes.shape({
+            useBorder : PropTypes.bool,
+            borderStyle : PropTypes.object,
+            selectStyle : PropTypes.object
+        }),
+        Popup : PropTypes.shape({}),
+        More : PropTypes.shape({
+            prefix : PropTypes.string,
+            suffix : PropTypes.string,
+            moreStyle : PropTypes.object,
+            position : PropTypes.shape({
+                alignItems : PropTypes.string,
+                justifyContent : PropTypes.string
+            })
+        }),
+        today : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        holiday : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        weekend : PropTypes.shape({
+            saturdayStyle : PropTypes.object,
+            sundayStyle : PropTypes.object
+        }),
+        weekdays : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        prevMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        }),
+        nextMonth : PropTypes.shape({
+            dateHeaderStyle : PropTypes.object,
+            backgroundCellStyle : PropTypes.object
+        })
+    }),
     onSelectEvent : PropTypes.func.isRequired,
     onSelectSlot : PropTypes.func.isRequired
 };
