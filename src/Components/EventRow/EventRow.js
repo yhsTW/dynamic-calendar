@@ -77,7 +77,7 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
 
 EventRow.propTypes = {
     currentView : PropTypes.string.isRequired,
-    eventRowRef : PropTypes.object,
+    eventRowRef : PropTypes.elementType.isRequired,
     events : PropTypes.arrayOf(PropTypes.shape({
         id : PropTypes.number.isRequired,
         title : PropTypes.string.isRequired,
