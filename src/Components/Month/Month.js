@@ -35,11 +35,15 @@ class Month extends Component {
         const { popup } = this.props;
 
         if(popup) {
+            const { bottom : monthBottom } = this.month.getBoundingClientRect();
+            const addHeight = height * 0.4;
+            const addWidth = width * 0.5;
+
             this.popup = { 
-                top,
+                top : top + height >= monthBottom ? top - addHeight : top,
                 left,
-                width : width + width * 0.5,
-                height : height + height * 0.4,
+                width : width + addWidth,
+                height : height + addHeight,
                 events,
                 date
             };
@@ -78,7 +82,7 @@ class Month extends Component {
         const PopupComponent = (components && components.popup) ? components.popup : Popup;
         
         return (
-            <div className={ styles.month } onMouseLeave={ this.stopSelecting }>
+            <div ref={ ref => this.month = ref } className={ styles.month } onMouseLeave={ this.stopSelecting }>
                 <MonthHeader customize={ customize.weekend } />
                 <MonthContent today={ today } events={ events } onSelectSlot={ onSelectSlot } currentDate={ currentDate }
                     onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit } currentView={ currentView }
