@@ -3,14 +3,14 @@
     flex: 1;
     flex-direction: column;
     position: relative;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
-.row-header {
+.rowHeader {
     display: flex;
 }
 
-.date-content {
+.dateContent {
     pointer-events: none;
     z-index: 4;
 }

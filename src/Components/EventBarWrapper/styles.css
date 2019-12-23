@@ -1,4 +1,4 @@
-.event-bar-wrapper {
+.eventBarWrapper {
     background-color: #9FE1E7;
     margin-bottom: 3px;
     padding: 2px;
@@ -8,17 +8,17 @@
     z-index: 5;
 }
 
-.event-bar-wrapper.start {
+.eventBarWrapper.start {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
 
-.event-bar-wrapper.end {
+.eventBarWrapper.end {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
-.time-event-bar-wrapper {
+.timeEventBarWrapper {
     position: absolute;
     display: flex;
     flex-direction: column;

@@ -1,6 +1,7 @@
-.dynamic-calendar {
+.dynamicCalendar {
     width: inherit;
     height: inherit;
     display: flex;
     flex-direction: column;
+    user-select: none;
 }

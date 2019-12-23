@@ -10,12 +10,12 @@
     cursor: pointer;
 }
 
-.today-btn {
+.todayBtn {
     padding: 10px 20px;
     border-radius: 23px;
 }
 
-.move-btn {
+.moveBtn {
     padding: 10px 15px;
     border-radius: 18px;
 }
