@@ -40,7 +40,7 @@ class Month extends Component {
             const addWidth = width * 0.5;
 
             this.popup = { 
-                top : top + height >= monthBottom ? top - addHeight : top,
+                top : Math.ceil(top + height) >= monthBottom ? top - addHeight : top,
                 left,
                 width : width + addWidth,
                 height : height + addHeight,
