@@ -38,7 +38,7 @@ class Month extends Component {
             this.popup = { 
                 top,
                 left,
-                width : width + width * 0.1,
+                width : width + width * 0.5,
                 height : height + height * 0.4,
                 events,
                 date
