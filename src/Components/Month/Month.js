@@ -36,8 +36,8 @@ class Month extends Component {
 
         if(popup) {
             const { bottom : monthBottom } = this.month.getBoundingClientRect();
-            const addHeight = height * 0.4;
-            const addWidth = width * 0.5;
+            const addHeight = height * 0.5;
+            const addWidth = width * 0.6;
 
             this.popup = { 
                 top : Math.ceil(top + height) >= monthBottom ? top - addHeight : top,
