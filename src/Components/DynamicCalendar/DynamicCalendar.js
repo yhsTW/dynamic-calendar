@@ -18,13 +18,24 @@ const TODAY = moment();
 class DynamicCalendar extends Component {
     constructor(props) {
         super(props);
-
+        
         this.state = {
             currentDate : moment(this.props.date),
-            currentView : this.props.defaultView
+            currentView : this.props.defaultView,
+            //////////////////////////////////// 테스트용 ////////////////////////////////////
+            events : []
+            //////////////////////////////////// 테스트용 ////////////////////////////////////
         };
     };
-
+    
+    //////////////////////////////////// 테스트용 ////////////////////////////////////
+    componentDidMount = () => {
+        this.setState({
+            events
+        });
+    }
+    //////////////////////////////////// 테스트용 ////////////////////////////////////
+    
     // 현재 사용자가 보고있는 날짜를 변경한다.
     updateCurrentDate = date => {
         const { onNavigate } = this.props;
@@ -44,7 +55,10 @@ class DynamicCalendar extends Component {
 
     // 사용자로부터 받은 이벤트를 그룹별로 묶는다.
     settingEvents = () => {
-        const { events } = this.props;
+        // const { events } = this.props;
+        //////////////////////////////////// 테스트용 ////////////////////////////////////
+        const { events } = this.state;
+        //////////////////////////////////// 테스트용 ////////////////////////////////////
         const { currentDate } = this.state;
 
         return makeEventGroup(events, currentDate);
@@ -83,9 +97,9 @@ testEventBarMap.set('ddd', HeaderTest);
 ///////////////////// 테스트용 /////////////////////
 
 DynamicCalendar.defaultProps = {
-    // events : [],
+    events : [],
     ///////////////////// 테스트용 /////////////////////
-    events,
+    // events,
     ///////////////////// 테스트용 /////////////////////
     date : TODAY,
     min : null,

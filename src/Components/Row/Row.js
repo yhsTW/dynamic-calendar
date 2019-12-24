@@ -24,6 +24,12 @@ class Row extends Component {
         );
     }
 
+    componentDidUpdate = prevProps => {
+        if(this.isMonth() && prevProps.events !== this.props.events) {
+            this.getRowLimit();
+        }
+    }
+
     componentWillUnmount = () => {
         this.isMonth() && window.removeEventListener('resize', this.getRowLimit);
     };
