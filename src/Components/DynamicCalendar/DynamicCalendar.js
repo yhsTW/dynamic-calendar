@@ -73,7 +73,6 @@ class DynamicCalendar extends Component {
         const { currentDate, currentView } = this.state;
         const events = this.settingEvents();
         const HeaderComponent = (components && components.header) || Header;
-        console.log('events : ', events)
         
         return (
             <div className={ styles.dynamicCalendar }>

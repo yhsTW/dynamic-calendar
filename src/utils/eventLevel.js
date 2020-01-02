@@ -3,7 +3,6 @@ import moment from 'moment';
 const getEventLevel = (start, end, events, { id : idKey, start : startKey, end : endKey }) => {
     const newEvents = [...events];
     let returnEvents = [];
-    console.log('newEvents : ', newEvents)
     
     while(newEvents.length > 0) {
         const currentEvent = newEvents.shift();
