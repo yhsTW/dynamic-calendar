@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import Label from '../Label';
 import styles from './styles.css';
 
-const EventBar = ({ useTime, time, event }) => (
+const EventBar = ({ useTime, time, event, eventProperty : { title } }) => (
     <Fragment>
         { useTime && <Label className={ `${ styles.timeLabel } ${ styles.ellipsisText }` } text={ time } /> }
-        <Label className={ !useTime ? styles.ellipsisText : '' } text={ event.title } />
+        <Label className={ !useTime ? styles.ellipsisText : '' } text={ event[title] } />
     </Fragment>
 );
 

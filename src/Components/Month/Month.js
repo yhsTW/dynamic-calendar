@@ -77,7 +77,8 @@ class Month extends Component {
         const { 
             currentDate, today, onSelectSlot, 
             onSelectEvent, currentView, events, 
-            selectable, useExtend, components, customize
+            selectable, useExtend, components, customize,
+            eventProperty
         } = this.props;
         const PopupComponent = (components && components.popup) ? components.popup : Popup;
         
@@ -87,11 +88,11 @@ class Month extends Component {
                 <MonthContent today={ today } events={ events } onSelectSlot={ onSelectSlot } currentDate={ currentDate }
                     onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit } currentView={ currentView }
                     openPopup={ this.openPopup } moveDayView={ this.moveDayView } selectable={ selectable }
-                    useExtend={ useExtend } components={ components } customize={ customize } />
+                    useExtend={ useExtend } components={ components } customize={ customize } eventProperty={ eventProperty } />
                 {
                     usePopup && (
                         <PopupComponent popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent }
-                            events={ events } customize={ customize.Popup } />
+                            events={ events } customize={ customize.Popup } eventProperty={ eventProperty } />
                     )
                 }
             </div>

@@ -8,10 +8,10 @@ import moment from 'moment';
 import { makeTimeFormat } from '../../utils/dateUtil';
 import sortEventsUtil from '../../utils/sortEvents';
 
-const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, currentView, events, customize }) => {
+const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, currentView, events, customize, eventProperty, eventProperty : { id : idKey, start : startKey, end : endKey } }) => {
     const getEventBarHeight = event => {
-        const start = moment(event.start);
-        const end = moment(event.end);
+        const start = moment(event[startKey]);
+        const end = moment(event[endKey]);
         const hour = (end.hour() - start.hour()) * 60;
         const min = start.minute() + end.minute();
         const gap = (hour + min) / 30;
@@ -21,7 +21,7 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
     };
 
     const getEventBarTop = event => {
-        const startHour = moment(event.start).hour();
+        const startHour = moment(event[startKey]).hour();
 
         return `calc((100% * ${ (startHour * 60) / 30 }) / ${ itemArr.length * 2 })`;
     };
@@ -32,16 +32,16 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
 
     const getEventLevel = (event, group) => {
         const prevEvents = group.filter(current => (
-            isBetween(event.start, current) || isBetween(event.end, current, '()')
+            isBetween(event[startKey], current) || isBetween(event[endKey], current, '()')
         ) && current);
 
         const nextEvents = group.filter(current => (
-            current.id !== event.id &&
+            current.id !== event[idKey] &&
             (isBetween(current.start, event, '()'))
         ) && current);
 
         const filterEvents = [...prevEvents, ...nextEvents];
-        const findIndex = filterEvents.findIndex(find => find.id === event.id);
+        const findIndex = filterEvents.findIndex(find => find[idKey] === event[idKey]);
 
         return {
             level : findIndex + 1,
@@ -55,7 +55,7 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
             left = 0;
             
         if(level > 0) left = `calc((100% / ${ group.length }) * ${ level - 1 })`;
-        if(event.id === row[row.length - 1].id) {
+        if(event[idKey] === row[row.length - 1].id) {
             width = `calc(${ width }% - ${ left })`;
         } else {
             width = (width / group.length) * 1.7;
@@ -92,7 +92,7 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
     const makeLayout = () => {
         if(!events) return;
 
-        const sEvents = sortEventsUtil(events);
+        const sEvents = sortEventsUtil(events, eventProperty);
         let notOverlap = [];
         let overlap = [];
 
@@ -100,7 +100,7 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
             const currentEvent = sEvents.shift();
             const overlapEvents = sEvents.filter(event => (
                 (
-                    isBetween(event.start, currentEvent) || isBetween(event.end, currentEvent)
+                    isBetween(event[startKey], currentEvent) || isBetween(event[endKey], currentEvent)
                 ) && event
             ));
             
@@ -136,10 +136,11 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
             <div className={ styles.contentColumn }>
                 {
                     week && events && makeLayout().map(event => 
-                        <EventBar key={ event.id } event={ event } isStart={ true } isEnd={ true } isSelecting={ select.isSelecting }
+                        <EventBar key={ event[idKey] } event={ event } isStart={ true } isEnd={ true } isSelecting={ select.isSelecting }
                             startSelecting={ select.startSelecting } width={ event.style.width } onSelectEvent={ onSelectEvent }
                             height={ getEventBarHeight(event) } top={ getEventBarTop(event) } useTime={ true }
-                            time={ `${ makeTimeFormat(event.start) } - ${ makeTimeFormat(event.end) }` } left={ `${ event.style.left }` } />
+                            time={ `${ makeTimeFormat(event[startKey]) } - ${ makeTimeFormat(event[endKey]) }` } left={ `${ event.style.left }` }
+                            eventProperty={ eventProperty } />
                     )
                 }
             </div>

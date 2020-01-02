@@ -5,17 +5,17 @@ import moment from 'moment';
 import { WEEK_NUM, VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
 
-const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSelecting, startSelecting, currentView, components }) => {
+const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSelecting, startSelecting, currentView, components, eventProperty, eventProperty : { id : idKey, start : startKey, end : endKey } }) => {
     const getStartCondition = (event) => {
         const slotStartDate = moment(slotStart.date);
-        const start = moment(event.start);
+        const start = moment(event[startKey]);
 
         return start.isAfter(slotStartDate) || slotStartDate.isSame(start, 'week');
     };
 
     const getEndCondition = (event) => {
         const slotEndDate = moment(slotEnd.date);
-        const end = moment(event.end);
+        const end = moment(event[endKey]);
 
         return slotEndDate.isAfter(end) || slotEndDate.isSame(end, 'week');
     };
@@ -25,9 +25,9 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
 
         if(getStartCondition(event)) {
             if(idx > 0) {
-                segmentWidth = `calc(100% * ${ moment(event.start).day() - moment(events[idx - 1].end).day() - 1 }/${ WEEK_NUM })`;
+                segmentWidth = `calc(100% * ${ moment(event[startKey]).day() - moment(events[idx - 1][endKey]).day() - 1 }/${ WEEK_NUM })`;
             } else {
-                segmentWidth = `calc(100% * ${ moment(event.start).day() }/${ WEEK_NUM })`;
+                segmentWidth = `calc(100% * ${ moment(event[startKey]).day() }/${ WEEK_NUM })`;
             }
         }
 
@@ -35,8 +35,8 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
     };
 
     const getEventBarWidth = (event) => {
-        const start = moment(event.start);
-        const end = moment(event.end);
+        const start = moment(event[startKey]);
+        const end = moment(event[endKey]);
         let width = 0;
 
         if(currentView !== VIEW_TYPE.day) {
@@ -63,11 +63,11 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
         <div className={ styles.eventRow } ref={ eventRowRef }>
             {
                 events.map((event, idx) => (
-                    <Fragment key={ event.id }>
+                    <Fragment key={ event[idKey] }>
                         { currentView !== VIEW_TYPE.day && <div className="segment" style={{ width : getSegmentWidth(event, idx), flexBasis : getSegmentWidth(event, idx) }}></div> }
                         <EventBarWrapper event={ event } width={ getEventBarWidth(event) } isStart={ getStartCondition(event) } 
                             isEnd={ getEndCondition(event) } onSelectEvent={ onSelectEvent } isSelecting={ isSelecting }
-                            startSelecting={ startSelecting } components={ components } />
+                            startSelecting={ startSelecting } components={ components } eventProperty={ eventProperty } />
                     </Fragment>
                 ))
             }

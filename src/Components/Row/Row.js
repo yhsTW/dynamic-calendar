@@ -10,9 +10,9 @@ import sortEventsUtil from '../../utils/sortEvents';
 import eventLevel from '../../utils/eventLevel';
 
 class Row extends Component {
-    sameEventRow = (sortEvents) => {
+    sameEventRow = (sortEvents, eventProperty) => {
         const { itemArr } = this.props;
-        let newEvents = eventLevel(itemArr[0], itemArr[itemArr.length - 1], sortEvents);
+        let newEvents = eventLevel(itemArr[0], itemArr[itemArr.length - 1], sortEvents, eventProperty);
 
         return newEvents;
     };
@@ -85,10 +85,10 @@ class Row extends Component {
             stopSelecting, startSelecting, setSelectedStart, setSelectedEnd,
             selectedStart, selectedEnd, lastSelectedDate, setLastSelectedDate,
             defaultSelectedDate, onSelectEvent, limit, openPopup, useDateHeader,
-            moveDayView, useExtend, components, customize
+            moveDayView, useExtend, components, customize, eventProperty
         } = this.props;
-        const sortEvents = sortEventsUtil(events);
-        const sameEventRow = this.sameEventRow(sortEvents);
+        const sortEvents = sortEventsUtil(events, eventProperty);
+        const sameEventRow = this.sameEventRow(sortEvents, eventProperty);
         const dateSlotCustomize = this.getDateSlotCustomize();
         const newLimit =  limit !== 0 && this.getMorePosition() === 'flex-end' ? limit - 1 : limit;
 
@@ -99,7 +99,7 @@ class Row extends Component {
                     setSelectedEnd={ setSelectedEnd } selectedStart={ selectedStart } selectedEnd={ selectedEnd }
                     lastSelectedDate={ lastSelectedDate } setLastSelectedDate={ setLastSelectedDate } defaultSelectedDate={ defaultSelectedDate }
                     limit={ limit } events={ sortEvents } openPopup={ openPopup } today={ today } customize={ customize }
-                    useExtend={ useExtend } />
+                    useExtend={ useExtend } eventProperty={ eventProperty } />
                 <div className={ styles.dateContent }>
                     <div className={ styles.rowHeader } ref={ ref => this.header = ref }>
                         { 
@@ -118,7 +118,7 @@ class Row extends Component {
                                         <EventRow eventRowRef={ ref => this.eventRow = ref } key={ `event-row_${ idx }` } 
                                             events={ event } slotStart={ itemArr[0] } slotEnd={ itemArr[itemArr.length - 1] } 
                                             onSelectEvent={ onSelectEvent } isSelecting={ isSelecting } startSelecting={ startSelecting }
-                                            currentView={ currentView } components={ components } />
+                                            currentView={ currentView } components={ components } eventProperty={ eventProperty } />
                                     );
                                 } else {
                                     return null;

@@ -1,14 +1,14 @@
 import moment from 'moment';
 
-const sortEvents = events => {
+const sortEvents = (events, { start : startKey, end : endKey }) => {
     if(!events) return [];
     
     const newEvents = [...events];
     const sort = newEvents.sort((a, b) => {
-        const mAStart = moment(a.start);
-        const mAEnd = moment(a.end);
-        const mBStart = moment(b.start);
-        const mBEnd = moment(b.end);
+        const mAStart = moment(a[startKey]);
+        const mAEnd = moment(a[endKey]);
+        const mBStart = moment(b[startKey]);
+        const mBEnd = moment(b[endKey]);
 
         return (
             // 시작 시간이 먼저인 것

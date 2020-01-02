@@ -3,16 +3,18 @@ import moment from 'moment';
 let group = [];
 
 // 현재 사용자가 보고있는 달의 이벤트인지 확인한다.
-const isCurrentEvent = (event, currentDate) => {
-    return moment(currentDate).isBetween(moment(event.start), moment(event.end), 'month', '[]') 
-        || moment(currentDate).startOf('month').isSame(moment(event.start), 'week')
-        || moment(currentDate).startOf('month').isSame(moment(event.end), 'week')
-        || moment(currentDate).endOf('month').isSame(moment(event.start), 'week')
-        || moment(currentDate).endOf('month').isSame(moment(event.end), 'week');
+const isCurrentEvent = (event, currentDate, { start : startKey, end : endKey }) => {
+    return moment(currentDate).isBetween(moment(event[startKey]), moment(event[endKey]), 'month', '[]') 
+        || moment(currentDate).startOf('month').isSame(moment(event[startKey]), 'week')
+        || moment(currentDate).startOf('month').isSame(moment(event[endKey]), 'week')
+        || moment(currentDate).endOf('month').isSame(moment(event[startKey]), 'week')
+        || moment(currentDate).endOf('month').isSame(moment(event[endKey]), 'week');
 };
 
 // 이벤트를 주(week) 별로 나눈다.
-export const makeEventGroup = (events, currentDate) => {
+export const makeEventGroup = (events, currentDate, eventProperty) => {
+    const { start : startKey, start : endKey } = eventProperty;
+
     // 현재 달(month)의 첫 번째 날이 올해의 몇 번째 주인지 확인한다.
     const currentFirstWeek = moment(currentDate).startOf('month').week();
     // 현재 달(month)의 마지막 날이 올해의 몇 번째 주인지 확인한다.
@@ -23,22 +25,26 @@ export const makeEventGroup = (events, currentDate) => {
         moment(currentDate).endOf('month').week();
 
     events.forEach(event => {
-        if(isCurrentEvent(event, currentDate)) {
+        if(isCurrentEvent(event, currentDate, eventProperty)) {
             // 이벤트 시작일의 주차를 가져온다.
-            let startWeek = moment(event.start).week();
+            // let startWeek = moment(event.start).week();
+            let startWeek = moment(event[startKey]).week();
             // 이벤트 종료일의 주차를 가져온다.
-            let endWeek = moment(event.end).week();
+            // let endWeek = moment(event.end).week();
+            let endWeek = moment(event[endKey]).week();
             
             // 현재 사용자가 보고있는 날의 달(month)가 12월일 경우
             if(moment(currentDate).month() === 11) {
                 // 이벤트 시작일이 해당 년도의 첫째주일 경우
-                if(moment(event.start).week() === 1) {
+                // if(moment(event.start).week() === 1) {
+                if(moment(event[startKey]).week() === 1) {
 
-                    startWeek = moment(event.start).weeksInYear() + moment(event.start).week();
+                    // startWeek = moment(event.start).weeksInYear() + moment(event.start).week();
+                    startWeek = moment(event[startKey]).weeksInYear() + moment(event[startKey]).week();
                 }
                 
-                if(moment(event.end).week() === 1 || moment(event.end).year() !== moment(currentDate).year()) {
-                    endWeek = moment(event.end).weeksInYear() + moment(event.end).week();
+                if(moment(event[endKey]).week() === 1 || moment(event[endKey]).year() !== moment(currentDate).year()) {
+                    endWeek = moment(event[endKey]).weeksInYear() + moment(event[endKey]).week();
                 }
             }
             

@@ -6,19 +6,19 @@ import getTimeArr from '../../utils/getTimeArr';
 import moment from 'moment'
 import { VIEW_TYPE } from '../../utils/constants';
 
-const TimeContent = ({ currentDate, today, weekArr, currentView, onSelectSlot, events, onSelectEvent, selectable, customize }) => {
+const TimeContent = ({ currentDate, today, weekArr, currentView, onSelectSlot, events, onSelectEvent, selectable, customize, eventProperty, eventProperty : { start : startKey } }) => {
     const timeArr = getTimeArr();
     const sortEvents = () => {
         let newEvents = [];
 
         events.forEach(event => {
-            const idx = moment(event.start).day();
+            const idx = moment(event[startKey]).day();
 
             if(!newEvents[idx]) {
                 newEvents[idx] = [];
             }
 
-            newEvents[moment(event.start).day()].push(event);
+            newEvents[moment(event[startKey]).day()].push(event);
         });
 
         return newEvents;
@@ -29,14 +29,14 @@ const TimeContent = ({ currentDate, today, weekArr, currentView, onSelectSlot, e
     return (
         <div className={ styles.timeContent }>
             <div className={ styles.timeContentHeader }>
-                <TimeColumn itemArr={ timeArr } customize={ customize } />
+                <TimeColumn itemArr={ timeArr } customize={ customize } eventProperty={ eventProperty } />
             </div>
             <div className={ styles.timeContents }>
                 { 
                     weekArr.map(week => (
                         <TimeColumn key={ `${ week.date }_${ week.type }` } itemArr={ timeArr } week={ week } 
                             onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent } currentView={ currentView }
-                            events={ newEvents[week.date.day()] } selectable={ selectable } customize={ customize } />
+                            events={ newEvents[week.date.day()] } selectable={ selectable } customize={ customize } eventProperty={ eventProperty } />
                     ))
                 }
             </div>

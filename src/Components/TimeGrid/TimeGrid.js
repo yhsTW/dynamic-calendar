@@ -7,7 +7,7 @@ import { MONTH_TYPE, WEEK_NUM, VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
 import { getSunday } from '../../utils/dateUtil';
 
-const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView, selectable, useExtend, customize }) => {
+const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView, selectable, useExtend, customize, eventProperty, eventProperty : { start : startKey, end : endKey, allDay : allDayKey } }) => {
     // 전달받은 배열에 data를 집어넣는다.
     const pushArr = (arr, data) => {
         arr.push(data);
@@ -60,7 +60,7 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         const weekEvents = getWeekEvents();
 
         return weekEvents ? weekEvents.filter(event => 
-            (event.allDay || !moment(event.start).isSame(event.end, 'date')) && event
+            (event[allDayKey] || !moment(event[startKey]).isSame(event[endKey], 'date')) && event
         ) : [];
     };
 
@@ -69,7 +69,7 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         const weekEvents = getWeekEvents();
 
         return weekEvents ? weekEvents.filter(event => 
-            !event.allDay && moment(event.start).isSame(event.end, 'date') && event
+            !event[allDayKey] && moment(event[startKey]).isSame(event[endKey], 'date') && event
         ) : [];
     };
 
@@ -79,11 +79,11 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         <div className={ styles.week }>
             <TimeHeader today={ today } currentView={ currentView } weekArr={ weekArr }
                 onSelectSlot={ onSelectSlot } events={ getAllDayEvents() } onSelectEvent={ onSelectEvent }
-                selectable={ selectable } useExtend={ useExtend } customize={ customize } />
+                selectable={ selectable } useExtend={ useExtend } customize={ customize } eventProperty={ eventProperty } />
             <TimeContent today={ today } currentDate={ currentDate } currentView={ currentView } 
                 events={ getNotAllDayEvents() } onSelectSlot={ onSelectSlot }
                 onSelectEvent={ onSelectEvent } weekArr={ weekArr } selectable={ selectable }
-                customize={ customize } />
+                customize={ customize } eventProperty={ eventProperty } />
         </div>
     );
 };

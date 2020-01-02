@@ -8,7 +8,7 @@ import combineStyle from '../../utils/combineStyle';
 import { PROPERTY } from '../../utils/constants';
 import moment from 'moment';
 
-const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelectEvent, selectable, useExtend, customize }) => {
+const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelectEvent, selectable, useExtend, customize, eventProperty }) => {
     const isToday = date => {
         return date.isSame(today, 'date');
     };
@@ -47,7 +47,7 @@ const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelec
                 </div>
                 <TimeAllDay today={ today } itemArr={ weekArr } useDateHeader={ false } onSelectSlot={ onSelectSlot }
                     events={ events } currentView={ currentView } onSelectEvent={ onSelectEvent } selectable={ selectable }
-                    useExtend={ useExtend } customize={ customize } />
+                    useExtend={ useExtend } customize={ customize } eventProperty={ eventProperty } />
             </div>
         </div>
     );

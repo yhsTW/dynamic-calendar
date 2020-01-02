@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Header from '../Header';
 import View from '../View';
-import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, POSITION, FORMAT } from '../../utils/constants';
+import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, POSITION, FORMAT, PROPERTY } from '../../utils/constants';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 import { events } from '../../events';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
@@ -55,23 +55,25 @@ class DynamicCalendar extends Component {
 
     // 사용자로부터 받은 이벤트를 그룹별로 묶는다.
     settingEvents = () => {
+        const { eventProperty } = this.props;
         // const { events } = this.props;
         //////////////////////////////////// 테스트용 ////////////////////////////////////
         const { events } = this.state;
         //////////////////////////////////// 테스트용 ////////////////////////////////////
         const { currentDate } = this.state;
 
-        return makeEventGroup(events, currentDate);
+        return makeEventGroup(events, currentDate, eventProperty);
     };
 
     render() {
         const { 
             views, onSelectSlot, onSelectEvent, useHeader, customize,
-            popup, selectable, useExtend, components
+            popup, selectable, useExtend, components, eventProperty
         } = this.props;
         const { currentDate, currentView } = this.state;
         const events = this.settingEvents();
         const HeaderComponent = (components && components.header) || Header;
+        console.log('events : ', events)
         
         return (
             <div className={ styles.dynamicCalendar }>
@@ -85,7 +87,8 @@ class DynamicCalendar extends Component {
                 <View today={ TODAY } currentDate={ currentDate } currentView={ currentView } views={ views }
                     events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
                     popup={ popup } updateCurrentDate={ this.updateCurrentDate } updateCurrentView={ this.updateCurrentView }
-                    selectable={ selectable } useExtend={ useExtend } components={ components } customize={ customize.View } />
+                    selectable={ selectable } useExtend={ useExtend } components={ components } customize={ customize.View }
+                    eventProperty={ eventProperty } />
             </div>
         );
     };
@@ -220,6 +223,13 @@ DynamicCalendar.defaultProps = {
                 }
             }
         }
+    },
+    eventProperty : {
+        id : 'id',
+        title : 'title',
+        start : 'start',
+        end : 'end',
+        allDay : 'allDay'
     },
     // onNavigate : () => {},
     // onSelectSlot : () => {},
@@ -361,6 +371,13 @@ DynamicCalendar.propTypes = {
                 backgroundCellStyle : PropTypes.object
             })
         })
+    }),
+    eventProperty : PropTypes.shape({
+        id : PropTypes.string.isRequired,
+        title : PropTypes.string.isRequired,
+        start : PropTypes.string.isRequired,
+        end : PropTypes.string.isRequired,
+        allDay : PropTypes.string.isRequired
     }),
     // 현재 보고 있는 날짜가 변경되면 실행된다.
     onNavigate : PropTypes.func,

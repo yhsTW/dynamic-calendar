@@ -54,7 +54,7 @@ class EventBarWrapper extends Component {
         const { 
             isStart, isEnd, width, isSelecting,
             event : { color }, height, top,
-            useTime, time, left, event
+            useTime, time, left, event, eventProperty
         } = this.props;
         const EventBarComponent = this.getEventBarComponent();
         
@@ -69,7 +69,7 @@ class EventBarWrapper extends Component {
                     left
                 }}
                 onClick={ this.onClickEvent } onMouseDown={ this.mouseDown } onMouseMove={ this.moveMouse }>
-                <EventBarComponent useTime={ useTime } time={ time } event={ event } />
+                <EventBarComponent useTime={ useTime } time={ time } event={ event } eventProperty={ eventProperty } />
             </div>
         );
     };

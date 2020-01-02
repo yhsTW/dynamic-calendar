@@ -3,7 +3,7 @@ import EventBar from '../EventBarWrapper';
 import { WEEK_DATA } from '../../utils/constants';
 import styles from './styles.css';
 
-const Popup = ({ popup : { events, top, left, width, height, date }, closePopup, onSelectEvent, customize }) => {
+const Popup = ({ popup : { events, top, left, width, height, date }, closePopup, onSelectEvent, customize, eventProperty, eventProperty : { id : idKey } }) => {
 
     return (
         <div className={ styles.popupBackground } onClick={ closePopup }>
@@ -15,8 +15,8 @@ const Popup = ({ popup : { events, top, left, width, height, date }, closePopup,
                 <div className={ styles.popupEvents }>
                     { 
                         events.map(event => (
-                            <EventBar key={ event.id } event={ event } isStart={ true } 
-                                isEnd={ true } onSelectEvent={ onSelectEvent } />
+                            <EventBar key={ event[idKey] } event={ event } isStart={ true } 
+                                isEnd={ true } onSelectEvent={ onSelectEvent } eventProperty={ eventProperty } />
                         )) 
                     }
                 </div>

@@ -9,14 +9,15 @@ class BackgroundRow extends Component {
     // Slot별로 event의 갯수를 센다.
     settingEventCount = () => {
         let eventCountArr = [];
-        const { events, itemArr } = this.props;
+        const { events, itemArr, eventProperty : { start : startKey, end : endKey } } = this.props;
 
         if(events) {
             const startSlot = itemArr[0].date;
             const endSlot = itemArr[itemArr.length - 1].date;
 
             events.forEach(event => {
-                const { start : eStart, end : eEnd } = event;
+                const eStart = event[startKey];
+                const eEnd = event[endKey];
                 const mStart = moment(eStart);
                 const mEnd = moment(eEnd);
                 const start = mStart.isBefore(startSlot) ? startSlot : mStart;
