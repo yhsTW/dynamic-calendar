@@ -55,12 +55,24 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         return events[getWeek()];
     };
 
+    const checkAllDay = event => {
+        let allDay = false;
+
+        if(typeof allDayKey === 'string') {
+            allDay = event[allDayKey];
+        } else {
+            allDay = event[allDayKey.key] === event[allDayKey.allDayType];
+        }
+
+        return allDay;
+    };
+
     // 종일 일정 목록을 가져온다.
     const getAllDayEvents = () => {
         const weekEvents = getWeekEvents();
 
         return weekEvents ? weekEvents.filter(event => 
-            (event[allDayKey] || !moment(event[startKey]).isSame(event[endKey], 'date')) && event
+            (checkAllDay(event) || !moment(event[startKey]).isSame(event[endKey], 'date')) && event
         ) : [];
     };
 
@@ -69,7 +81,7 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         const weekEvents = getWeekEvents();
 
         return weekEvents ? weekEvents.filter(event => 
-            !event[allDayKey] && moment(event[startKey]).isSame(event[endKey], 'date') && event
+            !checkAllDay(event) && moment(event[startKey]).isSame(event[endKey], 'date') && event
         ) : [];
     };
 

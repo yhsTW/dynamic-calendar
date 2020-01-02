@@ -376,7 +376,11 @@ DynamicCalendar.propTypes = {
         title : PropTypes.string.isRequired,
         start : PropTypes.string.isRequired,
         end : PropTypes.string.isRequired,
-        allDay : PropTypes.string.isRequired
+        allDay : PropTypes.oneOfType([PropTypes.string, PropTypes.shape({
+            key : PropTypes.string.isRequired,
+            notAllDayType : PropTypes.string.isRequired,
+            allDayType : PropTypes.string.isRequired
+        })]).isRequired
     }),
     // 현재 보고 있는 날짜가 변경되면 실행된다.
     onNavigate : PropTypes.func,
