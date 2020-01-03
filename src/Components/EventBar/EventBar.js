@@ -4,8 +4,8 @@ import styles from './styles.css';
 
 const EventBar = ({ useTime, time, event, eventProperty : { title } }) => (
     <Fragment>
-        { useTime && <Label className={ `${ styles.timeLabel } ${ styles.ellipsisText }` } text={ time } /> }
-        <Label className={ !useTime ? styles.ellipsisText : '' } text={ event[title] } />
+        { useTime && <Label className={ styles.eventLabel } text={ time } /> }
+        <Label className={ styles.eventLabel } text={ event[title] } />
     </Fragment>
 );
 
