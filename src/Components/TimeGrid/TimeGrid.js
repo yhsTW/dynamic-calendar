@@ -40,6 +40,8 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         return weekArr;
     };
 
+    const weekArr = getWeekArr();
+
     // 현재의 주(week)가 현재의 월(month)의 기준으로 몇 번째 주인지 확인한다.
     const getWeek = () => {
         const firstWeek = moment(currentDate).startOf('month').week();
@@ -70,10 +72,20 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
     // 종일 일정 목록을 가져온다.
     const getAllDayEvents = () => {
         const weekEvents = getWeekEvents();
+        let allDayEvents = [];
 
-        return weekEvents ? weekEvents.filter(event => 
-            (checkAllDay(event) || !moment(event[startKey]).isSame(event[endKey], 'date')) && event
-        ) : [];
+        if(!weekEvents) return allDayEvents;
+
+        allDayEvents = weekEvents.filter(event => {
+
+            if(currentView === VIEW_TYPE.week) {
+                return moment(currentDate).isBetween(weekArr[0].date, weekArr[weekArr.length - 1].date, 'date', '[]') && event;
+            } else if(currentView === VIEW_TYPE.day) {
+                return (!moment(event[startKey]).isSame(event[endKey], 'date') && moment(currentDate).isBetween(event[startKey], event[endKey], 'date', '[]')) && event
+            }
+        });
+
+        return allDayEvents;
     };
 
     // 종일 일정이 아닌 일정 목록을 가져온다.
@@ -81,12 +93,10 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         const weekEvents = getWeekEvents();
 
         return weekEvents ? weekEvents.filter(event => 
-            !checkAllDay(event) && moment(event[startKey]).isSame(event[endKey], 'date') && event
+            (!checkAllDay(event) && moment(event[startKey]).isSame(event[endKey], 'date')) && event
         ) : [];
     };
 
-    const weekArr = getWeekArr();
-    
     return (
         <div className={ styles.week }>
             <TimeHeader today={ today } currentView={ currentView } weekArr={ weekArr }

@@ -40,7 +40,8 @@ const getEventLevel = (start, end, events, { id : idKey, start : startKey, end :
 
         if(sameLevel.length > 0) {
             sameLevel.forEach(event => 
-                newEvents.splice(newEvents.findIndex(find => find[idKey] === event[idKey]), 1)
+                newEvents.splice(newEvents.findIndex(find => 
+                    `${ moment(find[startKey]).toDate().getTime() }${ find[idKey] }` === `${ moment(event[startKey]).toDate().getTime() }${ event[idKey] }`), 1)
             );
                 
             returnEvents.push([currentEvent, ...sameLevel]);
