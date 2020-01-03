@@ -99,7 +99,7 @@ class Row extends Component {
                     setSelectedEnd={ setSelectedEnd } selectedStart={ selectedStart } selectedEnd={ selectedEnd }
                     lastSelectedDate={ lastSelectedDate } setLastSelectedDate={ setLastSelectedDate } defaultSelectedDate={ defaultSelectedDate }
                     limit={ limit } events={ sortEvents } openPopup={ openPopup } today={ today } customize={ customize }
-                    useExtend={ useExtend } eventProperty={ eventProperty } />
+                    useExtend={ useExtend } eventProperty={ eventProperty } currentView={ currentView } />
                 <div className={ styles.dateContent }>
                     <div className={ styles.rowHeader } ref={ ref => this.header = ref }>
                         { 

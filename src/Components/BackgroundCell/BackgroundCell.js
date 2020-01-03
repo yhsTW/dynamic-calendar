@@ -5,7 +5,7 @@ import moment from 'moment';
 import More from '../More';
 import { makeTimeFormat } from '../../utils/dateUtil';
 import combineStyle from '../../utils/combineStyle';
-import { PROPERTY, CUSTOMIZE } from '../../utils/constants';
+import { PROPERTY, CUSTOMIZE, VIEW_TYPE } from '../../utils/constants';
 import Label from '../Label';
 
 
@@ -116,12 +116,12 @@ class BackgroundCell extends Component {
 
 
     getBackgroundCellStyle = isSelected => {
-        const { item, isToday, customize } = this.props;
+        const { item, isToday, customize, currentView } = this.props;
         const styleObj = customize;
         let style = combineStyle({ 
             styleObj, item, isToday, property : PROPERTY.backgroundCellStyle 
         });
-        
+
         // border가 겹치는 현상을 수정하기 위해 marginLeft와 marginBottom 추가
         if(styleObj.BackgroundCell.useBorder) {
             style = {
@@ -129,6 +129,10 @@ class BackgroundCell extends Component {
                 ...styleObj.BackgroundCell.borderStyle, 
                 marginLeft : '-1px', marginBottom : '-1px'
             };
+        }
+
+        if(currentView !== VIEW_TYPE.month) {
+            style.backgroundColor = '';
         }
 
         if(isSelected) {
