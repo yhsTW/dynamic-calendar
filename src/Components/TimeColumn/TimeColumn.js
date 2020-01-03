@@ -54,9 +54,9 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
         const { level, row } = getEventLevel(event, group);
         let width = 100,
             left = 0;
-            
+        
         if(level > 0) left = `calc((100% / ${ group.length }) * ${ level - 1 })`;
-        if(event[idKey] === row[row.length - 1].id) {
+        if(event[idKey] === row[row.length - 1][idKey]) {
             width = `calc(${ width }% - ${ left })`;
         } else {
             width = (width / group.length) * 1.7;

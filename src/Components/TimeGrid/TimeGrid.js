@@ -77,14 +77,16 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         if(!weekEvents) return allDayEvents;
 
         allDayEvents = weekEvents.filter(event => {
+            let result = false;
+
             if(currentView === VIEW_TYPE.week) {
-                return (checkAllDay(event) || (!checkAllDay(event) && !moment(event[startKey]).isSame(event[endKey], 'date', '[]'))) && event;
+                result = checkAllDay(event) || (!checkAllDay(event) && !moment(event[startKey]).isSame(event[endKey], 'date', '[]'));
             } else if(currentView === VIEW_TYPE.day) {
-                return (
-                    (checkAllDay(event) && moment(currentDate).isBetween(event[startKey], event[endKey], 'date', '[]')) ||
-                    (!checkAllDay(event) && (!moment(event[startKey]).isSame(event[endKey], 'date', '[]') && moment(currentDate).isBetween(event[startKey], event[endKey], 'date', '[]')))
-                ) && event;
+                result = (checkAllDay(event) && moment(currentDate).isBetween(event[startKey], event[endKey], 'date', '[]')) ||
+                    (!checkAllDay(event) && (!moment(event[startKey]).isSame(event[endKey], 'date', '[]') && moment(currentDate).isBetween(event[startKey], event[endKey], 'date', '[]')));
             }
+
+            return result && event;
         });
 
         return allDayEvents;
