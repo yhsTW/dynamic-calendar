@@ -22,8 +22,9 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
 
     const getEventBarTop = event => {
         const startHour = moment(event[startKey]).hour();
+        const startMin = moment(event[startKey]).minute();
 
-        return `calc((100% * ${ (startHour * 60) / 30 }) / ${ itemArr.length * 2 })`;
+        return `calc((100% * ${ ((startHour * 60) + startMin) / 30 }) / ${ itemArr.length * 2 })`;
     };
 
     const isBetween = (date, rangeDate, inclusivity = '[)') => {

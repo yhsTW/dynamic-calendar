@@ -734,5 +734,33 @@ export const events = [
 		end : new Date('2019-12-29 14:00'),
 		allDay : false
 	},
+	{
+		id : 111,
+		title : '1월 3일 당일 일정',
+		start : new Date('2020-1-3 13:00'),
+		end : new Date('2020-1-3 14:00'),
+		allDay : true
+	},
+	{
+		id : 112,
+		title : '1월 3일 장기 일정',
+		start : new Date('2020-1-3 13:00'),
+		end : new Date('2020-3-3 14:00'),
+		allDay : false
+	},
+	{
+		id : 113,
+		title : '1월 3일 장기 일정',
+		start : new Date('2020-1-3 13:00'),
+		end : new Date('2020-3-3 14:00'),
+		allDay : false
+	},
+	{
+		id : 114,
+		title : '1월 3일',
+		start : new Date('2020-1-5 13:15'),
+		end : new Date('2020-1-5 15:00'),
+		allDay : false
+	},
 ];
 console.log('events length : ', events.length)
