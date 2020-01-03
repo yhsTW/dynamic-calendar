@@ -68,7 +68,8 @@ class EventBarWrapper extends Component {
                     top,
                     left
                 }}
-                onClick={ this.onClickEvent } onMouseDown={ this.mouseDown } onMouseMove={ this.moveMouse }>
+                onClick={ this.onClickEvent } onMouseDown={ this.mouseDown } onMouseMove={ this.moveMouse }
+                title={ useTime ? `(${ time }) ${ event[eventProperty.title] }` : `${ event[eventProperty.title] }` }>
                 <EventBarComponent useTime={ useTime } time={ time } event={ event } eventProperty={ eventProperty } />
             </div>
         );

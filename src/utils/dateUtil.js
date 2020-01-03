@@ -6,10 +6,7 @@ export const makeTimeFormat = date => {
     const hour = moment(date).hour();
     const min = moment(date).minute();
 
-    return `
-        ${ hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour) }:${ min.toString().length < 2 ? `0${ min }` : min }
-        ${ hour > 12 ? AM_PM.pm : AM_PM.am }
-    `;
+    return `${ hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour) }:${ min.toString().length < 2 ? `0${ min }` : min } ${ hour > 12 ? AM_PM.pm : AM_PM.am }`;
 };
 
 // parameter로 받은 date를 기준으로 해당 주의 일요일을 가져온다.
