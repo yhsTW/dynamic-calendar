@@ -63,7 +63,7 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
         <div className={ styles.eventRow } ref={ eventRowRef }>
             {
                 events.map((event, idx) => (
-                    <Fragment key={ event[idKey] }>
+                    <Fragment key={ `${ moment(event[startKey]).toDate().getTime() }${ event[idKey] }` }>
                         { currentView !== VIEW_TYPE.day && <div className="segment" style={{ width : getSegmentWidth(event, idx), flexBasis : getSegmentWidth(event, idx) }}></div> }
                         <EventBarWrapper event={ event } width={ getEventBarWidth(event) } isStart={ getStartCondition(event) } 
                             isEnd={ getEndCondition(event) } onSelectEvent={ onSelectEvent } isSelecting={ isSelecting }
@@ -79,10 +79,10 @@ EventRow.propTypes = {
     currentView : PropTypes.string.isRequired,
     eventRowRef : PropTypes.elementType.isRequired,
     events : PropTypes.arrayOf(PropTypes.shape({
-        id : PropTypes.number.isRequired,
-        title : PropTypes.string.isRequired,
-        start : PropTypes.instanceOf(Date).isRequired,
-        end : PropTypes.instanceOf(Date).isRequired,
+        id : PropTypes.number,
+        title : PropTypes.string,
+        start : PropTypes.instanceOf(Date),
+        end : PropTypes.instanceOf(Date),
         color : PropTypes.string,
         allDay : PropTypes.bool
     })),

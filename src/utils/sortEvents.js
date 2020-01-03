@@ -1,6 +1,18 @@
 import moment from 'moment';
 
-const sortEvents = (events, { start : startKey, end : endKey }) => {
+const checkAllDay = (event, allDayKey) => {
+    let allDay = false;
+
+    if(typeof allDayKey === 'string') {
+        allDay = event[allDayKey];
+    } else {
+        allDay = event[allDayKey.key] === allDayKey.allDayType;
+    }
+
+    return allDay;
+};
+
+const sortEvents = (events, { start : startKey, end : endKey, allDay : allDayKey }) => {
     if(!events) return [];
     
     const newEvents = [...events];
@@ -10,16 +22,18 @@ const sortEvents = (events, { start : startKey, end : endKey }) => {
         const mBStart = moment(b[startKey]);
         const mBEnd = moment(b[endKey]);
 
-        return (
+        const result = (
             // 시작 시간이 먼저인 것
-            mAStart.diff(mBStart, 'days') ||
+            mAStart.diff(mBStart, 'days', true) ||
             // 일정의 기간이 긴 것
-            mBEnd.diff(mBStart, 'days') - mAEnd.diff(mAStart, 'days') ||
+            mBEnd.diff(mBStart, 'days', true) - mAEnd.diff(mAStart, 'days', true) ||
             // 종일 이벤트
-            b.allDay - a.allDay ||
+            checkAllDay(b, allDayKey) - checkAllDay(a, allDayKey) ||
             // 시간이 먼저인 것
-            mAStart.diff(mBStart, 'hours')
-        )
+            mAStart.diff(mBStart, 'hours', true)
+        );
+
+        return result;
     });
 
     return sort;

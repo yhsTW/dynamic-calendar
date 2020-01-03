@@ -105,10 +105,10 @@ class BackgroundRow extends Component {
 BackgroundRow.propTypes = {
     defaultSelectedDate : PropTypes.instanceOf(moment),
     events : PropTypes.arrayOf(PropTypes.shape({
-        id : PropTypes.number.isRequired,
-        title : PropTypes.string.isRequired,
-        start : PropTypes.instanceOf(Date).isRequired,
-        end : PropTypes.instanceOf(Date).isRequired,
+        id : PropTypes.number,
+        title : PropTypes.string,
+        start : PropTypes.instanceOf(Date),
+        end : PropTypes.instanceOf(Date),
         color : PropTypes.string,
         allDay : PropTypes.bool
     })),

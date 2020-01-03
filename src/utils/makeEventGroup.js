@@ -13,7 +13,7 @@ const isCurrentEvent = (event, currentDate, { start : startKey, end : endKey }) 
 
 // 이벤트를 주(week) 별로 나눈다.
 export const makeEventGroup = (events, currentDate, eventProperty) => {
-    const { start : startKey, start : endKey } = eventProperty;
+    const { start : startKey, end : endKey } = eventProperty;
 
     // 현재 달(month)의 첫 번째 날이 올해의 몇 번째 주인지 확인한다.
     const currentFirstWeek = moment(currentDate).startOf('month').week();
@@ -27,35 +27,38 @@ export const makeEventGroup = (events, currentDate, eventProperty) => {
     events.forEach(event => {
         if(isCurrentEvent(event, currentDate, eventProperty)) {
             // 이벤트 시작일의 주차를 가져온다.
-            // let startWeek = moment(event.start).week();
             let startWeek = moment(event[startKey]).week();
             // 이벤트 종료일의 주차를 가져온다.
-            // let endWeek = moment(event.end).week();
             let endWeek = moment(event[endKey]).week();
             
-            // 현재 사용자가 보고있는 날의 달(month)가 12월일 경우
+            // 현재 사용자가 보고있는 날의 달(month)이 12월일 경우
             if(moment(currentDate).month() === 11) {
                 // 이벤트 시작일이 해당 년도의 첫째주일 경우
-                // if(moment(event.start).week() === 1) {
                 if(moment(event[startKey]).week() === 1) {
-
-                    // startWeek = moment(event.start).weeksInYear() + moment(event.start).week();
+                    
                     startWeek = moment(event[startKey]).weeksInYear() + moment(event[startKey]).week();
                 }
                 
                 if(moment(event[endKey]).week() === 1 || moment(event[endKey]).year() !== moment(currentDate).year()) {
                     endWeek = moment(event[endKey]).weeksInYear() + moment(event[endKey]).week();
                 }
+
             }
+
+            let start = 0;
+            let end = 0;
             
-            const start = currentFirstWeek > startWeek ? 0 : startWeek - currentFirstWeek;
-            const end = currentLastWeek < endWeek ? currentLastWeek - currentFirstWeek : endWeek - currentFirstWeek;
+            if(moment(event[startKey]).year() === moment(currentDate).year() || moment(currentDate).month() === 11) {
+                start = currentFirstWeek > startWeek ? 0 : startWeek - currentFirstWeek;
+            }
+
+            end = currentLastWeek < endWeek ? currentLastWeek - currentFirstWeek : endWeek - currentFirstWeek;
 
             for(let i = start; i <= end; i++) {
                 if(!group[i]) {
                     group[i] = [];
                 }
-    
+                
                 group[i].push(event);
             }
         }

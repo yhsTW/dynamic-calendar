@@ -14,7 +14,7 @@ const getEventLevel = (start, end, events, { id : idKey, start : startKey, end :
         // 같은 이벤트를 찾을 필요 없이, 바로 return할 배열에 집어 넣는다.
         if(currentStart.isSameOrBefore(start.date) && currentEnd.isSameOrAfter(end.date)) {
             returnEvents.push([currentEvent]);
-            
+
             continue;
         }
         
@@ -37,7 +37,7 @@ const getEventLevel = (start, end, events, { id : idKey, start : startKey, end :
                 !overlap && sameLevel.push(event);
             }
         });
-        
+
         if(sameLevel.length > 0) {
             sameLevel.forEach(event => 
                 newEvents.splice(newEvents.findIndex(find => find[idKey] === event[idKey]), 1)
