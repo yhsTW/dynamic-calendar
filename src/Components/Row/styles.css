@@ -4,6 +4,11 @@
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    /* 
+        만약 오른쪽/왼쪽 margin 값을 1px에서 변경하게 된다면, 
+        Month.js openPopup 부분에서 MARGIN 값도 같이 조정해줘야
+        Popup이 정상적으로 작동한다.
+    */
     margin: 0 1px;
 }
 

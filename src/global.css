@@ -12,9 +12,9 @@
 }
 
 * {
-    font-family: inherit;
-    user-select: none;
+    /* font-family: inherit; */
+    /* user-select: none; */
     box-sizing: border-box;
-    color: #010101;
-    font-size: 10px;
+    /* color: #010101; */
+    font-size: 0.9rem;
 }

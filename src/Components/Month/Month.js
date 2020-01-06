@@ -35,13 +35,16 @@ class Month extends Component {
         const { popup } = this.props;
 
         if(popup) {
-            const { bottom : monthBottom } = this.month.getBoundingClientRect();
+            const { bottom : monthBottom, right : monthRight } = this.month.getBoundingClientRect();
+            // row에 왼쪽, 오른쪽에 margin 1px씩 줘서 추가
+            const MARGIN = 1;
+            // const PADDING = 40;
             const addHeight = height * 0.5;
             const addWidth = width * 0.6;
 
             this.popup = { 
                 top : Math.ceil(top + height) >= monthBottom ? top - addHeight : top,
-                left,
+                left : Math.ceil(left + width + MARGIN) >= monthRight ? left - addWidth : left,
                 width : width + addWidth,
                 height : height + addHeight,
                 events,
@@ -88,7 +91,8 @@ class Month extends Component {
                 <MonthContent today={ today } events={ events } onSelectSlot={ onSelectSlot } currentDate={ currentDate }
                     onSelectEvent={ onSelectEvent } limit={ limit } setLimit={ this.setLimit } currentView={ currentView }
                     openPopup={ this.openPopup } moveDayView={ this.moveDayView } selectable={ selectable }
-                    useExtend={ useExtend } components={ components } customize={ customize } eventProperty={ eventProperty } />
+                    useExtend={ useExtend } components={ components } customize={ customize } eventProperty={ eventProperty }
+                    usePopup={ usePopup } />
                 {
                     usePopup && (
                         <PopupComponent popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent }

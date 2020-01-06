@@ -10,6 +10,8 @@ import Label from '../Label';
 
 
 class BackgroundCell extends Component {
+    isOpenPopup = false;
+
     state = {
         isSelected : false
     };
@@ -20,7 +22,15 @@ class BackgroundCell extends Component {
         }
 
         return null;
-    }
+    };
+
+    componentDidMount = () => {
+        window.addEventListener('resize', this.openPopup);
+    };
+
+    componentWillUnmount = () => {
+        window.removeEventListener('resize', this.openPopup);
+    };
 
     resetTime = date => {
         date.set({ hour : 0, minute : 0, second : 0 });
@@ -108,10 +118,18 @@ class BackgroundCell extends Component {
     };
 
     openPopup = () => {
-        const { events, item : { date }, openPopup : pOpenPopup } = this.props;
-        const { top, left, width, height } = this.cell.getBoundingClientRect();
+        const { usePopup } = this.props;
+        
+        if(usePopup === this.isOpenPopup) {
+            const { events, item : { date }, openPopup : pOpenPopup } = this.props;
+            const { top, left, width, height } = this.cell.getBoundingClientRect();
 
-        pOpenPopup({ top, left, width, height, events, date });
+            pOpenPopup({ top, left, width, height, events, date });
+
+            this.isOpenPopup = true;
+        } else if(!usePopup) {
+            this.isOpenPopup = usePopup;
+        }
     };
 
 
@@ -161,10 +179,17 @@ class BackgroundCell extends Component {
         return selectTime;
     };
 
+    resetIsOpenPopup = () => {
+        const { usePopup } = this.props;
+
+        !usePopup && (this.isOpenPopup = usePopup);
+    };
+
     render() {
         const { isMore, more, useTime, selectedStart, item : { date }, customize } = this.props;
         const isSelected = this.checkSelected();
         const backgroundCellStyle = this.getBackgroundCellStyle(isSelected);
+        this.resetIsOpenPopup();
         
         return (
             <div ref={ ref => this.cell = ref } className={ styles.backgroundCell } onMouseDown={ this.selectStart } onMouseUp={ this.selectEnd }
