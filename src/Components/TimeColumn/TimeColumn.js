@@ -1,44 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import TimeSlot from '../TimeSlot';
-import withSelection from '../../hoc/withSelection';
-import EventBar from '../EventBarWrapper';
-import styles from './styles.css';
 import moment from 'moment';
 import { makeTimeFormat } from '../../utils/dateUtil';
 import sortEventsUtil from '../../utils/sortEvents';
+import withSelection from '../../hoc/withSelection';
+import TimeSlot from '../TimeSlot';
+import TimeEventWrapper from '../TimeEventWrapper';
+import styles from './styles.css';
 
-const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, currentView, events, customize, eventProperty, eventProperty : { id : idKey, start : startKey, end : endKey } }) => {
-    const getEventBarHeight = event => {
-        const start = moment(event[startKey]);
-        const end = moment(event[endKey]);
-        const hour = (end.hour() - start.hour()) * 60;
-        const min = start.minute() + end.minute();
-        const gap = (hour + min) / 30;
-        
-        // 30분 때문에
-        return `calc((100% * ${ gap })/${ itemArr.length * 2 })`;
+class TimeColumn extends Component {
+    state = {
+        totalHeight : 0
     };
 
-    const getEventBarTop = event => {
-        const startHour = moment(event[startKey]).hour();
-        const startMin = moment(event[startKey]).minute();
-
-        return `calc((100% * ${ ((startHour * 60) + startMin) / 30 }) / ${ itemArr.length * 2 })`;
+    componentDidMount = () => {
+        this.getTotalHeight();
     };
 
-    const isBetween = (date, rangeDate, inclusivity = '[)') => {
+    getTotalHeight = () => {
+        const { height } = this.backgroundColumnRef.getBoundingClientRect();
+
+        this.setState({
+            totalHeight : height
+        });
+    };
+
+    isBetween = (date, rangeDate, inclusivity = '[)') => {
         return moment(date).isBetween(rangeDate.start, rangeDate.end, null, inclusivity);
     };
 
-    const getEventLevel = (event, group) => {
+    getEventLevel = (event, group) => {
+        const { eventProperty : { id : idKey, start : startKey, end : endKey } } = this.props;
         const prevEvents = group.filter(current => (
-            isBetween(event[startKey], current) || isBetween(event[endKey], current, '()')
+            this.isBetween(event[startKey], current) || this.isBetween(event[endKey], current, '()')
         ) && current);
 
         const nextEvents = group.filter(current => (
             current.id !== event[idKey] &&
-            (isBetween(current.start, event, '()'))
+            (this.isBetween(current.start, event, '()'))
         ) && current);
 
         const filterEvents = [...prevEvents, ...nextEvents];
@@ -50,8 +49,9 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
         };
     };
 
-    const getStyle = (event, group) => {
-        const { level, row } = getEventLevel(event, group);
+    getStyle = (event, group) => {
+        const { eventProperty : { id : idKey } } = this.props;
+        const { level, row } = this.getEventLevel(event, group);
         let width = 100,
             left = 0;
         
@@ -68,7 +68,7 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
         };
     };
 
-    const makeStyle = eventGroup => {
+    makeStyle = eventGroup => {
         let returnGroup = [];
 
         for(let i = 0; i < eventGroup.length; i++) {
@@ -77,7 +77,7 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
             for(let j = 0; j < currentGroup.length; j++) {
                 const currentEvent = currentGroup[j];
 
-                const style = getStyle(currentEvent, currentGroup);
+                const style = this.getStyle(currentEvent, currentGroup);
                 let newEvent = {
                     ...currentEvent,
                     style
@@ -90,9 +90,12 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
         return returnGroup;
     };
 
-    const makeLayout = () => {
+    makeLayout = () => {
+        const { events } = this.props;
+
         if(!events) return;
 
+        const { eventProperty } = this.props;
         const sEvents = sortEventsUtil(events, eventProperty);
         let notOverlap = [];
         let overlap = [];
@@ -115,38 +118,48 @@ const TimeColumn = ({ itemArr, week, select, onSelectSlot, onSelectEvent, curren
             }
         }
 
-        let eventGroup = makeStyle([...notOverlap, ...overlap]);
+        let eventGroup = this.makeStyle([...notOverlap, ...overlap]);
         
         return eventGroup;
     };
 
-    const getSlotStyle = () => {
+    getSlotStyle = () => {
+        const { customize } = this.props;
+
         return customize;
     };
 
-    return (
-        <div className={ styles.timeColumn }>
-            <div className={ styles.backgroundColumn }>
-                {
-                    itemArr.map((item, index) => (
-                        <TimeSlot key={ `${ item[0].date }${ week ? `_${ week.date }` : '' }_${ index }` } items={ item } week={ week } 
-                            select={ select } onSelectSlot={ onSelectSlot } currentView={ currentView } customize={ getSlotStyle() } />
-                    ))
-                }
+    render() {
+        const { totalHeight } = this.state;
+        const { 
+            itemArr, week, select, onSelectSlot, currentView,
+            events, eventProperty : { id : idKey, start : startKey, end : endKey }, onSelectEvent,
+            eventProperty
+        } = this.props;
+
+        return (
+            <div className={ styles.timeColumn }>
+                <div className={ styles.backgroundColumn } ref={ ref => this.backgroundColumnRef = ref }>
+                    {
+                        itemArr.map((item, index) => (
+                            <TimeSlot key={ `${ item[0].date }${ week ? `_${ week.date }` : '' }_${ index }` } items={ item } week={ week } 
+                                select={ select } onSelectSlot={ onSelectSlot } currentView={ currentView } customize={ this.getSlotStyle() } />
+                        ))
+                    }
+                </div>
+                <div className={ styles.contentColumn }>
+                    {
+                        week && events && this.makeLayout().map(event => 
+                            <TimeEventWrapper key={ event[idKey] } event={ event } isStart={ true } isEnd={ true } isSelecting={ select.isSelecting }
+                                   startSelecting={ select.startSelecting } width={ event.style.width } onSelectEvent={ onSelectEvent }
+                                   totalHeight={ totalHeight } useTime={ true } time={ `${ makeTimeFormat(event[startKey]) } - ${ makeTimeFormat(event[endKey]) }` }
+                                   left={ `${ event.style.left }` } eventProperty={ eventProperty } itemArr={ itemArr } />
+                        )
+                    }
+                </div>
             </div>
-            <div className={ styles.contentColumn }>
-                {
-                    week && events && makeLayout().map(event => 
-                        <EventBar key={ event[idKey] } event={ event } isStart={ true } isEnd={ true } isSelecting={ select.isSelecting }
-                            startSelecting={ select.startSelecting } width={ event.style.width } onSelectEvent={ onSelectEvent }
-                            height={ getEventBarHeight(event) } top={ getEventBarTop(event) } useTime={ true }
-                            time={ `${ makeTimeFormat(event[startKey]) } - ${ makeTimeFormat(event[endKey]) }` } left={ `${ event.style.left }` }
-                            eventProperty={ eventProperty } />
-                    )
-                }
-            </div>
-        </div>
-    );
+        );
+    };
 };
 
 TimeColumn.propTypes = {

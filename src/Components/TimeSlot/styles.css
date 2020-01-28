@@ -6,4 +6,5 @@
 
 .timeSlotContent {
     flex: 1;
+    min-height: 38.5px;
 }

@@ -762,5 +762,12 @@ export const events = [
 		end : new Date('2020-1-5 15:00'),
 		allDay : false
 	},
+	{
+		id : 115,
+		title : '1월 28일',
+		start : new Date('2020-1-28 13:15'),
+		end : new Date('2020-1-28 15:00'),
+		allDay : false
+	},
 ];
 console.log('events length : ', events.length)
