@@ -128,3 +128,98 @@ export const PROPERTY = {
     backgroundCellStyle : BACKGROUND_CELL_STYLE,
     dateHeaderStyle : DATE_HEADER_STYLE
 };
+
+export const INITIAL_CUSTOMIZE = {
+    Header : {
+        order : [
+            COMPONENT_NAMES.controls,
+            COMPONENT_NAMES.label,
+            COMPONENT_NAMES.viewControls
+        ],
+        style : {},
+        Controls : {
+            order : [
+                CONTROLS_TYPE.today,
+                CONTROLS_TYPE.prev,
+                CONTROLS_TYPE.next
+            ],
+            prevContent : '<',
+            todayContent : '오늘',
+            nextContent : '>',
+            controlsStyle : {},
+            controlStyle : {}
+        },
+        Label : {
+            format : FORMAT,
+            style : {}
+        },
+        ViewControls : {
+            viewControlsStyle : {},
+            viewControlStyle : {}
+        }
+    },
+    View : {
+        BackgroundCell : {
+            useBorder : false,
+            borderStyle : {},
+            selectStyle : {
+                backgroundColor: '#EEEEEE'
+            }
+        },
+        Popup : {},
+        More : {
+            prefix : '+',
+            suffix : ' more',
+            moreStyle : {},
+            position : {
+                alignItems : 'flex-start',
+                justifyContent : 'flex-end'
+            }
+        },
+        today : {
+            dateHeaderStyle : {
+                backgroundColor : '#F8613B',
+                borderRadius : '13px',
+                padding : '3px 10px',
+                color : '#FFF'
+            },
+            backgroundCellStyle : {}
+        },
+        holiday : {
+            dateHeaderStyle : {},
+            backgroundCellStyle : {}
+        },
+        weekend : {
+            dateHeaderStyle : {
+                saturdayStyle : {},
+                sundayStyle : {
+                    color : '#F76767'
+                }
+            },
+            backgroundCellStyle : {
+                saturdayStyle : {},
+                sundayStyle : {}
+            }
+        },
+        weekdays : {
+            dateHeaderStyle : {},
+            backgroundCellStyle : {}
+        },
+        prevMonth : {
+            dateHeaderStyle : {
+                opacity : 0.3
+            },
+            backgroundCellStyle : {
+                backgroundColor : '#EEEEEE'
+            }
+        },
+        nextMonth : {
+            dateHeaderStyle : {
+                opacity : 0.3
+            },
+            backgroundCellStyle : {
+                backgroundColor : '#EEEEEE'
+            }
+        }
+    }
+};

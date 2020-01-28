@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import lodash from 'lodash';
 import Header from '../Header';
 import View from '../View';
-import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, POSITION, FORMAT, PROPERTY } from '../../utils/constants';
+import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, INITIAL_CUSTOMIZE } from '../../utils/constants';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 import { events } from '../../events';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
@@ -67,12 +68,13 @@ class DynamicCalendar extends Component {
 
     render() {
         const { 
-            views, onSelectSlot, onSelectEvent, useHeader, customize,
+            views, onSelectSlot, onSelectEvent, useHeader, customize : pCustomize,
             popup, selectable, useExtend, components, eventProperty
         } = this.props;
         const { currentDate, currentView } = this.state;
         const events = this.settingEvents();
         const HeaderComponent = (components && components.header) || Header;
+        const customize = lodash.merge(INITIAL_CUSTOMIZE, pCustomize);
         
         return (
             <div className={ styles.dynamicCalendar }>
@@ -129,100 +131,6 @@ DynamicCalendar.defaultProps = {
     ///////////////////// 테스트용 /////////////////////
     // useExtend : true,
     ///////////////////// 테스트용 /////////////////////
-    customize : {
-        Header : {
-            order : [
-                COMPONENT_NAMES.controls,
-                COMPONENT_NAMES.label,
-                COMPONENT_NAMES.viewControls
-            ],
-            style : {},
-            Controls : {
-                order : [
-                    CONTROLS_TYPE.today,
-                    CONTROLS_TYPE.prev,
-                    CONTROLS_TYPE.next
-                ],
-                prevContent : '<',
-                todayContent : '오늘',
-                nextContent : '>',
-                controlsStyle : {},
-                controlStyle : {}
-            },
-            Label : {
-                format : FORMAT,
-                style : {}
-            },
-            ViewControls : {
-                viewControlsStyle : {},
-                viewControlStyle : {}
-            }
-        },
-        View : {
-            BackgroundCell : {
-                useBorder : false,
-                borderStyle : {},
-                selectStyle : {
-                    backgroundColor: '#EEEEEE'
-                }
-            },
-            Popup : {},
-            More : {
-                prefix : '+',
-                suffix : ' more',
-                moreStyle : {},
-                position : {
-                    alignItems : 'flex-start',
-                    justifyContent : 'flex-end'
-                }
-            },
-            today : {
-                dateHeaderStyle : {
-                    backgroundColor : '#F8613B',
-                    borderRadius : '13px',
-                    padding : '3px 10px',
-                    color : '#FFF'
-                },
-                backgroundCellStyle : {}
-            },
-            holiday : {
-                dateHeaderStyle : {},
-                backgroundCellStyle : {}
-            },
-            weekend : {
-                dateHeaderStyle : {
-                    saturdayStyle : {},
-                    sundayStyle : {
-                        color : '#F76767'
-                    }
-                },
-                backgroundCellStyle : {
-                    saturdayStyle : {},
-                    sundayStyle : {}
-                }
-            },
-            weekdays : {
-                dateHeaderStyle : {},
-                backgroundCellStyle : {}
-            },
-            prevMonth : {
-                dateHeaderStyle : {
-                    opacity : 0.3
-                },
-                backgroundCellStyle : {
-                    backgroundColor : '#EEEEEE'
-                }
-            },
-            nextMonth : {
-                dateHeaderStyle : {
-                    opacity : 0.3
-                },
-                backgroundCellStyle : {
-                    backgroundColor : '#EEEEEE'
-                }
-            }
-        }
-    },
     eventProperty : {
         id : 'id',
         title : 'title',
