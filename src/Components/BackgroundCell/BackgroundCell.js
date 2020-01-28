@@ -24,12 +24,20 @@ class BackgroundCell extends Component {
         return null;
     };
 
+    resizeControl = () => {
+        const { usePopup } = this.props;
+
+        if(!usePopup) return;
+
+        this.openPopup();
+    };
+
     componentDidMount = () => {
-        window.addEventListener('resize', this.openPopup);
+        window.addEventListener('resize', this.resizeControl);
     };
 
     componentWillUnmount = () => {
-        window.removeEventListener('resize', this.openPopup);
+        window.removeEventListener('resize', this.resizeControl);
     };
 
     resetTime = date => {
