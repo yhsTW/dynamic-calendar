@@ -95,7 +95,7 @@ class TimeColumn extends Component {
 
         if(!events) return;
 
-        const { eventProperty } = this.props;
+        const { eventProperty, eventProperty : { start : startKey, end : endKey } } = this.props;
         const sEvents = sortEventsUtil(events, eventProperty);
         let notOverlap = [];
         let overlap = [];
@@ -104,7 +104,7 @@ class TimeColumn extends Component {
             const currentEvent = sEvents.shift();
             const overlapEvents = sEvents.filter(event => (
                 (
-                    isBetween(event[startKey], currentEvent) || isBetween(event[endKey], currentEvent)
+                    this.isBetween(event[startKey], currentEvent) || this.isBetween(event[endKey], currentEvent)
                 ) && event
             ));
             
