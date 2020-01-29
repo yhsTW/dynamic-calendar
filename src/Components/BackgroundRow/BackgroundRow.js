@@ -78,11 +78,14 @@ class BackgroundRow extends Component {
                         let more = 0;
                         let events = [];
 
-                        if(current && current.more > limit) {
-                            if(!useExtend) {
-                                isMore = true;
-                                more = alignItems === 'flex-end' ? current.more - (limit - 1) : current.more - limit;
+                        if(current) {
+                            if(current.more > limit) {
+                                if(!useExtend) {
+                                    isMore = true;
+                                    more = alignItems === 'flex-end' ? current.more - (limit - 1) : current.more - limit;
+                                }
                             }
+
                             events = current.events
                         }
 

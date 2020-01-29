@@ -95,7 +95,7 @@ class Month extends Component {
                 {
                     usePopup && (
                         <PopupComponent popup={ this.popup } closePopup={ this.closePopup } onSelectEvent={ onSelectEvent }
-                            events={ events } customize={ customize.Popup } eventProperty={ eventProperty } />
+                            customize={ customize.Popup } eventProperty={ eventProperty } />
                     )
                 }
             </div>

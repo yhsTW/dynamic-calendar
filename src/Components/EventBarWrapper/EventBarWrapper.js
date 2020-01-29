@@ -90,12 +90,12 @@ EventBarWrapper.propTypes = {
         allDay : PropTypes.bool
     }).isRequired,
     isEnd : PropTypes.bool.isRequired,
-    isSelecting : PropTypes.bool.isRequired,
+    isSelecting : PropTypes.bool,
     isStart : PropTypes.bool.isRequired,
     useTime : PropTypes.bool.isRequired,
-    width : PropTypes.string.isRequired,
+    width : PropTypes.string,
     onSelectEvent : PropTypes.func.isRequired,
-    startSelecting : PropTypes.func.isRequired
+    startSelecting : PropTypes.func
 };
 
 export default EventBarWrapper;
