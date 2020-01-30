@@ -116,9 +116,11 @@ class BackgroundCell extends Component {
 
     checkSelected = () => {
         const { isSelecting, selectedStart, selectedEnd, item : { date } } = this.props;
+        // console.log('BackgroundCell checkSelected : ', moment(date).format('YYYY-MM-DD'), isSelecting, selectedStart, selectedEnd);
         let isSelected = false;
     
         if(isSelecting && date.isBetween(selectedStart, selectedEnd, null, '[]')) {
+            // console.log('isSelecting && date.isBetween TRUE');
             isSelected = true;
         }
 
@@ -196,6 +198,7 @@ class BackgroundCell extends Component {
     render() {
         const { isMore, more, useTime, selectedStart, item : { date }, customize } = this.props;
         const isSelected = this.checkSelected();
+        // console.log('date, isSelected : ', moment(date).format('YYYY-MM-DD'), isSelected);
         const backgroundCellStyle = this.getBackgroundCellStyle(isSelected);
         this.resetIsOpenPopup();
         

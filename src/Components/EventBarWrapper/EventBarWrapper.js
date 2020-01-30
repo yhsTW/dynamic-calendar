@@ -5,6 +5,8 @@ import EventBar from '../EventBar/EventBar';
 
 class EventBarWrapper extends Component {
     isMouseDown = false;
+    clientX = 0;
+    clientY = 0;
 
     componentDidMount = () => {
         const { isSelecting } = this.props;
@@ -29,11 +31,21 @@ class EventBarWrapper extends Component {
 
     mouseDown = () => this.isMouseDown = true;
 
-    moveMouse = () => {
+    moveMouse = (e) => {
         if(this.isMouseDown) {
-            const { startSelecting } = this.props;
+            if(e.clientX !== this.clientX || e.clientY !== this.clientY) {
+                const { startSelecting } = this.props;
+                
+                startSelecting();
+            }
+        }
 
-            startSelecting();
+        if(e.clientX !== this.clientX) {
+            this.clientX = e.clientX;
+        }
+
+        if(e.clientY !== this.clientY) {
+            this.clientY = e.clientY;
         }
     };
 
