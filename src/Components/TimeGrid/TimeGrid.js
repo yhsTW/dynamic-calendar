@@ -9,6 +9,10 @@ import { getSunday } from '../../utils/dateUtil';
 import { resetTime } from '../../utils/resetTime';
 
 const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView, selectable, useExtend, customize, eventProperty, eventProperty : { start : startKey, end : endKey, allDay : allDayKey } }) => {
+    const setWeekObj = (date, type) => {
+        return { date : resetTime(date), type };
+    };
+
     // 전달받은 배열에 data를 집어넣는다.
     const pushArr = (arr, data) => {
         arr.push(data);
@@ -24,7 +28,7 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
                 MONTH_TYPE.current : currentDate.month() > current.month() 
                 ? MONTH_TYPE.prev : MONTH_TYPE.next;
             
-            pushArr(arr, { date : resetTime(current), type });
+            pushArr(arr, setWeekObj(current, type));
         }
     };
 
@@ -35,7 +39,7 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
         if(currentView === VIEW_TYPE.week) {
             setWeek(weekArr);
         } else if(currentView === VIEW_TYPE.day) {
-            pushArr(weekArr, { date : currentDate, type : MONTH_TYPE.current });
+            pushArr(weekArr, setWeekObj(currentDate, MONTH_TYPE.current));
         }
 
         return weekArr;
