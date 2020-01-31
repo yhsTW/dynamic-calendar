@@ -49,9 +49,13 @@ class DynamicCalendar extends Component {
     
     // 사용자가 보고있는 달력 타입을 변경한다.
     updateCurrentView = view => {
+        const { onView } = this.props;
+
         this.setState({
             currentView : view
         });
+
+        onView(view);
     };
 
     // 사용자로부터 받은 이벤트를 그룹별로 묶는다.
@@ -142,6 +146,7 @@ DynamicCalendar.defaultProps = {
     // onSelectSlot : () => {},
     // onSelectEvent : () => {}
     ///////////////////// 테스트용 /////////////////////
+    onView : view => console.log('onView view : ', view),
     onNavigate : date => console.log('onNavigate date : ', date),
     onSelectSlot : data => console.log('onSelectSlot data : ', data),
     onSelectEvent : event => console.log('onSelectEvent event : ', event)
@@ -295,7 +300,8 @@ DynamicCalendar.propTypes = {
     // 달력의 Slot을 누르면 발생하는 이벤트
     onSelectSlot : PropTypes.func,
     // 달력의 event를 클릭하면 발생하는 이벤트
-    onSelectEvent : PropTypes.func
+    onSelectEvent : PropTypes.func,
+    onView : PropTypes.func
 };
 
 export default DynamicCalendar;
