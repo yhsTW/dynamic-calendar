@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { MONTH_TYPE, WEEK_NUM } from './constants';
+import { resetTime } from './resetTime';
 
 let dateArr = [];
 let item = [];
@@ -22,10 +23,6 @@ const setItem = date => {
 
         resetItem();
     }
-};
-
-const resetTime = date => {
-    return date.set({ hour : 0, minute : 0, second : 0 });
 };
 
 const settingDate = (start, end, month, type = MONTH_TYPE.current) => {

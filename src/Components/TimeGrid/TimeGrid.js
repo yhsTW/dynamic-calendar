@@ -6,6 +6,7 @@ import moment from 'moment';
 import { MONTH_TYPE, WEEK_NUM, VIEW_TYPE } from '../../utils/constants';
 import styles from './styles.css';
 import { getSunday } from '../../utils/dateUtil';
+import { resetTime } from '../../utils/resetTime';
 
 const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, currentView, selectable, useExtend, customize, eventProperty, eventProperty : { start : startKey, end : endKey, allDay : allDayKey } }) => {
     // 전달받은 배열에 data를 집어넣는다.
@@ -19,11 +20,11 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
 
         for(let i = 0; i < WEEK_NUM; i++) {
             const current = moment(sunday).date(sunday.date() + i);
-
             const type = currentDate.month() === current.month() ? 
                 MONTH_TYPE.current : currentDate.month() > current.month() 
-                ? MONTH_TYPE.prev : MONTH_TYPE.next
-            pushArr(arr, { date : current, type });
+                ? MONTH_TYPE.prev : MONTH_TYPE.next;
+            
+            pushArr(arr, { date : resetTime(current), type });
         }
     };
 
@@ -41,7 +42,7 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
     };
 
     const weekArr = getWeekArr();
-
+    
     // 현재의 주(week)가 현재의 월(month)의 기준으로 몇 번째 주인지 확인한다.
     const getWeek = () => {
         const firstWeek = moment(currentDate).startOf('month').week();
