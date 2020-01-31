@@ -24,9 +24,13 @@ const setItem = date => {
     }
 };
 
+const resetTime = date => {
+    return date.set({ hour : 0, minute : 0, second : 0 });
+};
+
 const settingDate = (start, end, month, type = MONTH_TYPE.current) => {
     for(let i = start; i < end; i++) {
-        const date = moment(month).date(i);
+        const date = resetTime(moment(month).date(i));
         
         setItem({ type, date });
     }
@@ -59,7 +63,7 @@ const monthDate = currentDate => {
 
 const getDateArr = currentDate => {
     monthDate(currentDate);
-
+    
     return dateArr;
 };
 

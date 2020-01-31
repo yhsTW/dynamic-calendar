@@ -53,34 +53,43 @@ const withSelection = WrappedComponent => {
             }
         };
 
-        resetTime = date => {
-            date.set({ hour : 0, minute : 0, second : 0 });
-        };
-
-        makeSlots = (start, end) => {
+        makeSlots = (start, end, useTime) => {
             let slots = [];
-            const { _data : { days } } = moment.duration(end.diff(start));
+            let endValue = 0;
+
+            if(useTime) {
+                const { _milliseconds } = moment.duration(end.diff(start));
+
+                endValue = _milliseconds / 60000 / 30;
+            } else {
+                const { _data : { days } } = moment.duration(end.diff(start));
+                endValue = days;
+            }
     
-            for(let i = 0; i <= days; i++) {
-                const pushDate = moment(start).add(i, 'days');
+            for(let i = 0; i <= endValue; i++) {
+                let pushDate = null;
+                
+                if(useTime) {
+                    const addMin = i * 30;
+                    pushDate = moment(start).add(addMin, 'minute');
+                } else {
+                    pushDate = moment(start).add(i, 'days');
+                }
+
                 slots.push(pushDate);
             }
     
             return slots;
         };
 
-        slotSelectEnd = () => {
+        slotSelectEnd = useTime => {
             const { selectedStart : start, selectedEnd : end } = this.state;
-            const { onSelectSlot, useTime } = this.props;
-    
+            const { onSelectSlot } = this.props;
+            
             this.stopSelecting();
     
             if(start) {
-                if(!useTime) {
-                    this.resetTime(start);
-                    this.resetTime(end);
-                }
-                const slots = this.makeSlots(start, end);
+                const slots = this.makeSlots(start, end, useTime);
         
                 onSelectSlot({ slots, start, end });
             }

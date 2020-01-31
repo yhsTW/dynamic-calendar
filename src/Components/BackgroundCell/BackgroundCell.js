@@ -162,13 +162,16 @@ class BackgroundCell extends Component {
     };
 
     render() {
-        const { isMore, more, useTime, selectedStart, item : { date }, customize, slotSelectEnd } = this.props;
+        const { 
+            isMore, more, useTime, selectedStart, item : { date }, 
+            customize, slotSelectEnd 
+        } = this.props;
         const isSelected = this.checkSelected();
         const backgroundCellStyle = this.getBackgroundCellStyle(isSelected);
         this.resetIsOpenPopup();
         
         return (
-            <div ref={ ref => this.cell = ref } className={ styles.backgroundCell } onMouseDown={ this.selectStart } onMouseUp={ slotSelectEnd }
+            <div ref={ ref => this.cell = ref } className={ styles.backgroundCell } onMouseDown={ this.selectStart } onMouseUp={ () => slotSelectEnd(useTime) }
                 onMouseEnter={ this.selecting } style={ backgroundCellStyle }>
                 { (useTime && selectedStart && isSelected && selectedStart.isSame(date)) && <Label text={ this.currentSelectTime() } /> }
                 { isMore && <More more={ more } openPopup={ this.openPopup } customize={ customize.More } /> }
