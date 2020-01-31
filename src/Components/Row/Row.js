@@ -85,7 +85,8 @@ class Row extends Component {
             stopSelecting, startSelecting, setSelectedStart, setSelectedEnd,
             selectedStart, selectedEnd, lastSelectedDate, setLastSelectedDate,
             defaultSelectedDate, onSelectEvent, limit, openPopup, useDateHeader,
-            moveDayView, useExtend, components, customize, eventProperty, usePopup
+            moveDayView, useExtend, components, customize, eventProperty, usePopup,
+            slotSelectEnd
         } = this.props;
         const sortEvents = sortEventsUtil(events, eventProperty);
         const sameEventRow = this.sameEventRow(sortEvents, eventProperty);
@@ -99,7 +100,8 @@ class Row extends Component {
                     setSelectedEnd={ setSelectedEnd } selectedStart={ selectedStart } selectedEnd={ selectedEnd }
                     lastSelectedDate={ lastSelectedDate } setLastSelectedDate={ setLastSelectedDate } defaultSelectedDate={ defaultSelectedDate }
                     limit={ limit } events={ sortEvents } openPopup={ openPopup } today={ today } customize={ customize }
-                    useExtend={ useExtend } eventProperty={ eventProperty } currentView={ currentView } usePopup={ usePopup } />
+                    useExtend={ useExtend } eventProperty={ eventProperty } currentView={ currentView } usePopup={ usePopup }
+                    slotSelectEnd={ slotSelectEnd } />
                 <div className={ styles.dateContent }>
                     <div className={ styles.rowHeader } ref={ ref => this.header = ref }>
                         { 

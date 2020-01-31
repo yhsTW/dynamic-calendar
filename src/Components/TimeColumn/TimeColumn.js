@@ -14,8 +14,15 @@ class TimeColumn extends Component {
     };
 
     componentDidMount = () => {
+        // window.addEventListener('mouseleave', this.props.select.stopSelecting);
+        // window.addEventListener('mouseout', this.props.select.stopSelecting);
         this.getTotalHeight();
     };
+
+    // componentWillUnmount = () => {
+    //     window.removeEventListener('mouseleave', this.props.select.stopSelecting);
+    //     window.removeEventListener('mouseout', this.props.select.stopSelecting);
+    // };
 
     getTotalHeight = () => {
         const { height } = this.backgroundColumnRef.getBoundingClientRect();

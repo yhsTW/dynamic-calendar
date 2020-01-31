@@ -40,38 +40,6 @@ class BackgroundCell extends Component {
         window.removeEventListener('resize', this.resizeControl);
     };
 
-    resetTime = date => {
-        date.set({ hour : 0, minute : 0, second : 0 });
-    };
-
-    makeSlots = (start, end) => {
-        let slots = [];
-        const { _data : { days } } = moment.duration(end.diff(start));
-
-        for(let i = 0; i <= days; i++) {
-            const pushDate = moment(start).add(i, 'days');
-            slots.push(pushDate);
-        }
-
-        return slots;
-    };
-
-    selectEnd = () => {
-        const { stopSelecting, onSelectSlot, selectedStart : start, selectedEnd : end, useTime } = this.props;
-
-        stopSelecting();
-
-        if(start) {
-            if(!useTime) {
-                this.resetTime(start);
-                this.resetTime(end);
-            }
-            const slots = this.makeSlots(start, end);
-    
-            onSelectSlot({ slots, start, end });
-        }
-    };
-
     selectStart = () => {
         const { startSelecting, item : { date } } = this.props;
         
@@ -194,13 +162,13 @@ class BackgroundCell extends Component {
     };
 
     render() {
-        const { isMore, more, useTime, selectedStart, item : { date }, customize } = this.props;
+        const { isMore, more, useTime, selectedStart, item : { date }, customize, slotSelectEnd } = this.props;
         const isSelected = this.checkSelected();
         const backgroundCellStyle = this.getBackgroundCellStyle(isSelected);
         this.resetIsOpenPopup();
         
         return (
-            <div ref={ ref => this.cell = ref } className={ styles.backgroundCell } onMouseDown={ this.selectStart } onMouseUp={ this.selectEnd }
+            <div ref={ ref => this.cell = ref } className={ styles.backgroundCell } onMouseDown={ this.selectStart } onMouseUp={ slotSelectEnd }
                 onMouseEnter={ this.selecting } style={ backgroundCellStyle }>
                 { (useTime && selectedStart && isSelected && selectedStart.isSame(date)) && <Label text={ this.currentSelectTime() } /> }
                 { isMore && <More more={ more } openPopup={ this.openPopup } customize={ customize.More } /> }
