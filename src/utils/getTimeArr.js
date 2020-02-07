@@ -9,7 +9,7 @@ const getTimeArr = () => {
     
     for(let i = START_TIME; i <= END_TIME; i++) {
         timeArr.push([
-            { date : moment().set({ hour : i, minute : 0, second : 0 }), type : MONTH_TYPE.current }, 
+            { date : moment().set({ hour : i, minute : 0, second : 0 }), type : MONTH_TYPE.current },
             { date : moment().set({ hour : i, minute : 30, second : 0 }), type : MONTH_TYPE.current }
         ]);
     }

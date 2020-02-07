@@ -32,24 +32,38 @@ class BackgroundCell extends Component {
         this.openPopup();
     };
 
+    isLastTime = () => {
+        const { useTime, item : { date } } = this.props;
+
+        if(!useTime) return false;
+
+        if(moment(date).hour() === 23 && moment(date).minute() === 30) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     componentDidMount = () => {
         window.addEventListener('resize', this.resizeControl);
     };
-
+    
     componentWillUnmount = () => {
         window.removeEventListener('resize', this.resizeControl);
     };
 
     selectStart = () => {
-        const { startSelecting, item : { date } } = this.props;
+        const { startSelecting, item : { date }, useTime } = this.props;
         
-        startSelecting(date);
+        startSelecting(date, useTime);
     };
 
     selecting = () => {
+        console.log('selecting start')
         const { 
             isSelecting, setSelectedStart, setSelectedEnd, selectedStart, selectedEnd, 
-            item : { date }, lastSelectedDate, setLastSelectedDate, defaultSelectedDate
+            item : { date }, lastSelectedDate, setLastSelectedDate, defaultSelectedDate,
+            useTime
         } = this.props;
 
         if(!isSelecting) return;
@@ -57,36 +71,35 @@ class BackgroundCell extends Component {
         if(!selectedStart && !selectedEnd && !lastSelectedDate && !defaultSelectedDate) {
             const { startSelecting } = this.props;
 
-            startSelecting(date);
+            startSelecting(date, useTime);
         } else {
+            let start = date;
+            let end = defaultSelectedDate;
+            
             if(date.isBetween(selectedStart, selectedEnd, null, '[]')) {
-                if(date - lastSelectedDate > 0) {
-                    setSelectedStart(date);
-                    setSelectedEnd(defaultSelectedDate);
-                } else {
-                    setSelectedStart(defaultSelectedDate);
-                    setSelectedEnd(date);
+                if(date.isSameOrBefore(lastSelectedDate)) {
+                    start = defaultSelectedDate;
+                    end = this.isLastTime() ? moment(date).set({ minute : 59 }) : moment(date).set({ minute : moment(date).minute() + 30 });
                 }
             } else {
-                if(lastSelectedDate.isAfter(date)) {
-                    setSelectedStart(date);
-                    setSelectedEnd(defaultSelectedDate);
-                } else {
-                    setSelectedStart(defaultSelectedDate);
-                    setSelectedEnd(date);
+                if(date.isAfter(lastSelectedDate)) {
+                    start = defaultSelectedDate;
+                    end = this.isLastTime() ? moment(date).set({ minute : 59 }) : moment(date).set({ minute : moment(date).minute() + 30 });
                 }
             }
-    
-            setLastSelectedDate(date);
+
+            setSelectedStart(start);
+            setSelectedEnd(end);
+            setLastSelectedDate(end);
         }
-        
     };
 
     checkSelected = () => {
-        const { isSelecting, selectedStart, selectedEnd, item : { date } } = this.props;
+        const { isSelecting, selectedStart, selectedEnd, item : { date }, useTime } = this.props;
         let isSelected = false;
+        const inclusivity = useTime ? '[)' : '[]';
         
-        if(isSelecting && selectedStart && selectedEnd && date.isBetween(selectedStart, selectedEnd, null, '[]')) {
+        if(isSelecting && selectedStart && selectedEnd && date.isBetween(selectedStart, selectedEnd, null, inclusivity)) {
             isSelected = true;
         }
 
@@ -161,6 +174,16 @@ class BackgroundCell extends Component {
         !usePopup && (this.isOpenPopup = usePopup);
     };
 
+    mouseLeave = e => {
+        if(!this.isLastTime()) return;
+
+        const { bottom } = this.cell.getBoundingClientRect();
+
+        if(Math.floor(e.clientY) === Math.floor(bottom)) {
+            this.selecting();
+        }
+    };
+
     render() {
         const { 
             isMore, more, useTime, selectedStart, item : { date }, 
@@ -172,7 +195,7 @@ class BackgroundCell extends Component {
         
         return (
             <div ref={ ref => this.cell = ref } className={ styles.backgroundCell } onMouseDown={ this.selectStart } onMouseUp={ () => slotSelectEnd(useTime) }
-                onMouseEnter={ this.selecting } style={ backgroundCellStyle }>
+                onMouseEnter={ this.selecting } style={ backgroundCellStyle } onMouseLeave={ this.mouseLeave }>
                 { (useTime && selectedStart && isSelected && selectedStart.isSame(date)) && <Label text={ this.currentSelectTime() } /> }
                 { isMore && <More more={ more } openPopup={ this.openPopup } customize={ customize.More } /> }
             </div>

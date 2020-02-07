@@ -38,7 +38,7 @@ class Month extends Component {
             const { bottom : monthBottom, right : monthRight } = this.month.getBoundingClientRect();
             // row에 왼쪽, 오른쪽에 margin 1px씩 줘서 추가
             const MARGIN = 1;
-            const addHeight = height * 0.5;
+            const addHeight = height * 0.8;
             const addWidth = width * 0.6;
 
             this.popup = { 

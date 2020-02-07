@@ -26,10 +26,19 @@ const withSelection = WrappedComponent => {
         setLastSelectedDate = date => this.lastSelectedDate = date;
         setDefaultSelectedDate = date => this.defaultSelectedDate = date;
     
-        setDates = date => {
+        setDates = (date, useTime) => {
+            const { selectedStart, selectedEnd } = this.state;
+            let end = date;
+
+            if(useTime && !selectedStart && !selectedEnd) {
+                const min = moment(date).hour() === 23 && moment(date).minute() === 30 ? 59 : moment(date).minute() + 30;
+
+                end = moment(date).minute(min);
+            }
+
             this.setSelectedStart(date);
-            this.setSelectedEnd(date);
-            this.setLastSelectedDate(date);
+            this.setSelectedEnd(end);
+            this.setLastSelectedDate(end);
             this.setDefaultSelectedDate(date);
         };
     
@@ -42,14 +51,14 @@ const withSelection = WrappedComponent => {
             }
         };
     
-        startSelecting = date => {
+        startSelecting = (date, useTime = false) => {
             const { selectable } = this.props;
             
             if(selectable) {
                 const { isSelecting } = this.state;
         
                 if(!isSelecting) this.setState({ isSelecting : true });
-                if(date) this.setDates(date);
+                if(date) this.setDates(date, useTime);
             }
         };
 
@@ -60,17 +69,17 @@ const withSelection = WrappedComponent => {
             if(useTime) {
                 const { _milliseconds } = moment.duration(end.diff(start));
 
-                endValue = _milliseconds / 60000 / 30;
+                endValue = Math.ceil(_milliseconds / 60000 / 30);
             } else {
                 const { _data : { days } } = moment.duration(end.diff(start));
                 endValue = days;
             }
-    
+
             for(let i = 0; i <= endValue; i++) {
                 let pushDate = null;
                 
                 if(useTime) {
-                    const addMin = i * 30;
+                    const addMin = (i === endValue && moment(end).hour() === 23 && moment(end).minute() === 59) ? (i * 30) - 1 : i * 30;
                     pushDate = moment(start).add(addMin, 'minute');
                 } else {
                     pushDate = moment(start).add(i, 'days');
