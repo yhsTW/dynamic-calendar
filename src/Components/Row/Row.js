@@ -94,7 +94,7 @@ class Row extends Component {
         const newLimit =  limit !== 0 && this.getMorePosition() === 'flex-end' ? limit - 1 : limit;
 
         return (
-            <div className={ styles.row } ref={ ref => this.row = ref }>
+            <div className={ `${ styles.row }${ currentView !== VIEW_TYPE.month ? ` ${ styles.notMargin }` : '' }` } ref={ ref => this.row = ref }>
                 <BackgroundRow itemArr={ itemArr } onSelectSlot={ onSelectSlot } isSelecting={ isSelecting }
                     stopSelecting={ stopSelecting } startSelecting={ startSelecting } setSelectedStart={ setSelectedStart }
                     setSelectedEnd={ setSelectedEnd } selectedStart={ selectedStart } selectedEnd={ selectedEnd }
