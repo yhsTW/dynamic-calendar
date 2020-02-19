@@ -6,7 +6,7 @@ import Header from '../Header';
 import View from '../View';
 import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, INITIAL_CUSTOMIZE } from '../../utils/constants';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
-import { events } from '../../events';
+import { events } from '../../test/events';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 import styles from './styles.css';
 import { makeEventGroup } from '../../utils/makeEventGroup';

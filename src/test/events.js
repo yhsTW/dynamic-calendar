@@ -1,3 +1,5 @@
+import { getDummyEvents } from "./dummyEvents";
+
 export const events = [
 	{
 		id: 0,
@@ -811,5 +813,6 @@ export const events = [
 		end : new Date('2020-2-19 16:00'),
 		allDay : false
 	},
+	// ...getDummyEvents(new Date('2020.01.01'), new Date('2020.03.01'), 50)
 ];
 console.log('events length : ', events.length)
