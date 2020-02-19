@@ -16,7 +16,6 @@
 .timeHeaderHeaders {
     display: flex;
     flex: 0.5;
-    margin-bottom: 5px;
 }
 
 .timeHeaderItem {

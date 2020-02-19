@@ -29,14 +29,14 @@ const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelec
 
         return dateHeaderStyle;
     };
-
+    
     return (
-        <div className={ styles.timeHeader }>
+        <div className={ styles.timeHeader } style={ Object.keys(customize.BackgroundCell.borderStyle).length > 0 ? { borderTop : customize.BackgroundCell.borderStyle.border, borderLeft : customize.BackgroundCell.borderStyle.border, marginLeft : '-1px' } : {} }>
             <div className={ styles.timeHeaderSegment }>
                 <Label text="종일" />
             </div>
-            <div className={ styles.timeHeaderContent }>
-                <div className={ styles.timeHeaderHeaders }>
+            <div className={ styles.timeHeaderContent } style={ Object.keys(customize.BackgroundCell.borderStyle).length > 0 ? { borderLeft : customize.BackgroundCell.borderStyle.border, marginLeft : '-1px' } : {} }>
+                <div className={ styles.timeHeaderHeaders } style={ Object.keys(customize.BackgroundCell.borderStyle).length > 0 ? { borderRight : customize.BackgroundCell.borderStyle.border, marginRight : '-1px' } : {} }>
                     { 
                         weekArr.map(week => (
                             <Label key={ week.date } customize={ getTimeHeaderStyle(week) } className={ styles.timeHeaderItem } 
