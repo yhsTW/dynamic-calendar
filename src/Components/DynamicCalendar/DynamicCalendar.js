@@ -11,7 +11,7 @@ import { events } from '../../test/events';
 import styles from './styles.css';
 import { makeEventGroup } from '../../utils/makeEventGroup';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
-import HeaderTest from '../../HeaderTest';
+import HeaderTest from '../../test/HeaderTest';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 
 const TODAY = moment();
