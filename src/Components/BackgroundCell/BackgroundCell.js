@@ -59,7 +59,6 @@ class BackgroundCell extends Component {
     };
 
     selecting = () => {
-        console.log('selecting start')
         const { 
             isSelecting, setSelectedStart, setSelectedEnd, selectedStart, selectedEnd, 
             item : { date }, lastSelectedDate, setLastSelectedDate, defaultSelectedDate,

@@ -813,6 +813,34 @@ export const events = [
 		end : new Date('2020-2-19 16:00'),
 		allDay : false
 	},
+	{
+		id : 122,
+		title : '미쳤다고 하겠지',
+		start : new Date('2020-02-17'),
+		end : new Date('2020-02-20'),
+		allDay : true
+	},
+	{
+		id : 123,
+		title : '나는 심장이 없어',
+		start : new Date('2020-02-17'),
+		end : new Date('2020-02-17'),
+		allDay : true
+	},
+	{
+		id : 124,
+		title : '아프다고 말하면',
+		start : new Date('2020-02-17 18:00'),
+		end : new Date('2020-03-17 19:00'),
+		allDay : false
+	},
+	{
+		id : 125,
+		title : '정말 아플것 같아서',
+		start : new Date('2020-02-17 18:00'),
+		end : new Date('2020-02-21 19:00'),
+		allDay : false
+	},
 	// ...getDummyEvents(new Date('2020.01.01'), new Date('2020.03.01'), 50)
 ];
 console.log('events length : ', events.length)
