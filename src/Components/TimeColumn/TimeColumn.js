@@ -14,15 +14,8 @@ class TimeColumn extends Component {
     };
 
     componentDidMount = () => {
-        // window.addEventListener('mouseleave', this.props.select.stopSelecting);
-        // window.addEventListener('mouseout', this.props.select.stopSelecting);
         this.getTotalHeight();
     };
-
-    // componentWillUnmount = () => {
-    //     window.removeEventListener('mouseleave', this.props.select.stopSelecting);
-    //     window.removeEventListener('mouseout', this.props.select.stopSelecting);
-    // };
 
     getTotalHeight = () => {
         const { height } = this.backgroundColumnRef.getBoundingClientRect();
@@ -32,7 +25,7 @@ class TimeColumn extends Component {
         });
     };
 
-    isBetween = (date, rangeDate, inclusivity = '[)') => {
+    isBetween = (date, rangeDate, inclusivity = '[]') => {
         return moment(date).isBetween(rangeDate.start, rangeDate.end, null, inclusivity);
     };
 
@@ -41,7 +34,7 @@ class TimeColumn extends Component {
         const prevEvents = group.filter(current => (
             this.isBetween(event[startKey], current) || this.isBetween(event[endKey], current, '()')
         ) && current);
-
+        
         const nextEvents = group.filter(current => (
             current.id !== event[idKey] &&
             (this.isBetween(current.start, event, '()'))
@@ -49,7 +42,7 @@ class TimeColumn extends Component {
 
         const filterEvents = [...prevEvents, ...nextEvents];
         const findIndex = filterEvents.findIndex(find => find[idKey] === event[idKey]);
-
+        
         return {
             level : findIndex + 1,
             row : [...prevEvents, ...nextEvents]

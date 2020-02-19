@@ -7,9 +7,7 @@ class TimeEventWrapper extends Component {
         const { event, eventProperty : { start : startKey, end : endKey }, totalHeight, itemArr } = this.props;
         const start = moment(event[startKey]);
         const end = moment(event[endKey]);
-        const hour = (end.hour() - start.hour()) * 60;
-        const min = start.minute() + end.minute();
-        const gap = (hour + min) / 30;
+        const gap = (end.diff(start, 'minute')) / 30;
 
         return `calc((${ totalHeight }px * ${ gap })/${ itemArr.length * 2 })`;
     };
