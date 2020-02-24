@@ -31,6 +31,7 @@ const sortEvents = (events, { start : startKey, end : endKey, allDay : allDayKey
                 // b의 시작날짜가 더 빠를 경우 b가 우선순위
                 return 1;
             } else {
+                // 어떠한 조건에도 속하지 않으므로 순위변경 없음
                 return 0;
             }
         } else {
@@ -58,6 +59,7 @@ const sortEvents = (events, { start : startKey, end : endKey, allDay : allDayKey
                         // b가 종료 시간이 더 늦을 경우 b가 우선순위
                         return 1;
                     } else {
+                        // 어떠한 조건에도 속하지 않으므로 순위변경 없음
                         return 0;
                     }
                 }
