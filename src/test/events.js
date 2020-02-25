@@ -968,6 +968,6 @@ export const events = [
 		allDay : false
 	},
 
-	// ...getDummyEvents(new Date('2020.01.01'), new Date('2020.03.01'), 50)
+	...getDummyEvents(new Date('2020.01.01'), new Date('2020.03.01'), 1000)
 ];
 console.log('events length : ', events.length)
