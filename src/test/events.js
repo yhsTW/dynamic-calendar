@@ -967,7 +967,12 @@ export const events = [
 		end : new Date(1582088400000),
 		allDay : false
 	},
-
-	...getDummyEvents(new Date('2020.01.01'), new Date('2020.03.01'), 1000)
+	{
+		id : 143,
+		title : '시작날짜가 종료 날짜보다 뒤에 있는 일정',
+		start : new Date('2020.02.26'),
+		end : new Date('2020.01.27'),
+		allDay : false
+	},
 ];
 console.log('events length : ', events.length)
