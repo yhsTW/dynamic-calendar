@@ -18,6 +18,10 @@ class Month extends Component {
         date : null
     };
     
+    componentWillUnmount = () => {
+        console.log('month')
+    }
+    
     state = {
         limit : this.limit,
         usePopup : false

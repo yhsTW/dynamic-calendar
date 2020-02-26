@@ -58,7 +58,7 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
             return `100%`;
         }
     };
-
+    
     return (
         <div className={ styles.eventRow } ref={ eventRowRef }>
             {

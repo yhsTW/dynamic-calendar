@@ -1,15 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import DateSlot from '../DateSlot';
-import EventRow from '../EventRow';
-import BackgroundRow from '../BackgroundRow';
 import moment from 'moment';
-import styles from './styles.css';
+import _ from 'lodash';
+import DateSlot from '../DateSlot';
 import { VIEW_TYPE } from '../../utils/constants';
 import sortEventsUtil from '../../utils/sortEvents';
 import eventLevel from '../../utils/eventLevel';
+import BackgroundRow from '../BackgroundRow';
+import EventRowWrapper from '../EventRowWrapper';
+import DateSlotWrapper from '../DateSlotWrapper';
+import styles from './styles.css';
 
 class Row extends Component {
+    prevEvents = [];
+    prevSortEvents = [];
+    
+    isMonth = () => {
+        const { currentView } = this.props;
+        
+        return currentView === VIEW_TYPE.month;
+    };
+
+    componentDidMount = () => {
+        if(this.isMonth()) {
+            window.addEventListener('resize', this.getRowLimit);
+        }
+    };
+
+    componentDidUpdate = prevProps => {
+        if(this.isMonth() && prevProps.events !== this.props.events) {
+            this.getRowLimit();
+        }
+    };
+
+    componentWillUnmount = () => {
+        if(this.isMonth()) {
+            window.removeEventListener('resize', this.getRowLimit);
+        }
+    };
+
     sameEventRow = (sortEvents, eventProperty) => {
         const { itemArr } = this.props;
         let newEvents = eventLevel(itemArr[0], itemArr[itemArr.length - 1], sortEvents, eventProperty);
@@ -17,41 +46,16 @@ class Row extends Component {
         return newEvents;
     };
 
-    componentDidMount = () => {
-        this.isMonth() && (
-            this.getRowLimit(),
-            window.addEventListener('resize', this.getRowLimit)
-        );
-    }
-
-    componentDidUpdate = prevProps => {
-        if(this.isMonth() && prevProps.events !== this.props.events) {
-            this.getRowLimit();
-        }
-    }
-
-    componentWillUnmount = () => {
-        this.isMonth() && window.removeEventListener('resize', this.getRowLimit);
-    };
-
-    isMonth = () => {
-        const { currentView } = this.props;
-
-        return currentView === VIEW_TYPE.month;
-    }
-    
     getRowLimit = () => {
         const { useExtend } = this.props;
 
         if(useExtend) return;
-
+        
         const rowHeight = this.row.clientHeight;
         const dateHeader = this.header.clientHeight;
         const eventSpace = rowHeight - dateHeader;
-        const eventRow = this.eventRow && this.eventRow.clientHeight ? 
-            this.eventRow.clientHeight : 0;
+        const eventRow = this.eventRowWrapperRef.getEventRowHeight();
         const limit = eventRow === 0 ? 0 : Math.max(Math.floor(eventSpace / eventRow));
-
         
         if(limit > 0) {
             const { setLimit } = this.props;
@@ -60,37 +64,40 @@ class Row extends Component {
         }
     };
 
-    getDateSlotCustomize = () => {
-        const { customize : { today, holiday, weekdays, weekend, prevMonth, nextMonth } } = this.props;
-
-        return {
-            today,
-            holiday,
-            weekdays,
-            weekend, 
-            prevMonth,
-            nextMonth
-        };
-    };
-
     getMorePosition = () => {
         const { customize : { More : { alignItems } } } = this.props;
 
         return alignItems;
     };
 
+    differenceEvents = (prevEvents, currentEvents) => {
+        return (prevEvents.length !== currentEvents.length || _.isEqual(prevEvents, currentEvents));
+    };
+
+    sortEvents = () => {
+        const { events, eventProperty } = this.props;
+        let sortEvents = events ? this.prevSortEvents : [];
+
+        if(events && this.prevEvents && this.differenceEvents(this.prevEvents, events)) {
+            sortEvents = sortEventsUtil(events, eventProperty);
+            
+            this.prevEvents = events;
+            this.prevSortEvents = sortEvents;
+        }
+
+        return sortEvents;
+    };
+
     render() {
         const { 
-            today, itemArr, events, onSelectSlot, isSelecting, currentView,
+            today, itemArr, onSelectSlot, isSelecting, currentView,
             stopSelecting, startSelecting, setSelectedStart, setSelectedEnd,
             selectedStart, selectedEnd, lastSelectedDate, setLastSelectedDate,
             defaultSelectedDate, onSelectEvent, limit, openPopup, useDateHeader,
             moveDayView, useExtend, components, customize, eventProperty, usePopup,
             slotSelectEnd
         } = this.props;
-        const sortEvents = sortEventsUtil(events, eventProperty);
-        const sameEventRow = this.sameEventRow(sortEvents, eventProperty);
-        const dateSlotCustomize = this.getDateSlotCustomize();
+        const sortEvents = this.sortEvents();
         const newLimit =  limit !== 0 && this.getMorePosition() === 'flex-end' ? limit - 1 : limit;
 
         return (
@@ -104,29 +111,18 @@ class Row extends Component {
                     slotSelectEnd={ slotSelectEnd } />
                 <div className={ styles.dateContent }>
                     <div className={ styles.rowHeader } ref={ ref => this.header = ref }>
-                        { 
-                            useDateHeader && itemArr.map(item => (
-                                <DateSlot key={ `${ item.type }_${ item.date.date() }` } 
-                                    isToday={ today.isSame(item.date, 'date') } item={ item } customize={ dateSlotCustomize }
-                                    moveDayView={ moveDayView } isSelecting={ isSelecting } startSelecting={ startSelecting } />
-                            ))
+                        {
+                            useDateHeader && (
+                                <DateSlotWrapper moveDayView={ moveDayView } isSelecting={ isSelecting } startSelecting={ startSelecting }
+                                    itemArr={ itemArr } today={ today } customize={ customize } />
+                            )
                         }
                     </div>
                     <div className="eventBox">
-                        {  
-                            events && sameEventRow.map((event, idx) => {
-                                if(currentView !== VIEW_TYPE.month || (newLimit === 0 || idx < newLimit)) {
-                                    return (
-                                        <EventRow eventRowRef={ ref => this.eventRow = ref } key={ `event-row_${ idx }` } 
-                                            events={ event } slotStart={ itemArr[0] } slotEnd={ itemArr[itemArr.length - 1] } 
-                                            onSelectEvent={ onSelectEvent } isSelecting={ isSelecting } startSelecting={ startSelecting }
-                                            currentView={ currentView } components={ components } eventProperty={ eventProperty } />
-                                    );
-                                } else {
-                                    return null;
-                                }
-                            })
-                        }
+                        <EventRowWrapper ref={ ref => this.eventRowWrapperRef = ref } events={ sortEvents } onSelectEvent={ onSelectEvent } components={ components } 
+                            limit={ newLimit } slotStart={ itemArr[0] } slotEnd={ itemArr[itemArr.length - 1] }
+                            isSelecting={ isSelecting } startSelecting={ startSelecting } currentView={ currentView } 
+                            eventProperty={ eventProperty } limit={ limit } />
                     </div>
                 </div>
             </div>
