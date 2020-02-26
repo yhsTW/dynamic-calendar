@@ -9,7 +9,7 @@ class EventRowWrapper extends Component {
     prevSameEvents = [];
 
     shouldComponentUpdate = (nextProps) => {
-        return this.differenceEvents(this.props.events, nextProps.events);
+        return this.differenceEvents(this.props.events, nextProps.events) || this.props.limit !== nextProps.limit;
     };
 
     differenceEvents = (prevEvents, currentEvents) => {
