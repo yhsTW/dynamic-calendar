@@ -1,11 +1,6 @@
 import moment from 'moment';
 import _ from 'lodash';
 
-let prevEvents = [];
-
-const setPrevEvents = sortEvents => prevEvents = [...sortEvents];
-const getPrevEvents = () => prevEvents;
-
 const checkAllDay = (event, allDayKey) => {
     let allDay = false;
 
@@ -72,8 +67,6 @@ const sortEvents = (events, { start : startKey, end : endKey, allDay : allDayKey
             }
         }
     });
-
-    setPrevEvents(sort);
 
     return sort;
 };

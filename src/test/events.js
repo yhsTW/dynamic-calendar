@@ -974,5 +974,7 @@ export const events = [
 		end : new Date('2020.01.27'),
 		allDay : false
 	},
+
+	// ...getDummyEvents('2020.01.01', '2020.12.31', 100)
 ];
 // console.log('events length : ', events.length)
