@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react';
-import _ from 'lodash';
 import eventLevel from '../../utils/eventLevel';
 import { VIEW_TYPE } from '../../utils/constants';
+import { arrayCheck, variablesCheck } from '../../utils/changeCheck';
 import EventRow from '../EventRow';
 
 class EventRowWrapper extends Component {
@@ -9,11 +9,16 @@ class EventRowWrapper extends Component {
     prevSameEvents = [];
 
     shouldComponentUpdate = (nextProps) => {
-        return this.differenceEvents(this.props.events, nextProps.events) || this.props.limit !== nextProps.limit;
+        const { events, limit, isSelecting } = this.props;
+        const checkEvents = !this.differenceEvents(events, nextProps.events);
+        const checkLimit = !variablesCheck(limit, nextProps.limit);
+        const checkIsSelecting = !variablesCheck(isSelecting, nextProps.isSelecting);
+        
+        return checkEvents || checkLimit || checkIsSelecting;
     };
 
     differenceEvents = (prevEvents, currentEvents) => {
-        return (prevEvents.length !== currentEvents.length || _.isEqual(prevEvents, currentEvents).length > 0);
+        return (prevEvents.length !== currentEvents.length || !arrayCheck(prevEvents, currentEvents));
     };
 
     getEventRowHeight = () => {
@@ -24,7 +29,7 @@ class EventRowWrapper extends Component {
         const { slotStart, slotEnd, events, eventProperty } = this.props;
         let sameEvents = events ? this.prevSameEvents : [];
 
-        if(events && this.prevEvents && this.differenceEvents(this.prevEvents, events)) {
+        if(events && this.differenceEvents(this.prevEvents, events)) {
             sameEvents = eventLevel(slotStart, slotEnd, events, eventProperty);
 
             this.prevEvents = events;

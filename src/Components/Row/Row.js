@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { array } from 'prop-types';
 import moment from 'moment';
-import _ from 'lodash';
-import DateSlot from '../DateSlot';
 import { VIEW_TYPE } from '../../utils/constants';
 import sortEventsUtil from '../../utils/sortEvents';
 import eventLevel from '../../utils/eventLevel';
+import { arrayCheck } from '../../utils/changeCheck';
 import BackgroundRow from '../BackgroundRow';
 import EventRowWrapper from '../EventRowWrapper';
 import DateSlotWrapper from '../DateSlotWrapper';
@@ -71,14 +70,14 @@ class Row extends Component {
     };
 
     differenceEvents = (prevEvents, currentEvents) => {
-        return (prevEvents.length !== currentEvents.length || _.isEqual(prevEvents, currentEvents));
+        return (prevEvents.length !== currentEvents.length || !arrayCheck(prevEvents, currentEvents));
     };
 
     sortEvents = () => {
         const { events, eventProperty } = this.props;
         let sortEvents = events ? this.prevSortEvents : [];
 
-        if(events && this.prevEvents && this.differenceEvents(this.prevEvents, events)) {
+        if(events && this.differenceEvents(this.prevEvents, events)) {
             sortEvents = sortEventsUtil(events, eventProperty);
             
             this.prevEvents = events;

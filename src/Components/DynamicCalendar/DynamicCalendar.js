@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import lodash from 'lodash';
+import _ from 'lodash';
+import { arrayCheck, dateCheck, variablesCheck } from '../../utils/changeCheck';
 import Header from '../Header';
 import View from '../View';
 import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, INITIAL_CUSTOMIZE } from '../../utils/constants';
@@ -37,6 +38,23 @@ class DynamicCalendar extends Component {
     }
     //////////////////////////////////// 테스트용 ////////////////////////////////////
     
+    shouldComponentUpdate = (nextProps, nextState) => {
+        //////////////////////////////////// 테스트용 ////////////////////////////////////
+        const { events } = this.state;
+        const eventsResult = !arrayCheck(events, nextState.events);
+        //////////////////////////////////// 테스트용 ////////////////////////////////////
+      
+        const { currentDate, currentView } = this.state;
+        const { events : test, date } = this.props;
+        
+        // const eventsCheck = arrayCheck(events, nextProps.events);
+        const dateResult = !dateCheck(date, nextProps.date);
+        const currentDateResult = !dateCheck(currentDate, nextState.currentDate);
+        const currentViewResult = !variablesCheck(currentView, nextState.currentView);
+        
+        return eventsResult || dateResult || currentDateResult || currentViewResult;
+    };
+
     // 현재 사용자가 보고있는 날짜를 변경한다.
     updateCurrentDate = date => {
         const { onNavigate } = this.props;
@@ -78,7 +96,7 @@ class DynamicCalendar extends Component {
         const { currentDate, currentView } = this.state;
         const events = this.settingEvents();
         const HeaderComponent = (components && components.header) || Header;
-        const customize = lodash.merge(INITIAL_CUSTOMIZE, pCustomize);
+        const customize = _.merge(INITIAL_CUSTOMIZE, pCustomize);
         
         return (
             <div className={ styles.dynamicCalendar }>
