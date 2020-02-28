@@ -27,6 +27,10 @@ class EventBarWrapper extends Component {
 
         this.resetIsMouseDown();
         onSelectEvent(event, e);
+
+        if(this.props.closePopup) {
+            this.props.closePopup();
+        }
     };
 
     mouseDown = () => this.isMouseDown = true;

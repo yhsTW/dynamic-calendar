@@ -16,7 +16,8 @@ const Popup = ({ popup : { events, top, left, width, height, date }, closePopup,
                     { 
                         events.map(event => (
                             <EventBar key={ event[idKey] } event={ event } isStart={ true } 
-                                isEnd={ true } onSelectEvent={ onSelectEvent } eventProperty={ eventProperty } />
+                                isEnd={ true } onSelectEvent={ onSelectEvent } eventProperty={ eventProperty }
+                                closePopup={ closePopup } />
                         )) 
                     }
                 </div>
