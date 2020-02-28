@@ -2,6 +2,11 @@ import moment from 'moment';
 
 let group = [];
 
+// 이벤트 시작/종료일 검증(시작일보다 종료일이 먼저이면 안됨)
+const checkDate = (event, { start : startKey, end : endKey }) => {
+    return moment(event[startKey]).isBefore(event[endKey]);
+};
+
 // 현재 사용자가 보고있는 달의 이벤트인지 확인한다.
 const isCurrentEvent = (event, currentDate, { start : startKey, end : endKey }) => {
     return moment(currentDate).isBetween(moment(event[startKey]), moment(event[endKey]), 'month', '[]') 
@@ -25,7 +30,7 @@ export const makeEventGroup = (events, currentDate, eventProperty) => {
         moment(currentDate).endOf('month').week();
 
     events.forEach(event => {
-        if(isCurrentEvent(event, currentDate, eventProperty)) {
+        if(checkDate(event, eventProperty) && isCurrentEvent(event, currentDate, eventProperty)) {
             // 이벤트 시작일의 주차를 가져온다.
             let startWeek = moment(event[startKey]).week();
             // 이벤트 종료일의 주차를 가져온다.
