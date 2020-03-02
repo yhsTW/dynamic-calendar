@@ -118,7 +118,7 @@ class TimeColumn extends Component {
                 notOverlap.push([currentEvent]);
             }
         }
-
+        console.log('notOverlap, overlap : ', notOverlap, overlap);
         let eventGroup = this.makeStyle([...notOverlap, ...overlap]);
         
         return eventGroup;

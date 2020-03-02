@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Label from '../Label';
 import { WEEK_DATA } from '../../utils/constants';
+import { objectCheck } from '../../utils/changeCheck';
+import Label from '../Label';
 import styles from './styles.css';
 
-const MonthHeader = ({ customize }) => {
-    const { dateHeaderStyle } = customize;
+class MonthHeader extends Component {
 
-    const getMonthHeaderStyle = (idx, dateHeaderStyle) => {
+    shouldComponentUpdate = nextProps => {
+        const { customize } = this.props;
+        const customizeCheck = objectCheck(customize, nextProps.customize);
+
+        return !(customizeCheck);
+    };
+
+    getMonthHeaderStyle = idx => {
+        const { customize : { dateHeaderStyle } } = this.props;
         const { saturdayStyle, sundayStyle } = dateHeaderStyle;
         let style = {};
     
@@ -23,16 +31,18 @@ const MonthHeader = ({ customize }) => {
         }
     };
 
-    return (
-        <div className={ styles.monthHeader }>
-            {
-                WEEK_DATA.map((week, idx) => (
-                    <Label key={ week } className={ styles.label } text={ week } customize={ getMonthHeaderStyle(idx, dateHeaderStyle) } />
-                ))
-            }
-        </div>
-    );
-}
+    render() {
+        return (
+            <div className={ styles.monthHeader }>
+                {
+                    WEEK_DATA.map((week, idx) => (
+                        <Label key={ week } className={ styles.label } text={ week } customize={ this.getMonthHeaderStyle(idx) } />
+                    ))
+                }
+            </div>
+        );
+    };
+};
 
 MonthHeader.propTypes = {
     customize : PropTypes.shape({

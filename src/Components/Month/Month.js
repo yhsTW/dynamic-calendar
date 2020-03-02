@@ -6,6 +6,7 @@ import Popup from '../Popup/Popup';
 import styles from './styles.css';
 import MonthContent from '../MonthContent';
 import { VIEW_TYPE } from '../../utils/constants';
+import { variablesCheck, dateCheck, arrayCheck } from '../../utils/changeCheck';
 
 class Month extends Component {
     limit = 0;
@@ -17,14 +18,22 @@ class Month extends Component {
         events : [],
         date : null
     };
-    
-    componentWillUnmount = () => {
-        console.log('month')
-    }
-    
+
     state = {
         limit : this.limit,
         usePopup : false
+    };
+
+    shouldComponentUpdate = (nextProps, nextState) => {
+        const { limit, usePopup } = this.state;
+        const { currentDate, currentView, events } = this.props;
+        const checkLimit = variablesCheck(limit, nextState.limit);
+        const checkUsePopup = variablesCheck(usePopup, nextState.usePopup);
+        const checkCurrentDate = dateCheck(currentDate, nextProps.currentDate);
+        const checkCurrentView = variablesCheck(currentView, nextProps.currentView);
+        const checkEvents = arrayCheck(events, nextProps.events);
+
+        return !(checkLimit && checkUsePopup && checkCurrentView && checkCurrentDate && checkEvents);
     };
 
     setLimit = limit => {

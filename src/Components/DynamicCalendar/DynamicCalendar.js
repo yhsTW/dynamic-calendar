@@ -41,18 +41,17 @@ class DynamicCalendar extends Component {
     shouldComponentUpdate = (nextProps, nextState) => {
         //////////////////////////////////// 테스트용 ////////////////////////////////////
         const { events } = this.state;
-        const eventsResult = !arrayCheck(events, nextState.events);
+        const eventsResult = arrayCheck(events, nextState.events);
         //////////////////////////////////// 테스트용 ////////////////////////////////////
       
         const { currentDate, currentView } = this.state;
         const { events : test, date } = this.props;
+        // const eventsResult = arrayCheck(events, nextProps.events);
+        const dateResult = dateCheck(date, nextProps.date);
+        const currentDateResult = dateCheck(currentDate, nextState.currentDate);
+        const currentViewResult = variablesCheck(currentView, nextState.currentView);
         
-        // const eventsCheck = arrayCheck(events, nextProps.events);
-        const dateResult = !dateCheck(date, nextProps.date);
-        const currentDateResult = !dateCheck(currentDate, nextState.currentDate);
-        const currentViewResult = !variablesCheck(currentView, nextState.currentView);
-        
-        return eventsResult || dateResult || currentDateResult || currentViewResult;
+        return !(eventsResult && dateResult && currentDateResult && currentViewResult);
     };
 
     // 현재 사용자가 보고있는 날짜를 변경한다.

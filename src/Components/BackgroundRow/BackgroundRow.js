@@ -4,8 +4,28 @@ import BackgroundCell from '../BackgroundCell';
 import moment from 'moment';
 import styles from './styles.css';
 import { CUSTOMIZE } from '../../utils/constants';
+import { arrayCheck, variablesCheck, objectCheck, dateCheck } from '../../utils/changeCheck';
 
 class BackgroundRow extends Component {
+
+    shouldComponentUpdate = nextProps => {
+        const { events, isSelecting, itemArr, lastSelectedDate, limit, selectedEnd, selectedStart } = this.props;
+
+        const checkEvents = arrayCheck(events, nextProps.events);
+        const checkIsSelecting = objectCheck(isSelecting, nextProps.isSelecting);
+        const checkItemArr = arrayCheck(itemArr, nextProps.itemArr);
+        const checkLastSelectedDate = dateCheck(lastSelectedDate, nextProps.lastSelectedDate);
+        const checkLimit = variablesCheck(limit, nextProps.limit);
+        const checkSelectedEnd = dateCheck(selectedEnd, nextProps.selectedEnd);
+        const checkSelectedStart = dateCheck(selectedStart, nextProps.selectedStart);
+
+        return !(
+            checkEvents && checkIsSelecting && checkItemArr &&
+            checkLastSelectedDate && checkLimit && checkSelectedEnd &&
+            checkSelectedStart
+        );
+    };
+
     // Slot별로 event의 갯수를 센다.
     settingEventCount = () => {
         let eventCountArr = [];

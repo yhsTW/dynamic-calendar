@@ -10,11 +10,11 @@ class EventRowWrapper extends Component {
 
     shouldComponentUpdate = (nextProps) => {
         const { events, limit, isSelecting } = this.props;
-        const checkEvents = !this.differenceEvents(events, nextProps.events);
-        const checkLimit = !variablesCheck(limit, nextProps.limit);
-        const checkIsSelecting = !variablesCheck(isSelecting, nextProps.isSelecting);
+        const checkEvents = arrayCheck(events, nextProps.events);
+        const checkLimit = variablesCheck(limit, nextProps.limit);
+        const checkIsSelecting = variablesCheck(isSelecting, nextProps.isSelecting);
         
-        return checkEvents || checkLimit || checkIsSelecting;
+        return !(checkEvents && checkLimit && checkIsSelecting);
     };
 
     differenceEvents = (prevEvents, currentEvents) => {

@@ -1,15 +1,46 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Row from '../Row';
-import getDateArr from '../../utils/getDateArr';
-import withSelection from '../../hoc/withSelection';
-import { VIEW_TYPE } from '../../utils/constants';
 import moment from 'moment';
+import getDateArr from '../../utils/getDateArr';
+import { VIEW_TYPE } from '../../utils/constants';
+import { dateCheck, variablesCheck, arrayCheck, objectCheck } from '../../utils/changeCheck';
+import withSelection from '../../hoc/withSelection';
+import Row from '../Row';
 
-const MonthContent = props => getDateArr(props.currentDate).map((itemArr, idx) => (
-        <Row key={ idx } { ...props } itemArr={ itemArr } { ...props.select } events={ props.events[idx] } />
-    )
-);
+class MonthContent extends Component {
+    prevDate = null;
+    prevDateArr = [];
+    
+    shouldComponentUpdate = nextProps => {
+        const { limit, currentDate, currentView, events, select, usePopup } = this.props;
+
+        const checkLimit = variablesCheck(limit, nextProps.limit);
+        const checkCurrentView = variablesCheck(currentView, nextProps.currentView);
+        const checkCurrentDate = dateCheck(currentDate, nextProps.currentDate);
+        const checkEvents = arrayCheck(events, nextProps.events);
+        const checkSelect = objectCheck(select, nextProps.select);
+        const checkUsePopup = variablesCheck(usePopup, nextProps.usePopup);
+
+        return !(
+            checkLimit && checkCurrentDate && checkCurrentView && checkEvents && 
+            checkSelect && checkUsePopup
+        );
+    };
+
+    render() {
+        const { currentDate, select, events } = this.props;
+
+        return (
+            <Fragment>
+                {
+                    getDateArr(currentDate).map((itemArr, idx) => (
+                        <Row key={ new Date(itemArr[0].date).getTime() } { ...this.props } itemArr={ itemArr } { ...select } events={ events[idx] } />
+                    ))
+                }
+            </Fragment>
+        );
+    };
+};
 
 MonthContent.propTypes = {
     currentDate : PropTypes.instanceOf(moment).isRequired,

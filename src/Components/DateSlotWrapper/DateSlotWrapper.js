@@ -1,11 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import _ from 'lodash';
 import DateSlot from '../DateSlot';
+import { arrayCheck } from '../../utils/changeCheck';
 
 class DateSlotWrapper extends Component {
 
     shouldComponentUpdate = nextProps => {
-        return !_.isEqual(this.props.itemArr, nextProps.itemArr);
+        const { itemArr } = this.props;
+
+        const checkItemArr = arrayCheck(itemArr, nextProps.itemArr);
+
+        return !(checkItemArr);
     };
 
     getDateSlotCustomize = () => {

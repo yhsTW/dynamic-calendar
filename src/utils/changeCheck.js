@@ -19,5 +19,5 @@ export const dateCheck = (value, other) => {
 };
 
 export const variablesCheck = (value, other) => {
-    return value !== other;
+    return value === other;
 };

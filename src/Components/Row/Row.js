@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes, { array } from 'prop-types';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import { VIEW_TYPE } from '../../utils/constants';
 import sortEventsUtil from '../../utils/sortEvents';
 import eventLevel from '../../utils/eventLevel';
-import { arrayCheck } from '../../utils/changeCheck';
+import { arrayCheck, variablesCheck, dateCheck } from '../../utils/changeCheck';
 import BackgroundRow from '../BackgroundRow';
 import EventRowWrapper from '../EventRowWrapper';
 import DateSlotWrapper from '../DateSlotWrapper';
@@ -18,6 +18,25 @@ class Row extends Component {
         const { currentView } = this.props;
         
         return currentView === VIEW_TYPE.month;
+    };
+
+    shouldComponentUpdate = nextProps => {
+        const { 
+            events, isSelecting, itemArr, lastSelectedDate, 
+            selectedEnd, selectedStart
+        } = this.props;
+
+        const checkEvents = arrayCheck(events, nextProps.events);
+        const checkIsSelecting = variablesCheck(isSelecting, nextProps.isSelecting);
+        const checkItemArr = arrayCheck(itemArr, nextProps.itemArr);
+        const checkLastSelectedDate = dateCheck(lastSelectedDate, nextProps.lastSelectedDate);
+        const checkSelectedEnd = dateCheck(selectedEnd, nextProps.selectedEnd);
+        const checkSelectedStart = dateCheck(selectedStart, nextProps.selectedStart);
+
+        return !(
+            checkEvents && checkIsSelecting && checkItemArr && 
+            checkLastSelectedDate && checkSelectedEnd && checkSelectedStart
+        );
     };
 
     componentDidMount = () => {

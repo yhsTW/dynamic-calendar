@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.css';
 
-const More = ({ more, openPopup, customize }) => {
-    const { moreStyle, prefix, suffix, position } = customize;
+class More extends PureComponent {
 
-    const showMore = e => {
+    showMore = e => {
         e.stopPropagation();
+        const { openPopup } = this.props;
 
         openPopup();
     };
 
-    return (
-        <span className={ styles.more } style={ moreStyle } onMouseDown={ showMore }>
-            { `${ prefix }${ more }${ suffix }` }
-        </span>
-    );
+    render() {
+        const { customize : { moreStyle, prefix, suffix, position }, more } = this.props;
+
+        return (
+            <span className={ styles.more } style={ moreStyle } onMouseDown={ this.showMore }>
+                { `${ prefix }${ more }${ suffix }` }
+            </span>
+        );
+    };
 };
 
 More.propTypes = {

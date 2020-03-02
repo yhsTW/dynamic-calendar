@@ -974,7 +974,63 @@ export const events = [
 		end : new Date('2020.01.27'),
 		allDay : false
 	},
+	{
+		id : 144,
+		title : '첫 번째 일정',
+		start : new Date('2020.02.25 13:00'),
+		end : new Date('2020.02.25 14:00'),
+		allDay : false
+	},
+	{
+		id : 145,
+		title : '두 번째 일정',
+		start : new Date('2020.02.25 13:00'),
+		end : new Date('2020.02.25 14:00'),
+		allDay : false
+	},
+	{
+		id : 146,
+		title : '세 번째 일정',
+		start : new Date('2020.02.25 13:00'),
+		end : new Date('2020.02.25 14:00'),
+		allDay : false
+	},
+	{
+		id : 147,
+		title : '네 번째 일정',
+		start : new Date('2020.02.25 14:00'),
+		end : new Date('2020.02.25 14:30'),
+		allDay : false
+	},
+	{
+		id : 148,
+		title : '시간 이상한 일정',
+		start : new Date('2020.04.25 14:00'),
+		end : new Date('2020.03.25 14:30'),
+		allDay : false
+	},
+	{
+		id : 149,
+		title : '4월 정상 일정',
+		start : new Date('2020.04.25 14:00'),
+		end : new Date('2020.04.26 14:30'),
+		allDay : false
+	},
+	{
+		id : 150,
+		title : '몇 년 짜리 일정',
+		start : new Date('2020.03.15 14:00'),
+		end : new Date('2025.03.15 14:30'),
+		allDay : false
+	},
+	// {
+	// 	id : 151,
+	// 	title : '짧은 일정',
+	// 	start : new Date('2020.03.15 14:00'),
+	// 	end : new Date('2025.03.15 14:30'),
+	// 	allDay : false
+	// },
 
-	// ...getDummyEvents('2020.01.01', '2020.12.31', 100)
+	...getDummyEvents('2020.03.15', '2020.03.15', 30)
 ];
 // console.log('events length : ', events.length)

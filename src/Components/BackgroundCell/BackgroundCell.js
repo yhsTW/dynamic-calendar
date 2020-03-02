@@ -7,6 +7,7 @@ import { makeTimeFormat } from '../../utils/dateUtil';
 import combineStyle from '../../utils/combineStyle';
 import { PROPERTY, CUSTOMIZE, VIEW_TYPE } from '../../utils/constants';
 import Label from '../Label';
+import { dateCheck, variablesCheck, arrayCheck, objectCheck } from '../../utils/changeCheck';
 
 
 class BackgroundCell extends Component {
@@ -14,6 +15,29 @@ class BackgroundCell extends Component {
 
     state = {
         isSelected : false
+    };
+
+    shouldComponentUpdate = (nextProps, nextState) => {
+        const { isSelected } = this.state;
+        const { 
+            defaultSelectedDate, events, isSelecting, item, 
+            lastSelectedDate, more, selectedEnd, selectedStart
+        } = this.props;
+        const checkIsSelected = variablesCheck(isSelected, nextState.isSelected);
+        const checkDefaultSelectedDate = dateCheck(defaultSelectedDate, nextProps.defaultSelectedDate);
+        const checkEvents = arrayCheck(events, nextProps.events);
+        const checkIsSelecting = variablesCheck(isSelecting, nextProps.isSelecting);
+        const checkItem = objectCheck(item, nextProps.item);
+        const checkLastSelectedDate = dateCheck(lastSelectedDate, nextProps.lastSelectedDate);
+        const checkMore = variablesCheck(more, nextProps.more);
+        const checkSelectedEnd = dateCheck(selectedEnd, nextProps.selectedEnd);
+        const checkSelectedStart = dateCheck(selectedStart, nextProps.selectedStart);
+
+        return !(
+            checkIsSelected && checkDefaultSelectedDate && checkEvents && checkIsSelecting && 
+            checkItem && checkLastSelectedDate && checkMore && checkSelectedEnd &&
+            checkSelectedStart
+        );
     };
 
     static getDerivedStateFromProps = (nextProps, prevState) => {
