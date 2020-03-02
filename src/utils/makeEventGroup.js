@@ -42,10 +42,9 @@ export const makeEventGroup = (events, currentDate, eventProperty) => {
                 if(moment(event[endKey]).week() === 1 || moment(event[endKey]).year() !== moment(currentDate).year()) {
                     endWeek = moment(event[endKey]).weeksInYear() + moment(event[endKey]).week();
                 }
-
             }
 
-            const start = startWeek - currentFirstWeek;
+            const start = (moment(event[startKey]).isSame(currentDate, 'year') && startWeek - currentFirstWeek > 0) ? startWeek - currentFirstWeek : 0;
             const end = moment(event[endKey]).isSameOrBefore(currentDate, 'month') ? endWeek - currentFirstWeek : currentLastWeek - currentFirstWeek;
             
             for(let i = start; i <= end; i++) {
