@@ -41,6 +41,7 @@ class Row extends Component {
 
     componentDidMount = () => {
         if(this.isMonth()) {
+            this.getRowLimit();
             window.addEventListener('resize', this.getRowLimit);
         }
     };
