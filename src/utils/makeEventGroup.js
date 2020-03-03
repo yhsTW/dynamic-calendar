@@ -30,7 +30,6 @@ export const makeEventGroup = (events, currentDate, eventProperty) => {
             let startWeek = moment(event[startKey]).week();
             // 이벤트 종료일의 주차를 가져온다.
             let endWeek = moment(event[endKey]).week();
-            
             // 현재 사용자가 보고있는 날의 달(month)이 12월일 경우
             if(moment(currentDate).month() === 11) {
                 // 이벤트 시작일이 해당 년도의 첫째주일 경우
@@ -43,8 +42,8 @@ export const makeEventGroup = (events, currentDate, eventProperty) => {
                     endWeek = moment(event[endKey]).weeksInYear() + moment(event[endKey]).week();
                 }
             }
-
-            const start = (moment(event[startKey]).isSame(currentDate, 'year') && startWeek - currentFirstWeek > 0) ? startWeek - currentFirstWeek : 0;
+            
+            const start = (!moment(currentDate).isBetween(moment(event[startKey]), moment(event[endKey]), 'year', null, '()') && startWeek - currentFirstWeek > 0) ? startWeek - currentFirstWeek : 0;
             const end = moment(event[endKey]).isSameOrBefore(currentDate, 'month') ? endWeek - currentFirstWeek : currentLastWeek - currentFirstWeek;
             
             for(let i = start; i <= end; i++) {
