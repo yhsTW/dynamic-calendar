@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import EventBarWrapper from '../EventBarWrapper';
 import moment from 'moment';
 import { WEEK_NUM, VIEW_TYPE } from '../../utils/constants';
+import EventBarWrapper from '../EventBarWrapper';
+import Segment from '../Segment';
 import styles from './styles.css';
 
 const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSelecting, startSelecting, currentView, components, eventProperty, eventProperty : { id : idKey, start : startKey, end : endKey } }) => {
@@ -18,20 +19,6 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
         const end = moment(event[endKey]);
 
         return slotEndDate.isAfter(end) || slotEndDate.isSame(end, 'week');
-    };
-
-    const getSegmentWidth = (event, idx) => {
-        let segmentWidth = 0;
-
-        if(getStartCondition(event)) {
-            if(idx > 0) {
-                segmentWidth = `calc(100% * ${ moment(event[startKey]).day() - moment(events[idx - 1][endKey]).day() - 1 }/${ WEEK_NUM })`;
-            } else {
-                segmentWidth = `calc(100% * ${ moment(event[startKey]).day() }/${ WEEK_NUM })`;
-            }
-        }
-
-        return segmentWidth;
     };
 
     const getEventBarWidth = (event) => {
@@ -58,13 +45,22 @@ const EventRow = ({ events, slotStart, slotEnd, onSelectEvent, eventRowRef, isSe
             return `100%`;
         }
     };
+
+    const getPrevEventDay = idx => {
+        return idx > 0 ? moment(events[idx - 1][endKey]).day() : 0;
+    };
     
     return (
         <div className={ styles.eventRow } ref={ eventRowRef }>
             {
                 events.map((event, idx) => (
                     <Fragment key={ `${ moment(event[startKey]).toDate().getTime() }${ event[idKey] }` }>
-                        { currentView !== VIEW_TYPE.day && <div className="segment" style={{ width : getSegmentWidth(event, idx), flexBasis : getSegmentWidth(event, idx) }}></div> }
+                        { 
+                            currentView !== VIEW_TYPE.day && (
+                                <Segment event={ event } prevEventDay={ getPrevEventDay(idx) } eventProperty={ eventProperty }
+                                    getStartCondition={ getStartCondition } idx={ idx } />
+                            )
+                        }
                         <EventBarWrapper event={ event } width={ getEventBarWidth(event) } isStart={ getStartCondition(event) } 
                             isEnd={ getEndCondition(event) } onSelectEvent={ onSelectEvent } isSelecting={ isSelecting }
                             startSelecting={ startSelecting } components={ components } eventProperty={ eventProperty } />

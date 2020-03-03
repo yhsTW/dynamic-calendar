@@ -23,7 +23,7 @@ class Row extends Component {
     shouldComponentUpdate = nextProps => {
         const { 
             events, isSelecting, itemArr, lastSelectedDate, 
-            selectedEnd, selectedStart
+            selectedEnd, selectedStart, limit
         } = this.props;
 
         const checkEvents = arrayCheck(events, nextProps.events);
@@ -32,10 +32,12 @@ class Row extends Component {
         const checkLastSelectedDate = dateCheck(lastSelectedDate, nextProps.lastSelectedDate);
         const checkSelectedEnd = dateCheck(selectedEnd, nextProps.selectedEnd);
         const checkSelectedStart = dateCheck(selectedStart, nextProps.selectedStart);
+        const checkLimit = variablesCheck(limit, nextProps.limit);
 
         return !(
             checkEvents && checkIsSelecting && checkItemArr && 
-            checkLastSelectedDate && checkSelectedEnd && checkSelectedStart
+            checkLastSelectedDate && checkSelectedEnd && checkSelectedStart &&
+            checkLimit
         );
     };
 

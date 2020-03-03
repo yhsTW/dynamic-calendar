@@ -1031,6 +1031,6 @@ export const events = [
 	// 	allDay : false
 	// },
 
-	...getDummyEvents('2020.03.15', '2020.03.15', 30)
+	// ...getDummyEvents('2020.01.15', '2020.03.15', 100)
 ];
 // console.log('events length : ', events.length)
