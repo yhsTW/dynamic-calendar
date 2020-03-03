@@ -35,7 +35,27 @@ class DynamicCalendar extends Component {
         this.setState({
             events
         });
+        this.setEvent();
     }
+    
+    setEvent = () => {
+        const timer = setTimeout(() => {
+            this.setState(prevState => ({
+                events : [
+                    ...prevState.events,
+                    {
+                        id : prevState.events[prevState.events.length - 1].id + 1,
+                        title : 'ㅎㅇ',
+                        start : new Date('2020.03.11 14:00'),
+                        end : new Date('2025.03.11 14:30'),
+                        allDay : false
+                    }
+                ]
+            }))
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    };
     //////////////////////////////////// 테스트용 ////////////////////////////////////
     
     shouldComponentUpdate = (nextProps, nextState) => {
