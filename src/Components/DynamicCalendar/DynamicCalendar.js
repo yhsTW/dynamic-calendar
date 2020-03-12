@@ -13,6 +13,7 @@ import styles from './styles.css';
 import { makeEventGroup } from '../../utils/makeEventGroup';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 import HeaderTest from '../../test/HeaderTest';
+import { getDummyEvents } from '../../test/dummyEvents';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 
 const TODAY = moment();
@@ -32,26 +33,19 @@ class DynamicCalendar extends Component {
     
     //////////////////////////////////// 테스트용 ////////////////////////////////////
     componentDidMount = () => {
-        this.setState({
-            events
-        });
-        this.setEvent();
-    }
+        this.setState({ events });
+        // this.setEvent();
+    };
     
     setEvent = () => {
+        console.time('dynamicCalendar');
         const timer = setTimeout(() => {
             this.setState(prevState => ({
                 events : [
                     ...prevState.events,
-                    {
-                        id : prevState.events[prevState.events.length - 1].id + 1,
-                        title : 'ㅎㅇ',
-                        start : new Date('2020.03.11 14:00'),
-                        end : new Date('2025.03.11 14:30'),
-                        allDay : false
-                    }
+                    ...getDummyEvents('2020.01.15', '2020.03.15', 100)
                 ]
-            }))
+            }), () => console.timeEnd('dynamicCalendar'))
         }, 1000);
 
         return () => clearTimeout(timer);
@@ -134,7 +128,7 @@ class DynamicCalendar extends Component {
             </div>
         );
     };
-}
+};
 
 ///////////////////// 테스트용 /////////////////////
 const testEventBarMap = new Map();

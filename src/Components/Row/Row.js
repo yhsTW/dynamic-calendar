@@ -40,13 +40,12 @@ class Row extends Component {
             checkLimit
         );
     };
-
     componentDidMount = () => {
-        if(this.isMonth()) {
-            this.getRowLimit();
-            window.addEventListener('resize', this.getRowLimit);
-        }
-    };
+        this.isMonth() && (
+            this.getRowLimit(),
+            window.addEventListener('resize', this.getRowLimit)
+        );
+    }
 
     componentDidUpdate = prevProps => {
         if(this.isMonth() && prevProps.events !== this.props.events) {
@@ -55,29 +54,20 @@ class Row extends Component {
     };
 
     componentWillUnmount = () => {
-        if(this.isMonth()) {
-            window.removeEventListener('resize', this.getRowLimit);
-        }
-    };
-
-    sameEventRow = (sortEvents, eventProperty) => {
-        const { itemArr } = this.props;
-        let newEvents = eventLevel(itemArr[0], itemArr[itemArr.length - 1], sortEvents, eventProperty);
-
-        return newEvents;
+        this.isMonth() && window.removeEventListener('resize', this.getRowLimit);
     };
 
     getRowLimit = () => {
         const { useExtend } = this.props;
 
         if(useExtend) return;
-        
+
         const rowHeight = this.row.clientHeight;
         const dateHeader = this.header.clientHeight;
         const eventSpace = rowHeight - dateHeader;
         const eventRow = this.eventRowWrapperRef.getEventRowHeight();
         const limit = eventRow === 0 ? 0 : Math.max(Math.floor(eventSpace / eventRow));
-        
+
         if(limit > 0) {
             const { setLimit } = this.props;
 
@@ -94,7 +84,6 @@ class Row extends Component {
     differenceEvents = (prevEvents, currentEvents) => {
         return (prevEvents.length !== currentEvents.length || !arrayCheck(prevEvents, currentEvents));
     };
-
     sortEvents = () => {
         const { events, eventProperty } = this.props;
         let sortEvents = events ? this.prevSortEvents : [];
@@ -159,14 +148,16 @@ Row.defaultProps = {
 Row.propTypes = {
     currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]).isRequired,
     defaultSelectedDate : PropTypes.instanceOf(moment),
-    events : PropTypes.arrayOf(PropTypes.shape({
-        id : PropTypes.number,
-        title : PropTypes.string,
-        start : PropTypes.instanceOf(Date),
-        end : PropTypes.instanceOf(Date),
-        color : PropTypes.string,
-        allDay : PropTypes.bool
-    })),
+    events : PropTypes.arrayOf(
+        PropTypes.shape({
+            id : PropTypes.number,
+            title : PropTypes.string,
+            start : PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.instanceOf(moment), PropTypes.number, PropTypes.string]), 
+            end : PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.instanceOf(moment), PropTypes.number, PropTypes.string]), 
+            color : PropTypes.string,
+            allDay : PropTypes.bool
+        })
+    ),
     isSelecting : PropTypes.bool.isRequired,
     itemArr : PropTypes.arrayOf( PropTypes.shape({
         date : PropTypes.instanceOf(moment).isRequired,
