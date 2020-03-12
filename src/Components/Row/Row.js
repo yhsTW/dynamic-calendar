@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { VIEW_TYPE } from '../../utils/constants';
 import sortEventsUtil from '../../utils/sortEvents';
-import eventLevel from '../../utils/eventLevel';
 import { arrayCheck, variablesCheck, dateCheck } from '../../utils/changeCheck';
 import BackgroundRow from '../BackgroundRow';
 import EventRowWrapper from '../EventRowWrapper';
