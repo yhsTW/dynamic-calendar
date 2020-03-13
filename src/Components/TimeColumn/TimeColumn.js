@@ -165,14 +165,16 @@ class TimeColumn extends Component {
 
 TimeColumn.propTypes = {
     currentView : PropTypes.string,
-    events : PropTypes.arrayOf(PropTypes.shape({
-        id : PropTypes.number,
-        title : PropTypes.string,
-        start : PropTypes.instanceOf(Date),
-        end : PropTypes.instanceOf(Date),
-        color : PropTypes.string,
-        allDay : PropTypes.bool
-    })),
+    events : PropTypes.arrayOf(
+        PropTypes.shape({
+            id : PropTypes.number,
+            title : PropTypes.string,
+            start : PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.instanceOf(moment), PropTypes.number, PropTypes.string]), 
+            end : PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.instanceOf(moment), PropTypes.number, PropTypes.string]), 
+            color : PropTypes.string,
+            allDay : PropTypes.bool
+        })
+    ),
     itemArr : PropTypes.arrayOf(PropTypes.arrayOf(
         PropTypes.shape({
             date : PropTypes.instanceOf(moment),

@@ -55,14 +55,16 @@ const TimeHeader = ({ today, weekArr, currentView, onSelectSlot, events, onSelec
 
 TimeHeader.propTypes = {
     currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]),
-    events : PropTypes.arrayOf(PropTypes.shape({
-        id : PropTypes.number,
-        title : PropTypes.string,
-        start : PropTypes.instanceOf(Date),
-        end : PropTypes.instanceOf(Date),
-        color : PropTypes.string,
-        allDay : PropTypes.bool
-    })),
+    events : PropTypes.arrayOf(
+        PropTypes.shape({
+            id : PropTypes.number,
+            title : PropTypes.string,
+            start : PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.instanceOf(moment), PropTypes.number, PropTypes.string]), 
+            end : PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.instanceOf(moment), PropTypes.number, PropTypes.string]), 
+            color : PropTypes.string,
+            allDay : PropTypes.bool
+        })
+    ),
     today : PropTypes.instanceOf(moment).isRequired,
     weekArr : PropTypes.arrayOf( PropTypes.shape({
         date : PropTypes.instanceOf(moment).isRequired,

@@ -122,14 +122,16 @@ const TimeGrid = ({ today, currentDate, events, onSelectSlot, onSelectEvent, cur
 TimeGrid.propTypes = {
     currentDate : PropTypes.instanceOf(moment).isRequired,
     currentView : PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day]),
-    events : PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
-        id : PropTypes.number,
-        title : PropTypes.string,
-        start : PropTypes.instanceOf(Date),
-        end : PropTypes.instanceOf(Date),
-        color : PropTypes.string,
-        allDay : PropTypes.bool
-    }))).isRequired,
+    events : PropTypes.arrayOf(
+        PropTypes.shape({
+            id : PropTypes.number,
+            title : PropTypes.string,
+            start : PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.instanceOf(moment), PropTypes.number, PropTypes.string]), 
+            end : PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.instanceOf(moment), PropTypes.number, PropTypes.string]), 
+            color : PropTypes.string,
+            allDay : PropTypes.bool
+        })
+    ),
     selectable : PropTypes.bool.isRequired,
     today : PropTypes.instanceOf(moment).isRequired,
     views : PropTypes.arrayOf(PropTypes.oneOf([VIEW_TYPE.month, VIEW_TYPE.week, VIEW_TYPE.day])),
