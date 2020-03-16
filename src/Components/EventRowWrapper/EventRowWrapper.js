@@ -51,7 +51,7 @@ class EventRowWrapper extends Component {
             <Fragment>
                 {
                     sameEvents.map((events, idx) => {
-                        if(currentView !== VIEW_TYPE.month || (limit === 0 || idx < limit)) {
+                        if((currentView !== VIEW_TYPE.month) || (currentView === VIEW_TYPE.month && idx < limit)) {
                             return (
                                 <EventRow key={ events[0][eventProperty.id] } eventRowRef={ ref => this.eventRowRef = ref }
                                     events={ events } slotStart={ slotStart } slotEnd={ slotEnd } onSelectEvent={ onSelectEvent }

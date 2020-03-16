@@ -9,7 +9,7 @@ import { VIEW_TYPE } from '../../utils/constants';
 import { variablesCheck, dateCheck, arrayCheck } from '../../utils/changeCheck';
 
 class Month extends Component {
-    limit = 0;
+    limit = 1;
     popup = {
         top : 0,
         left : 0,

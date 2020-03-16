@@ -39,6 +39,7 @@ class Row extends Component {
             checkLimit
         );
     };
+    
     componentDidMount = () => {
         this.isMonth() && (
             this.getRowLimit(),
@@ -83,6 +84,7 @@ class Row extends Component {
     differenceEvents = (prevEvents, currentEvents) => {
         return (prevEvents.length !== currentEvents.length || !arrayCheck(prevEvents, currentEvents));
     };
+    
     sortEvents = () => {
         const { events, eventProperty } = this.props;
         let sortEvents = events ? this.prevSortEvents : [];
