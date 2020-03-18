@@ -21,18 +21,20 @@ class BackgroundCell extends Component {
         const { isSelected } = this.state;
         const { 
             defaultSelectedDate, events, isSelecting, item, 
-            lastSelectedDate, more, selectedEnd, selectedStart
+            lastSelectedDate, more, selectedEnd, selectedStart,
+            useTime
         } = this.props;
+
         const checkIsSelected = variablesCheck(isSelected, nextState.isSelected);
-        const checkDefaultSelectedDate = dateCheck(defaultSelectedDate, nextProps.defaultSelectedDate);
+        const checkDefaultSelectedDate = dateCheck(defaultSelectedDate, nextProps.defaultSelectedDate, useTime ? null : 'date');
         const checkEvents = arrayCheck(events, nextProps.events);
         const checkIsSelecting = variablesCheck(isSelecting, nextProps.isSelecting);
         const checkItem = objectCheck(item, nextProps.item);
-        const checkLastSelectedDate = dateCheck(lastSelectedDate, nextProps.lastSelectedDate);
+        const checkLastSelectedDate = dateCheck(lastSelectedDate, nextProps.lastSelectedDate, useTime ? null : 'date');
         const checkMore = variablesCheck(more, nextProps.more);
-        const checkSelectedEnd = dateCheck(selectedEnd, nextProps.selectedEnd);
-        const checkSelectedStart = dateCheck(selectedStart, nextProps.selectedStart);
-
+        const checkSelectedEnd = dateCheck(selectedEnd, nextProps.selectedEnd, useTime ? null : 'date');
+        const checkSelectedStart = dateCheck(selectedStart, nextProps.selectedStart, useTime ? null : 'date');
+        
         return !(
             checkIsSelected && checkDefaultSelectedDate && checkEvents && checkIsSelecting && 
             checkItem && checkLastSelectedDate && checkMore && checkSelectedEnd &&
@@ -41,7 +43,7 @@ class BackgroundCell extends Component {
     };
 
     static getDerivedStateFromProps = (nextProps, prevState) => {
-        if(!nextProps.isSelecting && prevState.isSelecting) {
+        if(!nextProps.isSelecting) {
             return { isSelected : false };
         }
 
@@ -90,7 +92,7 @@ class BackgroundCell extends Component {
         } = this.props;
 
         if(!isSelecting) return;
-
+        
         if(!selectedStart && !selectedEnd && !lastSelectedDate && !defaultSelectedDate) {
             const { startSelecting } = this.props;
 

@@ -14,8 +14,8 @@ export const objectCheck = (value, other) => {
     return referenceCheck(value, other);
 };
 
-export const dateCheck = (value, other) => {
-    return moment(value).isSame(other, 'date');
+export const dateCheck = (value, other, checkType = 'date') => {
+    return moment(value).isSame(other, checkType);
 };
 
 export const variablesCheck = (value, other) => {
