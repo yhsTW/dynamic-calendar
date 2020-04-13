@@ -1023,6 +1023,70 @@ export const events = [
 		end : new Date('2025.03.15 14:30'),
 		allDay : false
 	},
+	{
+		id : 151,
+		title : '4월 13일 일정',
+		start : new Date('2020.04.13 14:00'),
+		end : new Date('2020.04.13 14:30'),
+		allDay : false
+	},
+	{
+		id : 152,
+		title : '4월 13일 일정',
+		start : new Date('2020.04.13 14:00'),
+		end : new Date('2020.04.13 14:30'),
+		allDay : false
+	},
+	{
+		id : 153,
+		title : '4월 13일 일정',
+		start : new Date('2020.04.13 14:00'),
+		end : new Date('2020.04.13 14:30'),
+		allDay : false
+	},
+	{
+		id : 154,
+		title : '4월 13일 일정',
+		start : new Date('2020.04.13 14:00'),
+		end : new Date('2020.04.13 14:30'),
+		allDay : false
+	},
+	{
+		id : 155,
+		title : '4월 13일 일정',
+		start : new Date('2020.04.13 14:00'),
+		end : new Date('2020.04.13 14:30'),
+		allDay : false
+	},
+	{
+		id : 156,
+		title : '4월 13일 일정',
+		start : new Date('2020.04.13 14:00'),
+		end : new Date('2020.04.13 14:30'),
+		allDay : false
+	},
+	{
+		id : 157,
+		title : '4월 13일 일정',
+		start : new Date('2020.04.13 14:00'),
+		end : new Date('2020.04.13 14:30'),
+		allDay : false
+	},
+	{
+		id : 158,
+		title : '4월 13일 일정',
+		start : new Date('2020.04.13 14:00'),
+		end : new Date('2020.04.13 14:30'),
+		allDay : false
+	},
+	{
+		id : 159,
+		title : '공휴일',
+		start : new Date('2020.04.13 14:00'),
+		end : new Date('2020.04.13 14:30'),
+		allDay : false,
+		holiday : true
+	},
 	// {
 	// 	id : 151,
 	// 	title : '짧은 일정',

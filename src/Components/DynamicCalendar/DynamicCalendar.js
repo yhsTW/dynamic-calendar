@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { arrayCheck, dateCheck, variablesCheck } from '../../utils/changeCheck';
 import Header from '../Header';
 import View from '../View';
-import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, INITIAL_CUSTOMIZE } from '../../utils/constants';
+import { VIEW_TYPE, COMPONENT_NAMES, CONTROLS_TYPE, INITIAL_CUSTOMIZE, INITIAL_EVENT_PROPERTY } from '../../utils/constants';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
 import { events } from '../../test/events';
 //////////////////////////////////// 테스트용 ////////////////////////////////////
@@ -89,22 +89,27 @@ class DynamicCalendar extends Component {
         onView(view);
     };
 
+    mergeProperty = () => {
+        const { eventProperty } = this.props;
+
+        return _.merge(INITIAL_EVENT_PROPERTY, eventProperty);
+    };
+
     // 사용자로부터 받은 이벤트를 그룹별로 묶는다.
     settingEvents = () => {
-        const { eventProperty } = this.props;
         // const { events } = this.props;
         //////////////////////////////////// 테스트용 ////////////////////////////////////
         const { events } = this.state;
         //////////////////////////////////// 테스트용 ////////////////////////////////////
         const { currentDate } = this.state;
 
-        return makeEventGroup(events, currentDate, eventProperty);
+        return makeEventGroup(events, currentDate, this.mergeProperty());
     };
 
     render() {
         const { 
             views, onSelectSlot, onSelectEvent, useHeader, customize : pCustomize,
-            popup, selectable, useExtend, components, eventProperty
+            popup, selectable, useExtend, components
         } = this.props;
         const { currentDate, currentView } = this.state;
         const events = this.settingEvents();
@@ -124,7 +129,7 @@ class DynamicCalendar extends Component {
                     events={ events } onSelectSlot={ onSelectSlot } onSelectEvent={ onSelectEvent }
                     popup={ popup } updateCurrentDate={ this.updateCurrentDate } updateCurrentView={ this.updateCurrentView }
                     selectable={ selectable } useExtend={ useExtend } components={ components } customize={ customize.View }
-                    eventProperty={ eventProperty } />
+                    eventProperty={ this.mergeProperty() } />
             </div>
         );
     };
@@ -166,13 +171,7 @@ DynamicCalendar.defaultProps = {
     ///////////////////// 테스트용 /////////////////////
     // useExtend : true,
     ///////////////////// 테스트용 /////////////////////
-    eventProperty : {
-        id : 'id',
-        title : 'title',
-        start : 'start',
-        end : 'end',
-        allDay : 'allDay'
-    },
+    eventProperty : INITIAL_EVENT_PROPERTY,
     // onNavigate : () => {},
     // onSelectSlot : () => {},
     // onSelectEvent : () => {}
@@ -316,15 +315,16 @@ DynamicCalendar.propTypes = {
         })
     }),
     eventProperty : PropTypes.shape({
-        id : PropTypes.string.isRequired,
-        title : PropTypes.string.isRequired,
-        start : PropTypes.string.isRequired,
-        end : PropTypes.string.isRequired,
+        id : PropTypes.string,
+        title : PropTypes.string,
+        start : PropTypes.string,
+        end : PropTypes.string,
         allDay : PropTypes.oneOfType([PropTypes.string, PropTypes.shape({
-            key : PropTypes.string.isRequired,
-            notAllDayType : PropTypes.string.isRequired,
-            allDayType : PropTypes.string.isRequired
-        })]).isRequired
+            key : PropTypes.string,
+            notAllDayType : PropTypes.string,
+            allDayType : PropTypes.string
+        })]),
+        holiday : PropTypes.string
     }),
     // 현재 보고 있는 날짜가 변경되면 실행된다.
     onNavigate : PropTypes.func,

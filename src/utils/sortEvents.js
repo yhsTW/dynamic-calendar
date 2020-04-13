@@ -13,7 +13,7 @@ const checkAllDay = (event, allDayKey) => {
     return allDay;
 };
 
-const sortEvents = (events, { start : startKey, end : endKey, allDay : allDayKey }) => {
+const sortEvents = (events, { start : startKey, end : endKey, allDay : allDayKey, holiday : holidayKey }) => {
     if(!events) return [];
     
     const newEvents = [...events];
@@ -37,31 +37,39 @@ const sortEvents = (events, { start : startKey, end : endKey, allDay : allDayKey
             }
         } else {
             // a, b의 시작 날짜가 같을 때
-            if(mAEnd.isAfter(mBEnd, 'date')) {
-                // a의 종료날짜가 더 이후에 있을 경우 a가 우선순위
+            if(a[holidayKey]) {
+                // a가 공휴일일 경우 a가 우선순위
                 return -1;
-            } else if(mBEnd.isAfter(mAEnd, 'date')) {
-                // b의 종료날짜가 더 이후에 있을 경우 b가 우선순위
+            } else if(b[holidayKey]) {
+                // b가 공휴일일 경우 b가 우선순위
                 return 1;
             } else {
-                // a, b의 종료날짜가 모두 같을 때
-                if(checkAllDay(a, allDayKey) && !checkAllDay(b, allDayKey)) {
-                    // a만 종일일정일 경우 a가 우선순위
+                if(mAEnd.isAfter(mBEnd, 'date')) {
+                    // a의 종료날짜가 더 이후에 있을 경우 a가 우선순위
                     return -1;
-                } else if(!checkAllDay(a, allDayKey) && checkAllDay(b, allDayKey)) {
-                    // b만 종일일정일 경우 b가 우선순위
+                } else if(mBEnd.isAfter(mAEnd, 'date')) {
+                    // b의 종료날짜가 더 이후에 있을 경우 b가 우선순위
                     return 1;
                 } else {
-                    // 둘 다 종일/비종일일 때
-                    if(mAStart.isBefore(mBStart)) {
-                        // a가 시작 시간이 더 빠를 경우 a가 우선순위
-                        return -1
-                    } else if(mBStart.isBefore(mAStart)) {
-                        // b가 시작 시간이 더 빠를 경우 b가 우선순위
+                    // a, b의 종료날짜가 모두 같을 때
+                    if(checkAllDay(a, allDayKey) && !checkAllDay(b, allDayKey)) {
+                        // a만 종일일정일 경우 a가 우선순위
+                        return -1;
+                    } else if(!checkAllDay(a, allDayKey) && checkAllDay(b, allDayKey)) {
+                        // b만 종일일정일 경우 b가 우선순위
                         return 1;
                     } else {
-                        // 어떠한 조건에도 속하지 않으므로 순위변경 없음
-                        return 0;
+                        // 둘 다 종일/비종일일 때
+                        if(mAStart.isBefore(mBStart)) {
+                            // a가 시작 시간이 더 빠를 경우 a가 우선순위
+                            return -1
+                        } else if(mBStart.isBefore(mAStart)) {
+                            // b가 시작 시간이 더 빠를 경우 b가 우선순위
+                            return 1;
+                        } else {
+                            // 어떠한 조건에도 속하지 않으므로 순위변경 없음
+                            return 0;
+                        }
                     }
                 }
             }

@@ -223,3 +223,12 @@ export const INITIAL_CUSTOMIZE = {
         }
     }
 };
+
+export const INITIAL_EVENT_PROPERTY = {
+    id : 'id',
+    title : 'title',
+    start : 'start',
+    end : 'end',
+    allDay : 'allDay',
+    holiday : 'holiday'
+};
