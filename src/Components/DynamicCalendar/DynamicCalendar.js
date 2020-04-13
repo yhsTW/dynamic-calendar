@@ -320,9 +320,9 @@ DynamicCalendar.propTypes = {
         start : PropTypes.string,
         end : PropTypes.string,
         allDay : PropTypes.oneOfType([PropTypes.string, PropTypes.shape({
-            key : PropTypes.string,
-            notAllDayType : PropTypes.string,
-            allDayType : PropTypes.string
+            key : PropTypes.string.isRequired,
+            notAllDayType : PropTypes.string.isRequired,
+            allDayType : PropTypes.string.isRequired
         })]),
         holiday : PropTypes.string
     }),

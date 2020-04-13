@@ -16,30 +16,28 @@ const getEventLevel = (start, end, events, { id : idKey, start : startKey, end :
         // 같은 이벤트를 찾을 필요 없이, 바로 return할 배열에 집어 넣는다.
         if(getCurrentStart(currentEvent, startKey).isSameOrBefore(start.date) && getCurrentEnd(currentEvent, endKey).isSameOrAfter(end.date)) {
             resultEvents.push([currentEvent]);
-            
-            continue;
-        }
-        
-        // 같은 Row에 있어야 할 event를 찾는다.
-        const compareEvents = [...newEvents];
+        } else {
+            // 같은 Row에 있어야 할 event를 찾는다.
+            const compareEvents = [...newEvents];
 
-        while(compareEvents.length > 0) {
-            const compareEvent = compareEvents.splice(0, 1)[0];
-            const compareStart = moment(compareEvent[startKey]);
-            const compareEnd = moment(compareEvent[endKey]);
-            
-            if(getCurrentEnd(currentEvent, endKey).isBefore(compareStart, 'date')) {
-                sameEvents.push(compareEvent);
-                const removeIdx = newEvents.findIndex(event => (event[idKey] === compareEvent[idKey] && moment(event[startKey]).isSame(compareEvent[startKey])));
-                newEvents.splice(removeIdx, 1);
+            while(compareEvents.length > 0) {
+                const compareEvent = compareEvents.splice(0, 1)[0];
+                const compareStart = moment(compareEvent[startKey]);
+                const compareEnd = moment(compareEvent[endKey]);
                 
-                if(compareEnd.isSameOrAfter(end.date, 'date')) break;
-                
-                currentEvent = compareEvent;
+                if(getCurrentEnd(currentEvent, endKey).isBefore(compareStart, 'date')) {
+                    sameEvents.push(compareEvent);
+                    const removeIdx = newEvents.findIndex(event => (event[idKey] === compareEvent[idKey] && moment(event[startKey]).isSame(compareEvent[startKey])));
+                    newEvents.splice(removeIdx, 1);
+                    
+                    if(compareEnd.isSameOrAfter(end.date, 'date')) break;
+                    
+                    currentEvent = compareEvent;
+                }
             }
-        }
 
-        resultEvents.push(sameEvents);
+            resultEvents.push(sameEvents);
+        }
     }
 
     return resultEvents;
